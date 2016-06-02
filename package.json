@@ -1,0 +1,27 @@
+{
+  "name": "cn-hyper-test",
+  "version": "0.0.1",
+  "description": "Code Name Hyper, testing component",
+  "main": "bin/serve.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cloudoki/cn-hyper-test.git"
+  },
+  "author": "Ricardo Malta",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Cloudoki/cn-hyper-test/issues"
+  },
+  "homepage": "https://github.com/Cloudoki/cn-hyper-test#readme",
+  "dependencies": {
+    "async": "^2.0.0-rc.5",
+    "express": "^4.13.4",
+    "leveldown": "^1.4.6",
+    "levelup": "^1.3.2",
+    "sendgrid": "^2.0.0",
+    "supertest": "^1.2.0"
+  }
+}
