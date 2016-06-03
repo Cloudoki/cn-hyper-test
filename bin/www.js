@@ -9,22 +9,32 @@ app.use(bodyParser.json());
 
 app.post('/promise', function (req, res) {
 
-  console.log(req.headers);
-  console.log(req.body);
   // process git new pushes only
-  if( req.headers && req.headers["X-GitHub-Event"] && req.headers["X-GitHub-Event"] === "push" ){
-    console.log("Run...")
-    // "X-GitHub-Event"
-    // "X-GitHub-Delivery"
-    // "X-Hub-Signature"
+  if( req.headers && req.headers['x-github-event'] && req.headers['x-github-event'] === 'push' ){
 
+    hypert.addTest(req.body, function(err, result){
 
+      if( err )
+        return res.json({ok:false, error:err});
+
+      return res.json({ok:true});
+    });
   }
-
 });
 
 app.get('/test', function (req, res) {
-  res.send('Not done yet!');
+
+  hypert.addTest({repository: {url: 'https://github.com/Cloudoki/cn-hyper-test'}}, function(err, result){
+
+    if( err )
+      return res.json({ok:false, error:err});
+
+    return res.json({ok:true});
+  });
+});
+
+app.get('/ping', function (req, res) {
+  return res.json({ok:true});
 });
 
 app.listen(conf.web.port, function () {
