@@ -4,7 +4,22 @@ const hypert = require('../app'),
       express = require('express'),
       app = express();
 
-app.get('/', function (req, res) {
+app.post('/promise', function (req, res) {
+
+  console.log(req);
+  // process git new pushes only
+  if( req.headers && req.headers["X-GitHub-Event"] && req.headers["X-GitHub-Event"] === "push" ){
+
+    // "X-GitHub-Event"
+    // "X-GitHub-Delivery"
+    // "X-Hub-Signature"
+
+
+  }
+
+});
+
+app.get('/test', function (req, res) {
   res.send('Not done yet!');
 });
 
