@@ -1,0 +1,17 @@
+{
+  "apps" : [{
+    "name"        : "hyper-test",
+    "script"      : "bin/www",
+    "args"        : [],
+    "watch"       : false,
+    "node_args"   : "",
+    "merge_logs"  : true,
+    "instances"   : 1,
+    "exec_mode"   : "fork",
+    "env": {
+      "NODE_ENV": "production",
+      "API_PORT": 8700,
+
+    }
+  }]
+}

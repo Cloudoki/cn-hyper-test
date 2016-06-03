@@ -2,7 +2,7 @@
   "name": "cn-hyper-test",
   "version": "0.0.1",
   "description": "Code Name Hyper, testing component",
-  "main": "bin/serve.js",
+  "main": "bin/www.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
