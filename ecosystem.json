@@ -1,7 +1,7 @@
 {
   "apps" : [{
     "name"        : "hyper-test",
-    "script"      : "bin/www",
+    "script"      : "bin/www.js",
     "args"        : [],
     "watch"       : false,
     "node_args"   : "",
