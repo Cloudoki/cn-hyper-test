@@ -2,15 +2,18 @@
 
 const hypert = require('../app'),
       conf = require('../conf/app'),
-      express = require('express'),
-      app = express();
+      app = require('express')(),
+      bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
 
 app.post('/promise', function (req, res) {
 
-  console.log(req);
+  console.log(req.headers);
+  console.log(req.body);
   // process git new pushes only
   if( req.headers && req.headers["X-GitHub-Event"] && req.headers["X-GitHub-Event"] === "push" ){
-
+    console.log("Run...")
     // "X-GitHub-Event"
     // "X-GitHub-Delivery"
     // "X-Hub-Signature"
