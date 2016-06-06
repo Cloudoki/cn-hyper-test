@@ -8,10 +8,10 @@ module.exports = {
     "https://github.com/Cloudoki/cn-hyper-test"
   ],
   Recipients:[
-    "ricarod@cloudoki.com",
+    "ricardo@cloudoki.com",
     "edgar@cloudoki.com"
   ],
   Poll:[
-    __dirname+"test_ping.js"
+    __dirname+"/test_ping.js"
   ]
 }

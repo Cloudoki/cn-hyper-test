@@ -5,7 +5,7 @@ module.exports = {
   Version: "Staging",
   Repos: [],
   Recipients:[
-    "ricarod@cloudoki.com",
+    "ricardo@cloudoki.com",
     "edgar@cloudoki.com"
   ],
   Poll:[

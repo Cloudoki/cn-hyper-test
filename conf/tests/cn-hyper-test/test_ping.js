@@ -2,22 +2,19 @@
 
 var supertest = require("supertest");
 
-module.exports = function(callback){
+function Test(payload, serverAddress){
 
-  return callback(null, { ok:true });
-}
-
-function Test(name, serverAddress){
-
-  this.name = name;
-  this.server = supertest.agent(serverAddress);
+console.log('payload', payload);
+console.log('server'. serverAddress);
+  this.name = payload.repository.name;
+  this.server = supertest.agent(serverAddress.Server);
 }
 
 Test.prototype.run = function (callback) {
 
-  this.server.get("/")
+  this.server.get("/ping")
               .expect("Content-type",/json/)
-              .expect(200)
+              .expect(201)
               .end(callback);
 };
 

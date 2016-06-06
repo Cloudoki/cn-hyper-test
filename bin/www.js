@@ -8,23 +8,24 @@ const hypert = require('../app'),
 app.use(bodyParser.json());
 
 app.post('/promise', function (req, res) {
-
   // process git new pushes only
   if( req.headers && req.headers['x-github-event'] && req.headers['x-github-event'] === 'push' ){
-
     hypert.addTest(req.body, function(err, result){
-
-      if( err )
-        return res.json({ok:false, error:err});
+      if( err ) return res.json({ok:false, error:err});
 
       return res.json({ok:true});
     });
+  } else {
+    return res.json({ok:false, error:err});
   }
 });
 
 app.get('/test', function (req, res) {
 
-  hypert.addTest({repository: {url: 'https://github.com/Cloudoki/cn-hyper-test'}}, function(err, result){
+  hypert.addTest({repository: {
+    url: 'https://github.com/Cloudoki/cn-hyper-test',
+    name: 'cn-hyper-test'
+  }}, function(err, result){
 
     if( err )
       return res.json({ok:false, error:err});
@@ -32,6 +33,20 @@ app.get('/test', function (req, res) {
     return res.json({ok:true});
   });
 });
+
+app.get('/run', function(req, res) {
+
+  if( req.query.component ) {
+    hypert.runTest(req.query.component, function(err, result) {
+      if(err) return res.json({ok:false});
+     return res.json({ok: true, result: result});
+    })
+  } else res.json({ok:false})
+
+console.log(req)
+  
+  
+})
 
 app.get('/ping', function (req, res) {
   return res.json({ok:true});
