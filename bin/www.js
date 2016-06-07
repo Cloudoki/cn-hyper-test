@@ -56,6 +56,15 @@ app.get('/ping', function(req, res) {
   return res.json({ ok: true });
 });
 
+const handlebars = require('handlebars');
+
+app.get('/render', function(req, res) {
+  const source = require('fs').readFileSync(require('path').join(__dirname, '../views/mail.text.hbs'), 'utf8');
+  const template = handlebars.compile(source);
+  const context = require('../views/context_example.json');
+  res.end(template(context));
+});
+
 app.listen(conf.web.port, function() {
   console.log('Hyper test listening on port', conf.web.port);
 });
