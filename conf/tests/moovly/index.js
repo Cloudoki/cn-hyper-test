@@ -8,6 +8,9 @@ module.exports = {
     "https://github.com/Moovly/moovly-api",
     "https://github.com/Moovly/moovly-worker"
   ],
+  "Branchs" : [
+    "master"
+  ],
   Recipients:[
     "ricardo@cloudoki.com",
     "edgar@cloudoki.com",

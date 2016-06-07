@@ -259,7 +259,6 @@ Test.prototype.run = function(callback) {
             "submissions": {
               "type": "array",
               "items": GallerySubmission
-
             }
           }
         };
