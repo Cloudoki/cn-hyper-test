@@ -3,9 +3,9 @@
 var supertest = require("supertest");
 var async = require('async');
 var ZSchema = require('z-schema');
-var validator = new ZSchema({});
-var chai = require('chai');
-chai.should();
+var validator = new ZSchema({
+  ignoreUnknownFormats: true
+});
 
 function Test(payload, serverAddress) {
 
@@ -30,7 +30,7 @@ Test.prototype.run = function(callback) {
     ],
     "properties": {
       "date": {
-        "type": "dateTime",
+        "type": "string",
         "format": "date-time"
       },
       "timezone_type": {
@@ -47,83 +47,83 @@ Test.prototype.run = function(callback) {
     }
   };
   var User = {
-      "type": "object",
-      "required": [
-        "id",
-        "first_name",
-        "last_name"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "first_name": {
-          "type": "string"
-        },
-        "last_name": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string",
-          "format": "email"
-        }
-      }
-    },
-    var Project = {
-        "type": "object",
-        "required": [
-          "id",
-          "name",
-          "keyname",
-          "description",
-          "thumb",
-          "created_at",
-          "updated_at",
-          "created_by"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          },
-          "keyname": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "thumb": {
-            "type": "string"
-          },
-          "created_at": date,
-          "updated_at": date,
-          "created_by": User
-        }
+    "type": "object",
+    "required": [
+      "id",
+      "first_name",
+      "last_name"
+    ],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
       },
-      var GallerySubmission = {
-        "type": "object",
-        "required": [
-          "id",
-          "project",
-          "created_at",
-          "updated_at",
-          "created_by"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "project": project,
-          "created_at": date,
-          "updated_at": date,
-          "created_by": User
-        }
-      };
+      "first_name": {
+        "type": "string"
+      },
+      "last_name": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      }
+    }
+  };
+  var Project = {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "keyname",
+      "description",
+      "thumb",
+      "created_at",
+      "updated_at",
+      "created_by"
+    ],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "name": {
+        "type": "string"
+      },
+      "keyname": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "thumb": {
+        "type": "string"
+      },
+      "created_at": date,
+      "updated_at": date,
+      "created_by": User
+    }
+  };
+  var GallerySubmission = {
+    "type": "object",
+    "required": [
+      "id",
+      "project",
+      "created_at",
+      "updated_at",
+      "created_by"
+    ],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "project": Project,
+      "created_at": date,
+      "updated_at": date,
+      "created_by": User
+    }
+  };
   var Gallery = {
     "type": "object",
     "required": [
@@ -217,7 +217,7 @@ Test.prototype.run = function(callback) {
             }
           }
         };
-        that.server.get("/gallery")
+        that.server.get("/gallery/")
           .expect("Content-type", /json/)
           .expect(200)
           .end(function(err, result) {
@@ -225,104 +225,74 @@ Test.prototype.run = function(callback) {
             var data = {}
             if (err) data.error = err.messsage
 
-            validator.validate(res.body, schema, function(err, valid) {
+            validator.validate(result.body, schema, function(err, valid) {
               data.result = result
+              data.body = JSON.parse(result.text);
+              delete data.result.text;
               data.commit = that.payload
               data.config = that.serverData
+              data.schema = schema
+              console.log(err, valid);
               data.validation = {
-                err: err ? err.message : 'noerror',
+                err: err ? err : 'noerror',
                 valid: valid
               };
               cb(null, data);
             })
 
           });
-      }
-      /*,
-      function() {
+      },
+      function(cb) {
 
         var schema = {
           "type": "object",
+          "title": "UserGallery",
           "required": [
-            "data"
+            "user",
+            "published"
           ],
           "properties": {
-            "data": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "id",
-                "name"
-              ],
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "format": "int32",
-                  "example": 42
-                },
-                "name": {
-                  "type": "string",
-                  "example": "AccountName"
-                }
-              }
+            "galleries": {
+              "type": "array",
+              "items": Gallery
+            },
+            "submissions": {
+              "type": "array",
+              "items": GallerySubmission
+
             }
           }
         };
 
-
-
-
-        that.server.get("/ping")
+        that.server.get("/gallery/user/48137")
           .expect("Content-type", /json/)
-          .set('Authorization', process.env.API_KEY)
           .expect(200)
           .end(function(err, result) {
 
             var data = {}
             if (err) data.error = err.messsage
 
-            validator.validate(res.body, schema).should.be.true;
-
-            data.result = result
-            data.commit = that.payload
-            data.config = that.serverData
-            callback(null, data)
+            validator.validate(result.body, schema, function(err, valid) {
+              data.result = result
+              data.body = JSON.parse(result.text);
+              delete data.result.text;
+              data.commit = that.payload
+              data.config = that.serverData
+                            data.schema = schema
+              console.log(err, valid);
+              data.validation = {
+                err: err ? err : 'noerror',
+                valid: valid
+              };
+              cb(null, data);
+            })
           });
       },
-      function() {
+      function(cb) {
 
+        var schema = Gallery;
 
-        var schema = {
-          "type": "object",
-          "required": [
-            "data"
-          ],
-          "properties": {
-            "data": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "id",
-                "name"
-              ],
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "format": "int32",
-                  "example": 42
-                },
-                "name": {
-                  "type": "string",
-                  "example": "AccountName"
-                }
-              }
-            }
-          }
-        };
-
-
-        that.server.get("/ping")
-          .set('Authorization', process.env.API_KEY)
+        that.server.get("/gallery/demo-gallery?max=10&first=1")
           .expect("Content-type", /json/)
           .expect(200)
           .end(function(err, result) {
@@ -330,15 +300,23 @@ Test.prototype.run = function(callback) {
             var data = {}
             if (err) data.error = err.messsage
 
-            validator.validate(res.body, schema).should.be.true;
-
-            data.result = result
-            data.commit = that.payload
-            data.config = that.serverData
-            callback(null, data)
+            validator.validate(result.body, schema, function(err, valid) {
+              data.result = result
+              data.body = JSON.parse(result.text);
+              delete data.result.text;
+              data.commit = that.payload
+              data.config = that.serverData
+              console.log(err, valid);
+                            data.schema = schema
+              data.validation = {
+                err: err ? err : 'noerror',
+                valid: valid
+              };
+              cb(null, data);
+            })
           });
 
-      }*/
+      }
 
     ],
     callback
