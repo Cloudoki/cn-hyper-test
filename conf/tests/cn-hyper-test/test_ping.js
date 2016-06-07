@@ -17,7 +17,7 @@ Test.prototype.run = function (callback) {
 var that = this;
   this.server.get("/ping")
               .expect("Content-type",/json/)
-              .expect(201)
+              .expect(200)
               .end(function(err, result) {
 
 var data = {}

@@ -23,8 +23,8 @@ app.post('/promise', function (req, res) {
 app.get('/test', function (req, res) {
 
   hypert.addTest({repository: {
-    url: 'https://github.com/Cloudoki/cn-hyper-test',
-    name: 'cn-hyper-test'
+    url: req.query.url || 'https://github.com/Cloudoki/cn-hyper-test',
+    name: req.query.name || 'cn-hyper-test'
   }}, function(err, result){
 
     if( err )
@@ -44,8 +44,8 @@ app.get('/run', function(req, res) {
   } else res.json({ok:false})
 
 console.log(req)
-  
-  
+
+
 })
 
 app.get('/ping', function (req, res) {
