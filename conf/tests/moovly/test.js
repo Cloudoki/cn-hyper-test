@@ -4,7 +4,11 @@ var supertest = require("supertest");
 var async = require('async');
 var ZSchema = require('z-schema');
 var validator = new ZSchema({
-  ignoreUnknownFormats: true
+  ignoreUnknownFormats: true,
+  noTypeless: true,
+  assumeAdditional: true,
+  forceProperties: true,
+  breakOnFirstError: false
 });
 
 function Test(payload, serverAddress) {
@@ -143,7 +147,141 @@ Test.prototype.run = function(callback) {
       "name": {
         "type": "string"
       },
+      "slug": {
+        "type": "string"
+      },
+      "body": {
+        "type": "string"
+      },
+      "created_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "updated_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "project_count": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  };
+  var ProjectPublished = {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "keyname",
+      "description",
+      "thumb"
+    ],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "name": {
+        "type": "string"
+      },
       "keyname": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "thumb": {
+        "type": "string"
+      }
+    }
+  };
+  var ProjectGallery = {
+    "type": "object",
+    "required": [
+      "id",
+      "sticky",
+      "name",
+      "keyname",
+      "description",
+      "thumb",
+      "updated_at",
+      "created_by"
+    ],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "sticky": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "name": {
+        "type": "string"
+      },
+      "keyname": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "thumb": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "created_by": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  };
+
+  var GalleryUser = {
+    "type": "object",
+    "required": [
+      "id",
+      "firstname",
+      "name"
+    ],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "firstname": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      }
+    }
+  };
+  var GalleryProject = {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "slug",
+      "body",
+      "project_count",
+      "projects"
+    ],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "name": {
+        "type": "string"
+      },
+      "slug": {
         "type": "string"
       },
       "body": {
@@ -153,8 +291,10 @@ Test.prototype.run = function(callback) {
         "type": "integer",
         "format": "int64"
       },
-      "created_at": date,
-      "updated_at": date
+      "projects": {
+        "type": "array",
+        "items": ProjectGallery
+      }
     }
   };
 
@@ -203,17 +343,12 @@ Test.prototype.run = function(callback) {
           "type": "object",
           "title": "GalleryCollection",
           "required": [
-            "galleries",
-            "submissions"
+            "galleries"
           ],
           "properties": {
             "galleries": {
               "type": "array",
               "items": Gallery
-            },
-            "submissions": {
-              "type": "array",
-              "items": GallerySubmission
             }
           }
         };
@@ -252,13 +387,10 @@ Test.prototype.run = function(callback) {
             "published"
           ],
           "properties": {
-            "galleries": {
+            "user": GalleryUser,
+            "published": {
               "type": "array",
-              "items": Gallery
-            },
-            "submissions": {
-              "type": "array",
-              "items": GallerySubmission
+              "items": ProjectPublished
             }
           }
         };
@@ -277,7 +409,7 @@ Test.prototype.run = function(callback) {
               delete data.result.text;
               data.commit = that.payload
               data.config = that.serverData
-                            data.schema = schema
+              data.schema = schema
               console.log(err, valid);
               data.validation = {
                 err: err ? err : 'noerror',
@@ -289,9 +421,8 @@ Test.prototype.run = function(callback) {
       },
       function(cb) {
 
-        var schema = Gallery;
-
-        that.server.get("/gallery/demo-gallery?max=10&first=1")
+        var schema = GalleryProject;
+        that.server.get("/gallery/demo-gallery?max=5&first=1")
           .expect("Content-type", /json/)
           .expect(200)
           .end(function(err, result) {
@@ -306,7 +437,7 @@ Test.prototype.run = function(callback) {
               data.commit = that.payload
               data.config = that.serverData
               console.log(err, valid);
-                            data.schema = schema
+              data.schema = schema
               data.validation = {
                 err: err ? err : 'noerror',
                 valid: valid
