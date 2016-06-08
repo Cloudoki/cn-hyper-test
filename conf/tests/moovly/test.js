@@ -359,18 +359,25 @@ Test.prototype.run = function(callback) {
 
             var data = {}
             if (err) data.error = err.messsage
-            data.body = JSON.parse(result.text);
-            validator.validate(data.body, schema, function(err, valid) {
-              data.info = result;
-              delete data.result.text;
-              data.schema = schema;
-              console.log(err, valid);
-              data.validation = {
-                errors: err ? err : [],
-                valid: valid
-              };
-              cb(null, data);
-            })
+            console.log(result);
+            data.info = result;
+            try {
+              data.body = JSON.parse(result.text);
+
+              validator.validate(data.body, schema, function(err, valid) {
+
+                delete data.result.text;
+                data.schema = schema;
+                console.log(err, valid);
+                data.validation = {
+                  errors: err ? err : [],
+                  valid: valid
+                };
+                cb(null, data);
+              })
+            } catch (err) {
+              cb(err, data);
+            }
           });
       },
       function(cb) {
@@ -398,18 +405,25 @@ Test.prototype.run = function(callback) {
 
             var data = {}
             if (err) data.error = err.messsage
-            data.body = JSON.parse(result.text);
-            validator.validate(data.body, schema, function(err, valid) {
-              data.info = result;
-              delete data.result.text;
-              data.schema = schema;
-              console.log(err, valid);
-              data.validation = {
-                errors: err ? err : [],
-                valid: valid
-              };
-              cb(null, data);
-            })
+            console.log(result);
+            data.info = result;
+            try {
+              data.body = JSON.parse(result.text);
+
+              validator.validate(data.body, schema, function(err, valid) {
+
+                delete data.result.text;
+                data.schema = schema;
+                console.log(err, valid);
+                data.validation = {
+                  errors: err ? err : [],
+                  valid: valid
+                };
+                cb(null, data);
+              })
+            } catch (err) {
+              cb(err, data);
+            }
           });
       },
       function(cb) {
@@ -422,18 +436,25 @@ Test.prototype.run = function(callback) {
 
             var data = {}
             if (err) data.error = err.messsage
-            data.body = JSON.parse(result.text);
-            validator.validate(data.body, schema, function(err, valid) {
-              data.info = result;
-              delete data.result.text;
-              data.schema = schema;
-              console.log(err, valid);
-              data.validation = {
-                errors: err ? err : [],
-                valid: valid
-              };
-              cb(null, data);
-            })
+            console.log(result);
+            data.info = result;
+            try {
+              data.body = JSON.parse(result.text);
+
+              validator.validate(data.body, schema, function(err, valid) {
+
+                delete data.result.text;
+                data.schema = schema;
+                console.log(err, valid);
+                data.validation = {
+                  errors: err ? err : [],
+                  valid: valid
+                };
+                cb(null, data);
+              })
+            } catch (err) {
+              cb(err, data);
+            }
           });
 
       }
