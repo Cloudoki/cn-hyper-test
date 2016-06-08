@@ -1,5 +1,177 @@
-{{#each result}}
+<head>
+	<style>
+
+		body {
+			font-size: 14px;
+			font-family: sans-serif;
+			height: 100%; 
+			margin: 0px; 
+			padding: 0px;
+			background-color: #eee;
+			color: #334354;
+			position: relative;
+			font-weight: 300;
+		}
+
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			font-size: 14px;
+			padding: 20px;
+			margin-bottom: 20px;
+		}
+
+		ul li {
+			padding: 5px 0px;
+		}
+
+		#report-table-container {
+    	background-color: #F7F7F7;
+	    width: 100%;
+	    height: 100%;
+		}
+
+		#report-table-container tr:not(:nth-child(2)) {
+			background-color: #fff;
+			height: 1%;
+		}
+
+		.report-table-header td {
+	    padding: 5px 15px;
+	    opacity: .9;
+	    white-space: nowrap;
+	    font-size: 14px;
+		}
+
+		.report-table-body td {
+	    padding: 5px 15px;
+    	opacity: .9;
+		}
+
+		.report-table-footer td {
+			padding: 5px 15px;
+			font-size: 12px;
+			opacity: .9;
+		}
+
+		.card {
+			background-color: #ffffff;
+			-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+		}
+
+		.valid {
+			color: #61BF60;
+		}
+
+		.invalid {
+			color: #E05252;
+		}
+
+		.light {
+			opacity: .7;
+		}
+
+		.large {
+			font-size: 16px;
+		}
+
+	</style>
+</head>
+
+<!-- {{#each result}}
 {{#each this}}
-Request Url: {{{result.req.url}}}
+<tr><td>
+Request Url: {{{result.req.url}}} wefwef
+</td></tr>
 {{/each}}
-{{/each}}
+{{/each}} -->
+
+<table id="report-table-container" cellspacing="10" cellpadding="0">
+
+	<tr class="report-table-header">
+		<td class="card" align="left" valign="top">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" id="report-header-container">
+				<tr><!-- HEADER // -->
+					<td>
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" id="">
+							<tr>
+								<td width="100%" align="left" class="-text">
+									Push details:
+								</td>
+								<td align="left" class="">
+									<strong>Date:</strong> 08/06/16 18:3718:00
+								</td>
+								<td align="left" class="">
+									<strong>Author:</strong> {{payload.pusher.name}}
+								</td>
+								<td align="left" class="">
+									<strong>Organization:</strong> {{payload.organization.login}}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4">Commits:</td>
+							</tr>
+							{{#payload.commits}}
+							<tr>
+								<td colspan="4"><a href="{{url}}" target="_blank">{{url}}</a><br>{{message}}</td>
+							</tr>
+							{{/payload.commits}}
+					</td>
+				</tr><!-- // END HEADER -->
+			</table>
+		</td>
+	</tr>
+
+	<tr class="report-table-body">
+		<td class="card" align="left" valign="top">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" id="email-container" class="panel half-size">
+				<tr><!-- BODY // -->
+					<td>
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" id="">
+							<tr>
+								<td align="left" class="">
+									Test Results:
+								</td>
+							</tr>
+							{{#result.[0]}}
+							<tr>
+								<td align="left" class="">
+									<strong>{{info.req.method}}</strong> - {{info.req.url}} - <strong class="{{#if validation.valid}}valid{{else}}invalid{{/if}}">{{#if validation.valid}}Valid Schema{{else}}Invalid Schema{{/if}}</strong>
+									<ul>
+										{{#if validation.errors}}<li><strong class="large">Errors:</strong></li>{{/if}}
+									{{#validation.errors}}
+										<li><i class="light">{{path}}</i><br><strong class="invalid">{{code}}</strong> - {{message}}</li>
+									{{/validation.errors}}
+									</ul>
+								</td>
+							</tr>
+							{{/result.[0]}}
+						</table>
+					</td>
+				</tr><!-- // END BODY -->
+			</table>
+		</td>
+	</tr>
+
+	<tr class="report-table-footer">
+		<td class="card" align="center" valign="top">
+
+			<table border="0" cellpadding="0" cellspacing="0" id="report-footer-container">
+				<tr><!-- FOOTER // -->
+					<td>
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" id="">
+							<tr>
+								<td align="center" class="-text">
+									This email was sent to you automatically from <a href="{{data.platform}}">platform.com</a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr><!-- // END FOOTER -->
+			</table>
+		</td>
+	</tr>
+
+</table>
