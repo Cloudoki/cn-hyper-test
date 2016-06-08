@@ -9,7 +9,7 @@ module.exports = {
   ],
   Branchs: [
     "master"
-  ]
+  ],
   Recipients:[
     "ricardo@cloudoki.com",
     "edgar@cloudoki.com",
