@@ -359,12 +359,11 @@ Test.prototype.run = function(callback) {
 
             var data = {}
             if (err) data.error = err.messsage
-
-            validator.validate(result.body, schema, function(err, valid) {
-              data.info = result
-              data.body = JSON.parse(result.text);
+            data.body = JSON.parse(result.text);
+            validator.validate(data.body, schema, function(err, valid) {
+              data.info = result;
               delete data.result.text;
-              data.schema = schema
+              data.schema = schema;
               console.log(err, valid);
               data.validation = {
                 errors: err ? err : [],
@@ -372,7 +371,6 @@ Test.prototype.run = function(callback) {
               };
               cb(null, data);
             })
-
           });
       },
       function(cb) {
@@ -400,12 +398,11 @@ Test.prototype.run = function(callback) {
 
             var data = {}
             if (err) data.error = err.messsage
-
-            validator.validate(result.body, schema, function(err, valid) {
-              data.info = result
-              data.body = JSON.parse(result.text);
+            data.body = JSON.parse(result.text);
+            validator.validate(data.body, schema, function(err, valid) {
+              data.info = result;
               delete data.result.text;
-              data.schema = schema
+              data.schema = schema;
               console.log(err, valid);
               data.validation = {
                 errors: err ? err : [],
@@ -425,10 +422,9 @@ Test.prototype.run = function(callback) {
 
             var data = {}
             if (err) data.error = err.messsage
-
-            validator.validate(result.body, schema, function(err, valid) {
+            data.body = JSON.parse(result.text);
+            validator.validate(data.body, schema, function(err, valid) {
               data.info = result;
-              data.body = JSON.parse(result.text);
               delete data.result.text;
               data.schema = schema;
               console.log(err, valid);
