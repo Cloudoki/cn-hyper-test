@@ -29,6 +29,7 @@
     "moment-timezone": "^0.5.4",
     "sendgrid": "^2.0.0",
     "supertest": "^1.2.0",
+    "sway": "^1.0.0",
     "z-schema": "^3.17.0"
   }
 }

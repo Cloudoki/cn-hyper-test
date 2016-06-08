@@ -1,0 +1,21 @@
+{
+  "ref": "refs/heads/master",
+  "repository": {
+    "url": "https://github.com/Moovly/moovly-api",
+    "name": "moovly-api",
+    "organization": "Moovly"
+  },
+  "commits": [{
+    "timestamp": "2016-06-08T10:41:58.000Z",
+    "message": "do not require payload",
+    "author": {
+      "username": "dimitrivh"
+    }
+  }],
+  "pusher": {
+    "name": "dimitrivh"
+  },
+  "organization": {
+    "login": "Moovly"
+  }
+}

@@ -1,0 +1,673 @@
+{
+    "Error": {
+        "type": "object",
+        "required": [
+            "message",
+            "code"
+        ],
+        "properties": {
+            "message": {
+                "type": "string"
+            },
+            "code": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 600
+            }
+        }
+    },
+
+    "Broadcast": {
+        "type": "object",
+        "required": [
+            "id",
+            "name",
+            "created_at"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "name": {
+                "type": "string"
+            },
+            "created_at": {
+                "type": "dateTime",
+                "format": "date-time"
+            }
+        },
+        "example": {
+            "id": "0",
+            "name": "a simple broadcast message",
+            "created_at": "1970-01-01 00:00:01"
+        }
+    },
+
+    "PlayerSize": {
+        "type": "object",
+        "required": [
+            "w",
+            "h"
+        ],
+        "properties": {
+            "w": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "h": {
+                "type": "integer",
+                "format": "int64"
+            }
+        }
+    },
+
+    "Date" : {
+        "type": "object",
+        "required": [
+            "date"
+        ],
+        "properties": {
+            "date": {
+                "type": "string",
+                "format": "date-time"
+            }
+        }
+    },
+
+    "User": {
+        "type": "object",
+        "required": [
+            "id",
+            "first_name",
+            "last_name"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "first_name": {
+                "type": "string"
+            },
+            "last_name": {
+                "type": "string"
+            }
+        }
+    },
+
+    "UserGallery": {
+        "type": "object",
+        "required": [
+            "id",
+            "firstname",
+            "name"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "firstname": {
+                "type": "string"
+            },
+            "name": {
+                "type": "string"
+            },
+            "email": {
+                "type": "string",
+                "format": "email"
+            }
+        }
+    },
+
+    "CartStatus": {
+        "type": "object",
+        "required": [
+            "credits",
+            "usd"
+        ],
+        "properties": {
+            "credits": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "usd": {
+                "type": "number",
+                "format": "float"
+            }
+        }
+
+    },
+
+    "CreditPackage": {
+        "type": "object",
+        "required": [
+            "id",
+            "name",
+            "credits",
+            "price"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "name": {
+                "type": "string"
+            },
+            "credits": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "price": {
+                "type": "number",
+                "format": "float"
+            },
+            "position": {
+                "type": "integer",
+                "format": "int64"
+            }
+        }
+    },
+
+    "CartItem": {
+        "type": "object",
+        "required" :[
+            "id",
+            "name",
+            "thumbnail",
+            "price",
+            "usd"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "name": {
+                "type": "string"
+            },
+            "thumbnail": {
+                "type": "string"
+            },
+            "price": {
+                "type": "number",
+                "format": "float"
+            },
+            "usd": {
+                "type": "number",
+                "format": "float"
+            }
+
+        }
+    },
+
+    "Cart": {
+        "type": "object",
+        "required" :[
+            "items",
+            "status",
+            "balance"
+        ],
+        "properties": {
+            "items": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/CartItem"
+                }
+            },
+            "status": {
+                    "$ref": "#/CartStatus"
+            },
+            "balance": {
+                "type": "integer",
+                "format": "int64"
+            }
+
+        }
+
+    },
+
+    "GallerySubmission": {
+        "type": "object",
+        "required": [
+            "id",
+            "project",
+            "created_at",
+            "updated_at",
+            "created_by"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "project": {
+                "$ref": "#/Project"
+            },
+            "created_at": {
+                "$ref": "#/Date"
+            },
+            "updated_at": {
+                "$ref": "#/Date"
+            },
+            "created_by": {
+                "$ref": "#/User"
+            }
+        }
+    },
+
+    "Gallery": {
+        "type": "object",
+        "required": [
+            "id",
+            "name",
+            "slug",
+            "body",
+            "created_at",
+            "updated_at",
+            "project_count"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "name": {
+                "type": "string"
+            },
+            "slug": {
+                "type": "string"
+            },
+            "body": {
+                "type": "string"
+            },
+            "created_at": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "updated_at": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "project_count": {
+                "type": "integer",
+                "format": "int64"
+            }
+        }
+    },
+
+    "Project": {
+        "type": "object",
+        "required": [
+            "id",
+            "name",
+            "keyname",
+            "description",
+            "thumb",
+            "created_at",
+            "updated_at",
+            "created_by"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "name": {
+                "type": "string"
+            },
+            "keyname": {
+                "type": "string"
+            },
+            "description": {
+                "type": "string"
+            },
+            "thumb": {
+                "type": "string"
+            },
+            "created_at": {
+                "$ref": "#/Date"
+            },
+            "updated_at": {
+                "$ref": "#/Date"
+            },
+            "created_by": {
+                "$ref": "#/User"
+            }
+        }
+    },
+
+    "ProjectPublished": {
+        "type": "object",
+        "required": [
+            "id",
+            "name",
+            "keyname",
+            "description",
+            "thumb"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "name": {
+                "type": "string"
+            },
+            "keyname": {
+                "type": "string"
+            },
+            "description": {
+                "type": "string"
+            },
+            "thumb": {
+                "type": "string"
+            }
+        }
+    },
+
+    "ProjectGallery": {
+        "type": "object",
+        "required": [
+            "id",
+            "sticky",
+            "name",
+            "keyname",
+            "description",
+            "thumb",
+            "updated_at",
+            "created_by"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "sticky": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "name": {
+                "type": "string"
+            },
+            "keyname": {
+                "type": "string"
+            },
+            "description": {
+                "type": "string"
+            },
+            "thumb": {
+                "type": "string"
+            },
+            "updated_at" : {
+                "type": "string",
+                "format": "date-time"
+            },
+            "created_by" : {
+                "type": "integer",
+                "format": "int64"
+            }
+        }
+    },
+
+    "GalleryProject": {
+        "type": "object",
+        "required": [
+            "id",
+            "name",
+            "slug",
+            "body",
+            "project_count",
+            "projects"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "name": {
+                "type": "string"
+            },
+            "slug": {
+                "type": "string"
+            },
+            "body": {
+                "type": "string"
+            },
+            "project_count": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "projects" : {
+                "$ref": "#/ProjectGallery"
+            }
+        }
+    },
+
+    "SimpleProject": {
+        "type": "object",
+        "required": [
+            "id",
+            "name",
+            "keyname",
+            "description",
+            "thumb"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "name": {
+                "type": "string"
+            },
+            "keyname": {
+                "type": "string"
+            },
+            "description": {
+                "type": "string"
+            },
+            "thumb": {
+                "type": "string"
+            }
+        }
+    },
+
+    "ProjectID": {
+        "type": "object",
+        "required": [
+            "id",
+            "keyname"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "keyname": {
+                "type": "string"
+            }
+        }
+    },
+
+    "ProjectView": {
+        "allOf": [
+            {
+                "$ref": "#/SimpleProject"
+            },
+            {
+                "type": "object",
+                "required": [
+                    "stage_height",
+                    "stage_width",
+                    "stage_mode",
+                    "created_at",
+                    "updated_at",
+                    "created_by",
+                    "url",
+                    "date_finished",
+                    "pr_id"
+                ],
+                "additionalProperties": {
+                    "playerSize": {
+                        "$ref": "#/PlayerSize"
+                    }
+                },
+                "properties": {
+                    "stage_height": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "stage_width": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "stage_mode": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "created_at": {
+                        "type": "dateTime",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "dateTime",
+                        "format": "date-time"
+                    },
+                    "created_by": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "date_finished": {
+                        "type": "dateTime",
+                        "format": "date-time"
+                    },
+                    "pr_id": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            }
+        ]
+    },
+
+    "LoginRule": {
+        "type": "object",
+        "required": [
+            "id",
+            "rule",
+            "label",
+            "type",
+            "default"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "rule": {
+                "type": "string"
+            },
+            "label": {
+                "type": "string"
+            },
+            "type": {
+                "type": "string"
+            },
+            "default": {
+                "type": "string"
+            },
+            "value": {
+                "type": "string"
+            }
+        }
+    },
+
+    "Preset": {
+        "type": "object",
+        "required": [
+            "id",
+            "preview",
+            "color",
+            "font_color",
+            "font_background_color"
+        ],
+        "properties": {
+            "id": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "preview": {
+                "type": "string"
+            },
+            "color": {
+                "type": "string"
+            },
+            "font_color": {
+                "type": "string"
+            },
+            "font_background_color": {
+                "type": "string"
+            }
+        }
+    },
+
+    "ProjectSettings": {
+        "type": "object",
+        "required": [
+            "showLogo",
+            "libraryCategoryId",
+            "isPersonalLibrary"
+        ],
+        "properties": {
+            "showLogo": {
+                "type": "boolean"
+            },
+            "libraryCategoryId": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "isPersonalLibrary": {
+                "type": "string"
+            }
+        }
+    },
+
+    "RenderStatus": {
+        "type": "object",
+        "required": [
+            "project",
+            "status",
+            "datetime"
+        ],
+        "properties": {
+            "project": {
+                "type": "string"
+            },
+            "status": {
+                "type": "string",
+                "enum": [
+                    "queued",
+                    "rendering",
+                    "completed"
+                ]
+            },
+            "datetime": {
+                "type": "dateTime",
+                "format": "date-time"
+            }
+        },
+        "example": {
+            "project": "xxxxxxxx-xxxx-xxxx",
+            "status": "queued",
+            "datetime": "1970-01-01 00:00:01"
+        }
+    }
+}

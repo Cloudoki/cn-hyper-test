@@ -2,7 +2,8 @@
 
 const hypert = require('../app'),
   conf = require('../conf/app'),
-  app = require('express')(),
+  express = require('express'),
+  app = express(),
   bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -23,13 +24,7 @@ app.post('/promise', function(req, res) {
 
 app.get('/test', function(req, res) {
 
-  hypert.addTest({
-    ref: req.query.ref || 'master',
-    repository: {
-      url: req.query.url || 'https://github.com/Cloudoki/cn-hyper-test',
-      name: req.query.name || 'cn-hyper-test'
-    }
-  }, function(err, result) {
+  hypert.addTest(require('../static/payload'), function(err, result) {
 
     if (err)
       return res.json({ ok: false, error: err });
@@ -38,10 +33,10 @@ app.get('/test', function(req, res) {
   });
 });
 
-app.get('/run', function(req, res) {
+app.post('/run', function(req, res) {
 
-  if (req.query.component) {
-    hypert.runTest(req.query.component, function(err, result) {
+  if (req.body.component) {
+    hypert.runTest(req.query.component, req.body.swagger, function(err, result) {
       if (err) return res.json({ ok: false });
       return res.json({ ok: true, result: result });
     })
@@ -64,6 +59,8 @@ app.get('/render', function(req, res) {
   const context = require('../views/context_example.json');
   res.end(template(context));
 });
+
+app.use('/', express.static('static'));
 
 app.listen(conf.web.port, function() {
   console.log('Hyper test listening on port', conf.web.port);
