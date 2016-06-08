@@ -36,7 +36,7 @@
 		}
 
 		a:hover {
-			color: #858D96;
+			color: #337ab7;
 		}
 
 		#report-table-container {
@@ -94,6 +94,18 @@
 	    background-color: #E05252;
 		}
 
+		.info {
+			color: #5bc0de;
+		}
+
+		.warning {
+			color: #f0ad4e;
+		}
+
+		.primary {
+			color: #337ab7;
+		}
+
 		.light {
 			opacity: .7;
 		}
@@ -128,7 +140,7 @@
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" id="">
 							<tr>
 								<td width="100%" align="left" class="">
-									<strong>Push details:</strong>
+									<strong class="info">Push details:</strong>
 								</td>
 							</tr>
 
@@ -143,13 +155,15 @@
 							</tr>
 
 							<tr>
-								<td><strong>Commits:</strong></td>
+								<td>
+									<strong class="info">Commits:</strong>
+								</td>
 							</tr>
 							<tr>
 								<td class="header">
 									<ul class="commits">
 									{{#payload.commits}}
-										<li><a href="{{url}}" target="_blank">{{author.username}} - {{message}} - {{moment timestamp format="DD/MM/YY HH:mm:ss"}}</a></li>
+										<li><a href="{{url}}" title="{{url}}" target="_blank">{{author.username}} - {{message}} - {{moment timestamp format="DD/MM/YY HH:mm:ss"}}</a></li>
 									{{/payload.commits}}
 									</ul>
 								</td>
@@ -169,18 +183,18 @@
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="test-results">
 							<tr>
 								<td align="left" class="">
-									<strong>Test Results:</strong>
+									<strong class="info">Test Results:</strong>
 								</td>
 							</tr>
 							{{#result.[0]}}
 							<tr>
 								<td align="left" class="">
-									<strong>{{info.req.method}}</strong> - {{info.req.url}} - <strong class="status {{#if validation.valid}}valid{{else}}invalid{{/if}}">{{#if validation.valid}}Valid Schema{{else}}Invalid Schema{{/if}}</strong>
+									<strong class="warning">{{info.req.method}}</strong> - {{info.req.url}} - <strong class="status {{#if validation.valid}}valid{{else}}invalid{{/if}}">{{#if validation.valid}}Valid Schema{{else}}Invalid Schema{{/if}}</strong>
 									<ul>
 										{{#if validation.errors}}<li><strong class="large">Errors:</strong></li>{{/if}}
-									{{#validation.errors}}
-										<li><i class="light">{{path}}</i><br><strong class="status invalid">{{code}}</strong> - {{message}}</li>
-									{{/validation.errors}}
+										{{#validation.errors}}
+											<li><i class="light primary">{{path}}</i><br><strong class="status invalid">{{code}}</strong> - {{message}}</li>
+										{{/validation.errors}}
 									</ul>
 								</td>
 							</tr>
