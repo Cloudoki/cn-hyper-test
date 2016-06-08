@@ -26,6 +26,15 @@
 			padding: 5px 0px;
 		}
 
+		a {
+			color: #334354;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: #858D96;
+		}
+
 		#report-table-container {
     	background-color: #F7F7F7;
 	    width: 100%;
@@ -77,6 +86,10 @@
 			font-size: 16px;
 		}
 
+		.commits {
+			padding: 0 20px;
+		}
+
 	</style>
 </head>
 
@@ -113,11 +126,16 @@ Request Url: {{{result.req.url}}} wefwef
 							<tr>
 								<td colspan="4">Commits:</td>
 							</tr>
-							{{#payload.commits}}
 							<tr>
-								<td colspan="4"><a href="{{url}}" target="_blank">{{url}}</a><br>{{message}}</td>
+								<td colspan="4">
+									<ul class="commits">
+									{{#payload.commits}}
+										<li><a href="{{url}}" target="_blank">{{author.username}} - {{message}} - {{moment timestamp format="DD/MM/YY HH:mm:ss"}}</a></li>
+									{{/payload.commits}}
+									</ul>
+								</td>
 							</tr>
-							{{/payload.commits}}
+						</table>
 					</td>
 				</tr><!-- // END HEADER -->
 			</table>
