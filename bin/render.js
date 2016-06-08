@@ -2,7 +2,7 @@ const handlebars = require('handlebars');
 
 var app = require('express')(),
   const htmlToText = require('html-to-text');
-const helperMomentTimezone = require('./helper-moment-timezone')();
+const helperMomentTimezone = require('../lib/helper-moment-timezone')();
 const juice = require('juice');
 handlebars.registerHelper('moment', helperMomentTimezone.moment);
 handlebars.registerHelper('duration', helperMomentTimezone.duration);
