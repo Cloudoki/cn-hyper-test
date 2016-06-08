@@ -366,7 +366,7 @@ Test.prototype.run = function(callback) {
 
               validator.validate(data.body, schema, function(err, valid) {
 
-                delete data.result.text;
+                // delete data.result.text;
                 data.schema = schema;
                 console.log(err, valid);
                 data.validation = {
@@ -412,7 +412,7 @@ Test.prototype.run = function(callback) {
 
               validator.validate(data.body, schema, function(err, valid) {
 
-                delete data.result.text;
+                //delete data.result.text;
                 data.schema = schema;
                 console.log(err, valid);
                 data.validation = {
@@ -443,7 +443,7 @@ Test.prototype.run = function(callback) {
 
               validator.validate(data.body, schema, function(err, valid) {
 
-                delete data.result.text;
+                //delete data.result.text;
                 data.schema = schema;
                 console.log(err, valid);
                 data.validation = {
