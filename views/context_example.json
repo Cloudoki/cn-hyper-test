@@ -198,5 +198,592 @@
       "/var/www/workers/hyper/cn-hyper-test/conf/tests/cn-hyper-test/test_ping.js"
     ]
   },
-  "result": []
+  "result": [
+    [{
+      "info": {
+        "req": {
+          "method": "GET",
+          "url": "https://api.moovly.com/gallery/"
+        },
+        "header": {
+          "date": "Wed, 08 Jun 2016 10:15:00 GMT",
+          "server": "Apache/2.2.22 (Debian)",
+          "cache-control": "no-cache",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS",
+          "access-control-allow-headers": "Origin, Content-Type, Accept, Authorization, X-Request-With",
+          "content-length": "1009",
+          "connection": "close",
+          "content-type": "application/json"
+        },
+        "status": 200,
+        "text": "{\"galleries\":[{\"id\":\"1\",\"name\":\"Demo Gallery\",\"slug\":\"demo-gallery\",\"body\":\"This Demo Gallery contains examples of Moovs created with Moovly in different styles and with either standard or custom libraries. Of most of these Moovs, we can make the source available to you within Moovly. So if you want to check out what these Moovs look like under the hood or if you\\\\u0027d like to use them as a template for your own videos, \\\\u003Ca href=\\\\u0022https:\\\\/\\\\/www.moovly.com\\\\/adaptvideo\\\\u0022\\\\u003Elet us know\\\\u003C\\\\/a\\\\u003E.\",\"created_at\":\"2015-05-04 18:26:26\",\"updated_at\":\"2015-05-04 18:26:26\",\"project_count\":\"25\"},{\"id\":\"3\",\"name\":\"Staff Picks\",\"slug\":\"staff-picks\",\"body\":\"Examples of Moovly videos we like! All made by Moovly users...\",\"created_at\":\"2015-05-07 14:04:32\",\"updated_at\":\"2015-05-07 14:04:32\",\"project_count\":\"54\"},{\"id\":\"0\",\"name\":\"User Gallery\",\"slug\":\"user-gallery\",\"body\":\"User submitted Moovs\",\"created_at\":\"2016-06-08 12:14:59\",\"updated_at\":\"2016-06-08 12:14:59\",\"project_count\":\"31987\"}]}"
+      },
+      "body": {
+        "galleries": [{
+          "id": "1",
+          "name": "Demo Gallery",
+          "slug": "demo-gallery",
+          "body": "This Demo Gallery contains examples of Moovs created with Moovly in different styles and with either standard or custom libraries. Of most of these Moovs, we can make the source available to you within Moovly. So if you want to check out what these Moovs look like under the hood or if you'd like to use them as a template for your own videos, <a href=\"https://www.moovly.com/adaptvideo\">let us know</a>.",
+          "created_at": "2015-05-04 18:26:26",
+          "updated_at": "2015-05-04 18:26:26",
+          "project_count": "25"
+        }, {
+          "id": "3",
+          "name": "Staff Picks",
+          "slug": "staff-picks",
+          "body": "Examples of Moovly videos we like! All made by Moovly users...",
+          "created_at": "2015-05-07 14:04:32",
+          "updated_at": "2015-05-07 14:04:32",
+          "project_count": "54"
+        }, {
+          "id": "0",
+          "name": "User Gallery",
+          "slug": "user-gallery",
+          "body": "User submitted Moovs",
+          "created_at": "2016-06-08 12:14:59",
+          "updated_at": "2016-06-08 12:14:59",
+          "project_count": "31987"
+        }]
+      },
+      "schema": {
+        "type": "object",
+        "title": "GalleryCollection",
+        "required": ["galleries"],
+        "properties": {
+          "galleries": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "name", "slug", "body", "created_at", "updated_at", "project_count"],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "project_count": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        }
+      },
+      "validation": {
+        "errors": [{
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/galleries/2/project_count"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2016-06-08 12:14:59"],
+          "message": "Object didn't pass validation for format date-time: 2016-06-08 12:14:59",
+          "path": "#/galleries/2/updated_at"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2016-06-08 12:14:59"],
+          "message": "Object didn't pass validation for format date-time: 2016-06-08 12:14:59",
+          "path": "#/galleries/2/created_at"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/galleries/2/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/galleries/1/project_count"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2015-05-07 14:04:32"],
+          "message": "Object didn't pass validation for format date-time: 2015-05-07 14:04:32",
+          "path": "#/galleries/1/updated_at"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2015-05-07 14:04:32"],
+          "message": "Object didn't pass validation for format date-time: 2015-05-07 14:04:32",
+          "path": "#/galleries/1/created_at"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/galleries/1/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/galleries/0/project_count"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2015-05-04 18:26:26"],
+          "message": "Object didn't pass validation for format date-time: 2015-05-04 18:26:26",
+          "path": "#/galleries/0/updated_at"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2015-05-04 18:26:26"],
+          "message": "Object didn't pass validation for format date-time: 2015-05-04 18:26:26",
+          "path": "#/galleries/0/created_at"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/galleries/0/id"
+        }],
+        "valid": false
+      }
+    }, {
+      "info": {
+        "req": {
+          "method": "GET",
+          "url": "https://api.moovly.com/gallery/user/48137"
+        },
+        "header": {
+          "date": "Wed, 08 Jun 2016 10:15:00 GMT",
+          "server": "Apache/2.2.22 (Debian)",
+          "cache-control": "no-cache",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS",
+          "access-control-allow-headers": "Origin, Content-Type, Accept, Authorization, X-Request-With",
+          "content-length": "1802",
+          "connection": "close",
+          "content-type": "application/json"
+        },
+        "status": 200,
+        "text": "{\"user\":{\"id\":\"48137\",\"firstname\":\"Kaat\",\"name\":\"Van de Vijver\"},\"published\":[{\"id\":\"1996045\",\"name\":\"Test video maintenance test\",\"keyname\":\"175fd50c-6057-b959\",\"description\":null,\"thumb\":\"https:\\\\/\\\\/www.moovly.com\\\\/upload\\\\/projectthumb\\\\/20\\\\/74\\\\/20749a8ea264e7988890d7bfb1bb6a00.png\"},{\"id\":\"1953773\",\"name\":\"Progress bar\",\"keyname\":\"b03ea104-d984-42bf\",\"description\":null,\"thumb\":\"https:\\\\/\\\\/www.moovly.com\\\\/upload\\\\/projectthumb\\\\/8a\\\\/bd\\\\/8abd1176e7c5ef946fd4fb075d4f22ab.png\"},{\"id\":\"2008819\",\"name\":\"benefit deduct [Copy]\",\"keyname\":\"0c62baad-8f39-4e03\",\"description\":null,\"thumb\":\"https:\\\\/\\\\/www.moovly.com\\\\/upload\\\\/projectthumb\\\\/e0\\\\/b5\\\\/e0b5379242cbab11ca67fb54f2e783e8.png\"},{\"id\":\"1421705\",\"name\":\"season\\\\u0027s Greetings Template 9 [Copy]\",\"keyname\":\"3139955e-db9b-88e9\",\"description\":\"Frozen\",\"thumb\":\"https:\\\\/\\\\/www.moovly.com\\\\/upload\\\\/projectthumb\\\\/3f\\\\/07\\\\/3f076620da8e5d54fcf3f81ba6d93188.png\"},{\"id\":\"449271\",\"name\":\"What are Chords?\",\"keyname\":\"b03ea104-66e0-4e4f\",\"description\":\"In this new editable video we give you an overview of what a musical chord is, how such a chord is represented and what the most common types of chords are. Enjoy!\",\"thumb\":\"https:\\\\/\\\\/www.moovly.com\\\\/upload\\\\/projectthumb\\\\/dc\\\\/43\\\\/dc43041da3df99a0b2c8ff25360e7e5c.png\"},{\"id\":\"415975\",\"name\":\"The Alphabet Library\",\"keyname\":\"b03ea104-21b9-8ea4\",\"description\":\"The Moovly Marketplace has been updated with a new Library! Find out how you can spice up your whiteboard (or blackboard) videos with these new objects.\",\"thumb\":\"https:\\\\/\\\\/www.moovly.com\\\\/upload\\\\/projectthumb\\\\/ae\\\\/18\\\\/ae186e85b86b70dbc9f88f9f6270a9bb.png\"},{\"id\":\"118077\",\"name\":\"New Extended Libraries\",\"keyname\":\"51531db3-fda5-2e5b\",\"description\":null,\"thumb\":\"https:\\\\/\\\\/www.moovly.com\\\\/upload\\\\/projectthumb\\\\/185816b6d8dc9bf4a4da0ae67c1cc015.png\"}]}"
+      },
+      "body": {
+        "user": {
+          "id": "48137",
+          "firstname": "Kaat",
+          "name": "Van de Vijver"
+        },
+        "published": [{
+          "id": "1996045",
+          "name": "Test video maintenance test",
+          "keyname": "175fd50c-6057-b959",
+          "description": null,
+          "thumb": "https://www.moovly.com/upload/projectthumb/20/74/20749a8ea264e7988890d7bfb1bb6a00.png"
+        }, {
+          "id": "1953773",
+          "name": "Progress bar",
+          "keyname": "b03ea104-d984-42bf",
+          "description": null,
+          "thumb": "https://www.moovly.com/upload/projectthumb/8a/bd/8abd1176e7c5ef946fd4fb075d4f22ab.png"
+        }, {
+          "id": "2008819",
+          "name": "benefit deduct [Copy]",
+          "keyname": "0c62baad-8f39-4e03",
+          "description": null,
+          "thumb": "https://www.moovly.com/upload/projectthumb/e0/b5/e0b5379242cbab11ca67fb54f2e783e8.png"
+        }, {
+          "id": "1421705",
+          "name": "season's Greetings Template 9 [Copy]",
+          "keyname": "3139955e-db9b-88e9",
+          "description": "Frozen",
+          "thumb": "https://www.moovly.com/upload/projectthumb/3f/07/3f076620da8e5d54fcf3f81ba6d93188.png"
+        }, {
+          "id": "449271",
+          "name": "What are Chords?",
+          "keyname": "b03ea104-66e0-4e4f",
+          "description": "In this new editable video we give you an overview of what a musical chord is, how such a chord is represented and what the most common types of chords are. Enjoy!",
+          "thumb": "https://www.moovly.com/upload/projectthumb/dc/43/dc43041da3df99a0b2c8ff25360e7e5c.png"
+        }, {
+          "id": "415975",
+          "name": "The Alphabet Library",
+          "keyname": "b03ea104-21b9-8ea4",
+          "description": "The Moovly Marketplace has been updated with a new Library! Find out how you can spice up your whiteboard (or blackboard) videos with these new objects.",
+          "thumb": "https://www.moovly.com/upload/projectthumb/ae/18/ae186e85b86b70dbc9f88f9f6270a9bb.png"
+        }, {
+          "id": "118077",
+          "name": "New Extended Libraries",
+          "keyname": "51531db3-fda5-2e5b",
+          "description": null,
+          "thumb": "https://www.moovly.com/upload/projectthumb/185816b6d8dc9bf4a4da0ae67c1cc015.png"
+        }]
+      },
+      "schema": {
+        "type": "object",
+        "title": "UserGallery",
+        "required": ["user", "published"],
+        "properties": {
+          "user": {
+            "type": "object",
+            "required": ["id", "firstname", "name"],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "firstname": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              }
+            }
+          },
+          "published": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "name", "keyname", "description", "thumb"],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "keyname": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "thumb": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "validation": {
+        "errors": [{
+          "code": "INVALID_TYPE",
+          "params": ["string", "null"],
+          "message": "Expected type string but found type null",
+          "path": "#/published/6/description"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/published/6/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/published/5/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/published/4/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/published/3/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["string", "null"],
+          "message": "Expected type string but found type null",
+          "path": "#/published/2/description"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/published/2/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["string", "null"],
+          "message": "Expected type string but found type null",
+          "path": "#/published/1/description"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/published/1/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["string", "null"],
+          "message": "Expected type string but found type null",
+          "path": "#/published/0/description"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/published/0/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/user/id"
+        }],
+        "valid": false
+      }
+    }, {
+      "info": {
+        "req": {
+          "method": "GET",
+          "url": "https://api.moovly.com/gallery/demo-gallery?max=5&first=1"
+        },
+        "header": {
+          "date": "Wed, 08 Jun 2016 10:15:00 GMT",
+          "server": "Apache/2.2.22 (Debian)",
+          "cache-control": "no-cache",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS",
+          "access-control-allow-headers": "Origin, Content-Type, Accept, Authorization, X-Request-With",
+          "content-length": "4284",
+          "connection": "close",
+          "content-type": "application/json"
+        },
+        "status": 200,
+        "text": "{\"id\":\"1\",\"name\":\"Demo Gallery\",\"slug\":\"demo-gallery\",\"body\":\"This Demo Gallery contains examples of Moovs created with Moovly in different styles and with either standard or custom libraries. Of most of these Moovs, we can make the source available to you within Moovly. So if you want to check out what these Moovs look like under the hood or if you\\\\u0027d like to use them as a template for your own videos, \\\\u003Ca href=\\\\u0022https:\\\\/\\\\/www.moovly.com\\\\/adaptvideo\\\\u0022\\\\u003Elet us know\\\\u003C\\\\/a\\\\u003E.\",\"project_count\":\"25\",\"projects\":[{\"id\":\"79808\",\"sticky\":\"1\",\"name\":\"What is a vector?\",\"description\":\"This video explains what a vector is, what its application areas are and how you can add two vectors.\\\\r\\\\n\\\\r\\\\nFeel free to use, embed or even adapt this video to your own needs. For example: you can add a new voice-over that suits your audience better, translate the video or modify its content. \\\\r\\\\n\\\\r\\\\nIf you\\\\u2019d like to use this video as a template for your own videos, we can share the source code of the video with you. Just follow these steps to request an editable copy of the video: https:\\\\/\\\\/www.moovly.com\\\\/adaptvideo\",\"keyname\":\"51531db3-6b9e-0132\",\"thumb\":\"af\\\\/7f\\\\/af7fd4e5f5358eeaf76203c2b6feae7d.png\",\"updated_at\":\"2016-05-03 09:51:17\",\"created_by\":\"763\"},{\"id\":\"1569049\",\"sticky\":\"1\",\"name\":\"What is the Zika Virus?\",\"description\":\"The Zika virus is all over the news, but what is the Zika virus and how can you explain this in an easy and clear way? We created a short explainer video to give you a head start. The video covers the basics about the Zika virus: what it is, when it was first discovered, its causes, symptoms, consequences and the precautions we should take. Use or edit this video for free: get in touch to receive an editable copy of the video: https:\\\\/\\\\/www.moovly.com\\\\/contact\",\"keyname\":\"b03ea104-1952-c841\",\"thumb\":\"11\\\\/f5\\\\/11f5359a6b592232c9f992158605bb1a.png\",\"updated_at\":\"2016-04-19 14:28:12\",\"created_by\":\"763\"},{\"id\":\"260580\",\"sticky\":\"1\",\"name\":\"What is Ebola?\",\"description\":\"Since its outbreak in West Africa, thousands of people have died from Ebola. But what exactly is Ebola?  This video explains what causes Ebola, what the symptoms are and how to deal with it.\\\\r\\\\n\\\\r\\\\nFeel free to use, embed or even adapt this video to your own needs. For example: you can add a new voice-over that suits your audience better, translate the video or modify its content. \\\\r\\\\n\\\\r\\\\nIf you\\\\u2019d like to use this video as a template for your own videos, we can share the source code of the video with you. Just follow these steps to request an editable copy of the video: https:\\\\/\\\\/moovly.com\\\\/adaptvideo\",\"keyname\":\"51531db3-d3b9-0bea\",\"thumb\":\"96\\\\/ff\\\\/96ffef52c910a1a12de029eb5c8bd4d9.png\",\"updated_at\":\"2016-04-19 14:23:53\",\"created_by\":\"763\"},{\"id\":\"230071\",\"sticky\":\"1\",\"name\":\"What is ALS\\\\/MND?\",\"description\":\"Everybody knows about the Ice Bucket Challenge. But what do you know about the disease behind this challenge, known as ALS or MND? Watch this video to learn about it.\\\\r\\\\n\\\\r\\\\nFeel free to use, embed or even adapt this video to your own needs. For example: you can add a new voice-over that suits your audience better, translate the video or modify its content. \\\\r\\\\n\\\\r\\\\nIf you\\\\u2019d like to use this video as a template for your own videos, we can share the source code of the video with you. Just follow these steps to request an editable copy of the video: https:\\\\/\\\\/moovly.com\\\\/adaptvideo\",\"keyname\":\"d5f6f60a-9787-0244\",\"thumb\":\"c0\\\\/b4\\\\/c0b411f51a8224858f3c50dea1d135ec.png\",\"updated_at\":\"2016-04-19 14:17:47\",\"created_by\":\"763\"},{\"id\":\"193905\",\"sticky\":\"1\",\"name\":\"Happy Easter!\",\"description\":\"The Moovly Team wishes you and your family a Happy Easter!\\\\r\\\\n\\\\r\\\\nFeel free to use, embed or even adapt this video to your own needs. For example: you can add a new voice-over that suits your audience better, translate the video or modify its content. \\\\r\\\\n\\\\r\\\\nIf you\\\\u2019d like to use this video as a template for your own videos, we can share the source code of the video with you. Just follow these steps to request an editable copy of the video: https:\\\\/\\\\/moovly.com\\\\/adaptvideo\",\"keyname\":\"51531db3-c05b-d1dd\",\"thumb\":\"77\\\\/eb\\\\/77eb9daba3fc14a7e0e6eb5283da44f0.png\",\"updated_at\":\"2016-04-19 14:11:38\",\"created_by\":\"763\"}]}"
+      },
+      "body": {
+        "id": "1",
+        "name": "Demo Gallery",
+        "slug": "demo-gallery",
+        "body": "This Demo Gallery contains examples of Moovs created with Moovly in different styles and with either standard or custom libraries. Of most of these Moovs, we can make the source available to you within Moovly. So if you want to check out what these Moovs look like under the hood or if you'd like to use them as a template for your own videos, <a href=\"https://www.moovly.com/adaptvideo\">let us know</a>.",
+        "project_count": "25",
+        "projects": [{
+          "id": "79808",
+          "sticky": "1",
+          "name": "What is a vector?",
+          "description": "This video explains what a vector is, what its application areas are and how you can add two vectors.\\r\\n\\r\\nFeel free to use, embed or even adapt this video to your own needs. For example: you can add a new voice-over that suits your audience better, translate the video or modify its content. \\r\\n\\r\\nIf you’d like to use this video as a template for your own videos, we can share the source code of the video with you. Just follow these steps to request an editable copy of the video: https://www.moovly.com/adaptvideo",
+          "keyname": "51531db3-6b9e-0132",
+          "thumb": "af/7f/af7fd4e5f5358eeaf76203c2b6feae7d.png",
+          "updated_at": "2016-05-03 09:51:17",
+          "created_by": "763"
+        }, {
+          "id": "1569049",
+          "sticky": "1",
+          "name": "What is the Zika Virus?",
+          "description": "The Zika virus is all over the news, but what is the Zika virus and how can you explain this in an easy and clear way? We created a short explainer video to give you a head start. The video covers the basics about the Zika virus: what it is, when it was first discovered, its causes, symptoms, consequences and the precautions we should take. Use or edit this video for free: get in touch to receive an editable copy of the video: https://www.moovly.com/contact",
+          "keyname": "b03ea104-1952-c841",
+          "thumb": "11/f5/11f5359a6b592232c9f992158605bb1a.png",
+          "updated_at": "2016-04-19 14:28:12",
+          "created_by": "763"
+        }, {
+          "id": "260580",
+          "sticky": "1",
+          "name": "What is Ebola?",
+          "description": "Since its outbreak in West Africa, thousands of people have died from Ebola. But what exactly is Ebola?  This video explains what causes Ebola, what the symptoms are and how to deal with it.\\r\\n\\r\\nFeel free to use, embed or even adapt this video to your own needs. For example: you can add a new voice-over that suits your audience better, translate the video or modify its content. \\r\\n\\r\\nIf you’d like to use this video as a template for your own videos, we can share the source code of the video with you. Just follow these steps to request an editable copy of the video: https://moovly.com/adaptvideo",
+          "keyname": "51531db3-d3b9-0bea",
+          "thumb": "96/ff/96ffef52c910a1a12de029eb5c8bd4d9.png",
+          "updated_at": "2016-04-19 14:23:53",
+          "created_by": "763"
+        }, {
+          "id": "230071",
+          "sticky": "1",
+          "name": "What is ALS/MND?",
+          "description": "Everybody knows about the Ice Bucket Challenge. But what do you know about the disease behind this challenge, known as ALS or MND? Watch this video to learn about it.\\r\\n\\r\\nFeel free to use, embed or even adapt this video to your own needs. For example: you can add a new voice-over that suits your audience better, translate the video or modify its content. \\r\\n\\r\\nIf you’d like to use this video as a template for your own videos, we can share the source code of the video with you. Just follow these steps to request an editable copy of the video: https://moovly.com/adaptvideo",
+          "keyname": "d5f6f60a-9787-0244",
+          "thumb": "c0/b4/c0b411f51a8224858f3c50dea1d135ec.png",
+          "updated_at": "2016-04-19 14:17:47",
+          "created_by": "763"
+        }, {
+          "id": "193905",
+          "sticky": "1",
+          "name": "Happy Easter!",
+          "description": "The Moovly Team wishes you and your family a Happy Easter!\\r\\n\\r\\nFeel free to use, embed or even adapt this video to your own needs. For example: you can add a new voice-over that suits your audience better, translate the video or modify its content. \\r\\n\\r\\nIf you’d like to use this video as a template for your own videos, we can share the source code of the video with you. Just follow these steps to request an editable copy of the video: https://moovly.com/adaptvideo",
+          "keyname": "51531db3-c05b-d1dd",
+          "thumb": "77/eb/77eb9daba3fc14a7e0e6eb5283da44f0.png",
+          "updated_at": "2016-04-19 14:11:38",
+          "created_by": "763"
+        }]
+      },
+      "schema": {
+        "type": "object",
+        "required": ["id", "name", "slug", "body", "project_count", "projects"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "project_count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "sticky", "name", "keyname", "description", "thumb", "updated_at", "created_by"],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "sticky": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "keyname": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "thumb": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "created_by": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        }
+      },
+      "validation": {
+        "errors": [{
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/4/created_by"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2016-04-19 14:11:38"],
+          "message": "Object didn't pass validation for format date-time: 2016-04-19 14:11:38",
+          "path": "#/projects/4/updated_at"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/4/sticky"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/4/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/3/created_by"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2016-04-19 14:17:47"],
+          "message": "Object didn't pass validation for format date-time: 2016-04-19 14:17:47",
+          "path": "#/projects/3/updated_at"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/3/sticky"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/3/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/2/created_by"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2016-04-19 14:23:53"],
+          "message": "Object didn't pass validation for format date-time: 2016-04-19 14:23:53",
+          "path": "#/projects/2/updated_at"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/2/sticky"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/2/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/1/created_by"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2016-04-19 14:28:12"],
+          "message": "Object didn't pass validation for format date-time: 2016-04-19 14:28:12",
+          "path": "#/projects/1/updated_at"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/1/sticky"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/1/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/0/created_by"
+        }, {
+          "code": "INVALID_FORMAT",
+          "params": ["date-time", "2016-05-03 09:51:17"],
+          "message": "Object didn't pass validation for format date-time: 2016-05-03 09:51:17",
+          "path": "#/projects/0/updated_at"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/0/sticky"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/projects/0/id"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/project_count"
+        }, {
+          "code": "INVALID_TYPE",
+          "params": ["integer", "string"],
+          "message": "Expected type integer but found type string",
+          "path": "#/id"
+        }],
+        "valid": false
+      }
+    }]
+  ]
 }
