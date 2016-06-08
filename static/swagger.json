@@ -974,32 +974,32 @@
                   "published": {
                     "type": "array",
                     "items": {
-                        "type": "object",
-                        "required": [
-                            "id",
-                            "name",
-                            "keyname",
-                            "description",
-                            "thumb"
-                        ],
-                        "properties": {
-                            "id": {
-                                "type": "integer",
-                                "format": "int64"
-                            },
-                            "name": {
-                                "type": "string"
-                            },
-                            "keyname": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "thumb": {
-                                "type": "string"
-                            }
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name",
+                        "keyname",
+                        "description",
+                        "thumb"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "keyname": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "thumb": {
+                          "type": "string"
                         }
+                      }
                     }
                   }
                 }
@@ -1036,47 +1036,47 @@
                   "gallery": {
                     "type": "array",
                     "items": {
-                        "type": "object",
-                        "required": [
-                            "id",
-                            "sticky",
-                            "name",
-                            "keyname",
-                            "description",
-                            "thumb",
-                            "updated_at",
-                            "created_by"
-                        ],
-                        "properties": {
-                            "id": {
-                                "type": "integer",
-                                "format": "int64"
-                            },
-                            "sticky": {
-                                "type": "integer",
-                                "format": "int64"
-                            },
-                            "name": {
-                                "type": "string"
-                            },
-                            "keyname": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "thumb": {
-                                "type": "string"
-                            },
-                            "updated_at" : {
-                                "type": "string",
-                                "format": "date-time"
-                            },
-                            "created_by" : {
-                                "type": "integer",
-                                "format": "int64"
-                            }
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "sticky",
+                        "name",
+                        "keyname",
+                        "description",
+                        "thumb",
+                        "updated_at",
+                        "created_by"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "sticky": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "keyname": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "thumb": {
+                          "type": "string"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "created_by": {
+                          "type": "integer",
+                          "format": "int64"
                         }
+                      }
                     }
                   }
                 }
@@ -2744,3 +2744,4 @@
       }
     }
   }
+}
