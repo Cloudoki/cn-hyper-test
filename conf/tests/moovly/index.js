@@ -16,7 +16,8 @@ module.exports = {
     "edgar@cloudoki.com",
     "catia@cloudoki.com",
     "nuno@cloudoki.com",
-    "koen@cloudoki.com"
+    "koen@cloudoki.com",
+    "development@moovly.com"
   ],
   Poll:[
     __dirname+"/test.js"
