@@ -1,5 +1,228 @@
-{{#each result}}
-{{#each this}}
-Request Url: {{{result.req.url}}}
-{{/each}}
-{{/each}}
+<head>
+	<style>
+
+		* {
+			line-height: 1.5;
+		}
+
+		body {
+			font-size: 14px;
+			font-family: sans-serif;
+			height: 100%; 
+			margin: 0px; 
+			padding: 0px;
+			background-color: #eee;
+			color: #334354;
+			position: relative;
+			font-weight: 300;
+		}
+
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			font-size: 14px;
+			padding: 20px;
+			margin-bottom: 20px;
+		}
+
+		ul li {
+			padding-bottom: 15px;
+		}
+
+		a {
+			color: #334354;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: #337ab7;
+		}
+
+		#report-table-container {
+    	background-color: #F7F7F7;
+	    width: 100%;
+	    height: 100%;
+		}
+
+		#report-table-container tr:not(:nth-child(2)) {
+			background-color: #fff;
+			height: 1%;
+		}
+
+		.report-table-header td {
+	    padding: 5px 15px;
+	    opacity: .9;
+	    white-space: nowrap;
+	    font-size: 14px;
+		}
+
+		.report-table-body td {
+	    padding: 5px 15px;
+    	opacity: .9;
+		}
+
+		.report-table-body .test-results tr:not(:first-child) > td {
+			border-top: 1px solid #EFEFEF;
+    	padding-top: 30px;
+		}
+
+		.report-table-footer td {
+			padding: 5px 15px;
+			font-size: 12px;
+			opacity: .9;
+		}
+
+		.card {
+			background-color: #ffffff;
+			-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+		}
+
+		.status {
+			padding: 3px 15px;
+			color: #fff;
+	    font-size: 10px;
+	    text-transform: uppercase;
+		}
+
+		.valid {
+			background-color: #61BF60;
+		}
+
+		.invalid {
+	    background-color: #E05252;
+		}
+
+		.info {
+			color: #5bc0de;
+		}
+
+		.warning {
+			color: #f0ad4e;
+		}
+
+		.primary {
+			color: #337ab7;
+		}
+
+		.light {
+			opacity: .7;
+		}
+
+		.large {
+			font-size: 16px;
+		}
+
+		.commits {
+			padding: 0 20px;
+		}
+
+		.m-20 {
+			margin: 20px;
+		}
+
+		.header {
+	    border-top: 1px solid #EFEFEF;
+    	padding-top: 15px !important;
+		}
+
+	</style>
+</head>
+
+<table id="report-table-container" cellspacing="20" cellpadding="0">
+
+	<tr class="report-table-header">
+		<td class="card" align="left" valign="top">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" id="report-header-container">
+				<tr><!-- HEADER // -->
+					<td>
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" id="">
+							<tr>
+								<td width="100%" align="left" class="">
+									<strong class="info">Push details:</strong>
+								</td>
+							</tr>
+
+							<tr>
+								<td class="header">
+									<ul class="commits">
+										<li><strong>Date:</strong> 08/06/16 18:3718:00</li>
+										<li><strong>Author:</strong> {{payload.pusher.name}}</li>
+										<li><strong>Organization:</strong> {{payload.organization.login}}</li>
+									</ul>
+								</td>
+							</tr>
+
+							<tr>
+								<td>
+									<strong class="info">Commits:</strong>
+								</td>
+							</tr>
+							<tr>
+								<td class="header">
+									<ul class="commits">
+									{{#payload.commits}}
+										<li><a href="{{url}}" title="{{url}}" target="_blank">{{author.username}} - {{message}} - {{moment timestamp format="DD/MM/YY HH:mm:ss"}}</a></li>
+									{{/payload.commits}}
+									</ul>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr><!-- // END HEADER -->
+			</table>
+		</td>
+	</tr>
+
+	<tr class="report-table-body">
+		<td class="card" align="left" valign="top">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" id="email-container" class="panel half-size">
+				<tr><!-- BODY // -->
+					<td>
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="test-results">
+							<tr>
+								<td align="left" class="">
+									<strong class="info">Test Results:</strong>
+								</td>
+							</tr>
+							{{#result.[0]}}
+							<tr>
+								<td align="left" class="">
+									<strong class="warning">{{info.req.method}}</strong> - {{info.req.url}} - <strong class="status {{#if validation.valid}}valid{{else}}invalid{{/if}}">{{#if validation.valid}}Valid Schema{{else}}Invalid Schema{{/if}}</strong>
+									<ul>
+										{{#if validation.errors}}<li><strong class="large">Errors:</strong></li>{{/if}}
+										{{#validation.errors}}
+											<li><i class="light primary">{{path}}</i><br><strong class="status invalid">{{code}}</strong> - {{message}}</li>
+										{{/validation.errors}}
+									</ul>
+								</td>
+							</tr>
+							{{/result.[0]}}
+						</table>
+					</td>
+				</tr><!-- // END BODY -->
+			</table>
+		</td>
+	</tr>
+
+	<tr class="report-table-footer">
+		<td class="card" align="center" valign="top">
+
+			<table border="0" cellpadding="0" cellspacing="0" id="report-footer-container">
+				<tr><!-- FOOTER // -->
+					<td>
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" id="">
+							<tr>
+								<td align="center" class="-text">
+									This email was sent to you automatically from <a href="{{data.platform}}">platform.com</a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr><!-- // END FOOTER -->
+			</table>
+		</td>
+	</tr>
+
+</table>

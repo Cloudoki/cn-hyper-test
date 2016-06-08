@@ -34,6 +34,60 @@
       "modified": [
         "conf/tests/cn-hyper-test/index.js"
       ]
+    },
+    {
+      "id": "4bb1b2d59a19ecf3319fa99fcd552f276e69b59e",
+      "tree_id": "72d5417d328d5255bb6f2b1f5acf1025198e19a4",
+      "distinct": true,
+      "message": "fix bug",
+      "timestamp": "2016-06-08T10:31:15+01:00",
+      "url": "https://github.com/Cloudoki/cn-hyper-test/commit/4bb1b2d59a19ecf3319fa99fcd552f276e69b59e",
+      "author": {
+        "name": "Edgar Ribeiro",
+        "email": "edgar.marques.ribeiro@gmail.com",
+        "username": "efmr"
+      },
+      "committer": {
+        "name": "Edgar Ribeiro",
+        "email": "edgar.marques.ribeiro@gmail.com",
+        "username": "efmr"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "conf/tests/cn-hyper-test/index.js"
+      ]
+    },
+    {
+      "id": "4bb1b2d59a19ecf3319fa99fcd552f276e69b59e",
+      "tree_id": "72d5417d328d5255bb6f2b1f5acf1025198e19a4",
+      "distinct": true,
+      "message": "fix bug",
+      "timestamp": "2016-06-08T10:31:15+01:00",
+      "url": "https://github.com/Cloudoki/cn-hyper-test/commit/4bb1b2d59a19ecf3319fa99fcd552f276e69b59e",
+      "author": {
+        "name": "Edgar Ribeiro",
+        "email": "edgar.marques.ribeiro@gmail.com",
+        "username": "efmr"
+      },
+      "committer": {
+        "name": "Edgar Ribeiro",
+        "email": "edgar.marques.ribeiro@gmail.com",
+        "username": "efmr"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "conf/tests/cn-hyper-test/index.js"
+      ]
     }],
     "head_commit": {
       "id": "4bb1b2d59a19ecf3319fa99fcd552f276e69b59e",
@@ -671,118 +725,8 @@
         }
       },
       "validation": {
-        "errors": [{
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/4/created_by"
-        }, {
-          "code": "INVALID_FORMAT",
-          "params": ["date-time", "2016-04-19 14:11:38"],
-          "message": "Object didn't pass validation for format date-time: 2016-04-19 14:11:38",
-          "path": "#/projects/4/updated_at"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/4/sticky"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/4/id"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/3/created_by"
-        }, {
-          "code": "INVALID_FORMAT",
-          "params": ["date-time", "2016-04-19 14:17:47"],
-          "message": "Object didn't pass validation for format date-time: 2016-04-19 14:17:47",
-          "path": "#/projects/3/updated_at"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/3/sticky"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/3/id"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/2/created_by"
-        }, {
-          "code": "INVALID_FORMAT",
-          "params": ["date-time", "2016-04-19 14:23:53"],
-          "message": "Object didn't pass validation for format date-time: 2016-04-19 14:23:53",
-          "path": "#/projects/2/updated_at"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/2/sticky"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/2/id"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/1/created_by"
-        }, {
-          "code": "INVALID_FORMAT",
-          "params": ["date-time", "2016-04-19 14:28:12"],
-          "message": "Object didn't pass validation for format date-time: 2016-04-19 14:28:12",
-          "path": "#/projects/1/updated_at"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/1/sticky"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/1/id"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/0/created_by"
-        }, {
-          "code": "INVALID_FORMAT",
-          "params": ["date-time", "2016-05-03 09:51:17"],
-          "message": "Object didn't pass validation for format date-time: 2016-05-03 09:51:17",
-          "path": "#/projects/0/updated_at"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/0/sticky"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/projects/0/id"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/project_count"
-        }, {
-          "code": "INVALID_TYPE",
-          "params": ["integer", "string"],
-          "message": "Expected type integer but found type string",
-          "path": "#/id"
-        }],
-        "valid": false
+        "errors": [],
+        "valid": true
       }
     }]
   ]
