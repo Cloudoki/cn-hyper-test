@@ -351,7 +351,7 @@ Test.prototype.run = function(swaggerUrl, callback) {
                   valid) {
 
                   // delete data.result.text;
-                  data.schema = schema;
+                  data.schema = definition.schema;
                   console.log(err, valid);
                   data.validation = {
                     errors: err ? err : [],
@@ -400,7 +400,7 @@ Test.prototype.run = function(swaggerUrl, callback) {
                   valid) {
 
                   //delete data.result.text;
-                  data.schema = schema;
+                  data.schema = defition.schema;
                   console.log(err, valid);
                   data.validation = {
                     errors: err ? err : [],
@@ -435,7 +435,7 @@ Test.prototype.run = function(swaggerUrl, callback) {
                   valid) {
 
                   //delete data.result.text;
-                  data.schema = schema;
+                  data.schema = definition.schema;
                   console.log(err, valid);
                   data.validation = {
                     errors: err ? err : [],
