@@ -400,7 +400,7 @@ Test.prototype.run = function(swaggerUrl, callback) {
                   valid) {
 
                   //delete data.result.text;
-                  data.schema = defition.schema;
+                  data.schema = definition.schema;
                   console.log(err, valid);
                   data.validation = {
                     errors: err ? err : [],
