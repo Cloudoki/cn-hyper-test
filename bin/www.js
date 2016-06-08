@@ -38,7 +38,7 @@ app.post('/run', function(req, res) {
   if (req.body.component) {
     hypert.runTest(req.body.component, req.body.swagger, function(err, result) {
       if (err) return res.json({ ok: false, error: err.message });
-      return res.json({ ok: true, result: result });
+      return res.json({ ok: true });
     })
   } else res.json({ ok: false })
 
