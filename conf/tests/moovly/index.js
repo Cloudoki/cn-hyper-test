@@ -14,7 +14,8 @@ module.exports = {
   Recipients:[
     "ricardo@cloudoki.com",
     "edgar@cloudoki.com",
-    "catia@cloudoki.com"
+    "catia@cloudoki.com",
+    "nuno@cloudoki.com"
   ],
   Poll:[
     __dirname+"/test.js"

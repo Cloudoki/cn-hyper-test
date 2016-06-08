@@ -361,15 +361,13 @@ Test.prototype.run = function(callback) {
             if (err) data.error = err.messsage
 
             validator.validate(result.body, schema, function(err, valid) {
-              data.result = result
+              data.info = result
               data.body = JSON.parse(result.text);
               delete data.result.text;
-              data.commit = that.payload
-              data.config = that.serverData
               data.schema = schema
               console.log(err, valid);
               data.validation = {
-                err: err ? err : 'noerror',
+                errors: err ? err : [],
                 valid: valid
               };
               cb(null, data);
@@ -404,15 +402,13 @@ Test.prototype.run = function(callback) {
             if (err) data.error = err.messsage
 
             validator.validate(result.body, schema, function(err, valid) {
-              data.result = result
+              data.info = result
               data.body = JSON.parse(result.text);
               delete data.result.text;
-              data.commit = that.payload
-              data.config = that.serverData
               data.schema = schema
               console.log(err, valid);
               data.validation = {
-                err: err ? err : 'noerror',
+                errors: err ? err : [],
                 valid: valid
               };
               cb(null, data);
@@ -431,15 +427,13 @@ Test.prototype.run = function(callback) {
             if (err) data.error = err.messsage
 
             validator.validate(result.body, schema, function(err, valid) {
-              data.result = result
+              data.info = result;
               data.body = JSON.parse(result.text);
               delete data.result.text;
-              data.commit = that.payload
-              data.config = that.serverData
+              data.schema = schema;
               console.log(err, valid);
-              data.schema = schema
               data.validation = {
-                err: err ? err : 'noerror',
+                errors: err ? err : [],
                 valid: valid
               };
               cb(null, data);

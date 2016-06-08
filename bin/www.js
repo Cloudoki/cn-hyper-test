@@ -59,7 +59,7 @@ app.get('/ping', function(req, res) {
 const handlebars = require('handlebars');
 
 app.get('/render', function(req, res) {
-  const source = require('fs').readFileSync(require('path').join(__dirname, '../views/mail.text.hbs'), 'utf8');
+  const source = require('fs').readFileSync(require('path').join(__dirname, '../views/mail.hbs'), 'utf8');
   const template = handlebars.compile(source);
   const context = require('../views/context_example.json');
   res.end(template(context));

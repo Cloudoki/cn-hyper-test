@@ -7,9 +7,14 @@ module.exports = {
   Repos: [
     "https://github.com/Cloudoki/cn-hyper-test"
   ],
+  Branchs: [
+    "master"
+  ]
   Recipients:[
     "ricardo@cloudoki.com",
-    "edgar@cloudoki.com"
+    "edgar@cloudoki.com",
+    "catia@cloudoki.com",
+    "nuno@cloudoki.com"
   ],
   Poll:[
     __dirname+"/test_ping.js"
