@@ -10,7 +10,7 @@ exports.addTest = function(payload, callback){
   return callback(new Error("Invalid Git payload"));
 }
 
-exports.runTest = function(component, callback){
+exports.runTest = function(component, swaggerUrl, callback){
 
-  return tester.run(component, callback);
+  return tester.run(component, swaggerUrl, callback);
 }
