@@ -314,7 +314,9 @@ Test.prototype.run = function(swaggerUrl, callback) {
   sway.create({
     definition: schemaSource
   }).then(function(api) {
+
     console.log(api);
+
     async.parallel([
         function(cb) {
           /*
@@ -389,9 +391,8 @@ Test.prototype.run = function(swaggerUrl, callback) {
 
               var data = {}
               if (err) data.error = err.messsage
-              console.log(result);
               data.info = result;
-              var op = api.getOperation('/gallery', 'get');
+              var op = api.getOperation('/gallery/user/{id}', 'get');
               var definition = op.getResponse(200).definitionFullyResolved;
               try {
                 data.body = JSON.parse(result.text);
@@ -399,7 +400,7 @@ Test.prototype.run = function(swaggerUrl, callback) {
                 validator.validate(data.body, definition.schema, function(err,
                   valid) {
 
-                  //delete data.result.text;
+                  // delete data.result.text;
                   data.schema = definition.schema;
                   console.log(err, valid);
                   data.validation = {
@@ -423,12 +424,11 @@ Test.prototype.run = function(swaggerUrl, callback) {
 
               var data = {}
               if (err) data.error = err.messsage
-              console.log(result);
               data.info = result;
               try {
                 data.body = JSON.parse(result.text);
 
-                var op = api.getOperation('/gallery', 'get');
+                var op = api.getOperation('/gallery/{slug}', 'get');
                 var definition = op.getResponse(200).definitionFullyResolved;
 
                 validator.validate(data.body, definition.schema, function(err,
