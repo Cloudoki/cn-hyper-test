@@ -1,6 +1,6 @@
-"use strict"
+'use strict';
 
-var supertest = require("supertest");
+var supertest = require('supertest');
 var async = require('async');
 var ZSchema = require('z-schema');
 var validator = new ZSchema({
@@ -16,279 +16,283 @@ var sway = require('sway');
 // TODO: serve schema
 // fake payload
 
+/*
 var date = {
-  "type": "object",
-  "required": [
-    "date",
-    "timezone_type",
-    "timezone"
+  'type': 'object',
+  'required': [
+    'date',
+    'timezone_type',
+    'timezone'
   ],
-  "properties": {
-    "date": {
-      "type": "string",
-      "format": "date-time"
+  'properties': {
+    'date': {
+      'type': 'string',
+      'format': 'date-time'
     },
-    "timezone_type": {
-      "type": "integer"
+    'timezone_type': {
+      'type': 'integer'
     },
-    "timezone": {
-      "type": "string"
+    'timezone': {
+      'type': 'string'
     }
   },
-  "example": {
-    "date": "1970-01-01 00:00:01.000000",
-    "timezone_type": 3,
-    "timezone": "UTC"
+  'example': {
+    'date': '1970-01-01 00:00:01.000000',
+    'timezone_type': 3,
+    'timezone': 'UTC'
   }
 };
 var User = {
-  "type": "object",
-  "required": [
-    "id",
-    "first_name",
-    "last_name"
+  'type': 'object',
+  'required': [
+    'id',
+    'first_name',
+    'last_name'
   ],
-  "properties": {
-    "id": {
-      "type": "integer",
-      "format": "int64"
+  'properties': {
+    'id': {
+      'type': 'integer',
+      'format': 'int64'
     },
-    "first_name": {
-      "type": "string"
+    'first_name': {
+      'type': 'string'
     },
-    "last_name": {
-      "type": "string"
+    'last_name': {
+      'type': 'string'
     },
-    "email": {
-      "type": "string",
-      "format": "email"
+    'email': {
+      'type': 'string',
+      'format': 'email'
     }
   }
 };
+
 var Project = {
-  "type": "object",
-  "required": [
-    "id",
-    "name",
-    "keyname",
-    "description",
-    "thumb",
-    "created_at",
-    "updated_at",
-    "created_by"
+  'type': 'object',
+  'required': [
+    'id',
+    'name',
+    'keyname',
+    'description',
+    'thumb',
+    'created_at',
+    'updated_at',
+    'created_by'
   ],
-  "properties": {
-    "id": {
-      "type": "integer",
-      "format": "int64"
+  'properties': {
+    'id': {
+      'type': 'integer',
+      'format': 'int64'
     },
-    "name": {
-      "type": "string"
+    'name': {
+      'type': 'string'
     },
-    "keyname": {
-      "type": "string"
+    'keyname': {
+      'type': 'string'
     },
-    "description": {
-      "type": "string"
+    'description': {
+      'type': 'string'
     },
-    "thumb": {
-      "type": "string"
+    'thumb': {
+      'type': 'string'
     },
-    "created_at": date,
-    "updated_at": date,
-    "created_by": User
+    'created_at': date,
+    'updated_at': date,
+    'created_by': User
   }
 };
+
 var GallerySubmission = {
-  "type": "object",
-  "required": [
-    "id",
-    "project",
-    "created_at",
-    "updated_at",
-    "created_by"
+  'type': 'object',
+  'required': [
+    'id',
+    'project',
+    'created_at',
+    'updated_at',
+    'created_by'
   ],
-  "properties": {
-    "id": {
-      "type": "integer",
-      "format": "int64"
+  'properties': {
+    'id': {
+      'type': 'integer',
+      'format': 'int64'
     },
-    "project": Project,
-    "created_at": date,
-    "updated_at": date,
-    "created_by": User
+    'project': Project,
+    'created_at': date,
+    'updated_at': date,
+    'created_by': User
   }
 };
+
 var Gallery = {
-  "type": "object",
-  "required": [
-    "id",
-    "name",
-    "slug",
-    "body",
-    "created_at",
-    "updated_at",
-    "project_count"
+  'type': 'object',
+  'required': [
+    'id',
+    'name',
+    'slug',
+    'body',
+    'created_at',
+    'updated_at',
+    'project_count'
   ],
-  "properties": {
-    "id": {
-      "type": "integer",
-      "format": "int64"
+  'properties': {
+    'id': {
+      'type': 'integer',
+      'format': 'int64'
     },
-    "name": {
-      "type": "string"
+    'name': {
+      'type': 'string'
     },
-    "slug": {
-      "type": "string"
+    'slug': {
+      'type': 'string'
     },
-    "body": {
-      "type": "string"
+    'body': {
+      'type': 'string'
     },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
+    'created_at': {
+      'type': 'string',
+      'format': 'date-time'
     },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time"
+    'updated_at': {
+      'type': 'string',
+      'format': 'date-time'
     },
-    "project_count": {
-      "type": "integer",
-      "format": "int64"
+    'project_count': {
+      'type': 'integer',
+      'format': 'int64'
     }
   }
 };
 var ProjectPublished = {
-  "type": "object",
-  "required": [
-    "id",
-    "name",
-    "keyname",
-    "description",
-    "thumb"
+  'type': 'object',
+  'required': [
+    'id',
+    'name',
+    'keyname',
+    'description',
+    'thumb'
   ],
-  "properties": {
-    "id": {
-      "type": "integer",
-      "format": "int64"
+  'properties': {
+    'id': {
+      'type': 'integer',
+      'format': 'int64'
     },
-    "name": {
-      "type": "string"
+    'name': {
+      'type': 'string'
     },
-    "keyname": {
-      "type": "string"
+    'keyname': {
+      'type': 'string'
     },
-    "description": {
-      "type": "string"
+    'description': {
+      'type': 'string'
     },
-    "thumb": {
-      "type": "string"
+    'thumb': {
+      'type': 'string'
     }
   }
 };
 var ProjectGallery = {
-  "type": "object",
-  "required": [
-    "id",
-    "sticky",
-    "name",
-    "keyname",
-    "description",
-    "thumb",
-    "updated_at",
-    "created_by"
+  'type': 'object',
+  'required': [
+    'id',
+    'sticky',
+    'name',
+    'keyname',
+    'description',
+    'thumb',
+    'updated_at',
+    'created_by'
   ],
-  "properties": {
-    "id": {
-      "type": "integer",
-      "format": "int64"
+  'properties': {
+    'id': {
+      'type': 'integer',
+      'format': 'int64'
     },
-    "sticky": {
-      "type": "integer",
-      "format": "int64"
+    'sticky': {
+      'type': 'integer',
+      'format': 'int64'
     },
-    "name": {
-      "type": "string"
+    'name': {
+      'type': 'string'
     },
-    "keyname": {
-      "type": "string"
+    'keyname': {
+      'type': 'string'
     },
-    "description": {
-      "type": "string"
+    'description': {
+      'type': 'string'
     },
-    "thumb": {
-      "type": "string"
+    'thumb': {
+      'type': 'string'
     },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time"
+    'updated_at': {
+      'type': 'string',
+      'format': 'date-time'
     },
-    "created_by": {
-      "type": "integer",
-      "format": "int64"
+    'created_by': {
+      'type': 'integer',
+      'format': 'int64'
     }
   }
 };
 
 var GalleryUser = {
-  "type": "object",
-  "required": [
-    "id",
-    "firstname",
-    "name"
+  'type': 'object',
+  'required': [
+    'id',
+    'firstname',
+    'name'
   ],
-  "properties": {
-    "id": {
-      "type": "integer",
-      "format": "int64"
+  'properties': {
+    'id': {
+      'type': 'integer',
+      'format': 'int64'
     },
-    "firstname": {
-      "type": "string"
+    'firstname': {
+      'type': 'string'
     },
-    "name": {
-      "type": "string"
+    'name': {
+      'type': 'string'
     },
-    "email": {
-      "type": "string",
-      "format": "email"
+    'email': {
+      'type': 'string',
+      'format': 'email'
     }
   }
 };
 var GalleryProject = {
-  "type": "object",
-  "required": [
-    "id",
-    "name",
-    "slug",
-    "body",
-    "project_count",
-    "projects"
+  'type': 'object',
+  'required': [
+    'id',
+    'name',
+    'slug',
+    'body',
+    'project_count',
+    'projects'
   ],
-  "properties": {
-    "id": {
-      "type": "integer",
-      "format": "int64"
+  'properties': {
+    'id': {
+      'type': 'integer',
+      'format': 'int64'
     },
-    "name": {
-      "type": "string"
+    'name': {
+      'type': 'string'
     },
-    "slug": {
-      "type": "string"
+    'slug': {
+      'type': 'string'
     },
-    "body": {
-      "type": "string"
+    'body': {
+      'type': 'string'
     },
-    "project_count": {
-      "type": "integer",
-      "format": "int64"
+    'project_count': {
+      'type': 'integer',
+      'format': 'int64'
     },
-    "projects": {
-      "type": "array",
-      "items": ProjectGallery
+    'projects': {
+      'type': 'array',
+      'items': ProjectGallery
     }
   }
 };
-
+*/
 function Test(payload, serverAddress, swaggerUrl) {
 
   console.log('payload', payload);
@@ -301,14 +305,16 @@ function Test(payload, serverAddress, swaggerUrl) {
 }
 
 Test.prototype.run = function(swaggerUrl, callback) {
-  if (typeof swaggerUrl === 'function') return this.run.call(this, null,
-    swaggerUrl)
+  if (typeof swaggerUrl === 'function') {
+    return this.run.call(this, null, swaggerUrl);
+  }
+
   var that = this;
 
   var schemaSource = this.swaggerUrl || swaggerUrl;
 
   if (!schemaSource) {
-    schemaSource = "http://localhost:8700/swagger.json";
+    schemaSource = 'http://localhost:8700/swagger.json';
   }
 
   sway.create({
@@ -318,38 +324,39 @@ Test.prototype.run = function(swaggerUrl, callback) {
     console.log(api);
 
     async.parallel([
-        function(cb) {
-          /*
-          var schema = {
-            "type": "object",
-            "title": "GalleryCollection",
-            "required": [
-              "galleries"
-            ],
-            "properties": {
-              "galleries": {
-                "type": "array",
-                "items": Gallery
-              }
+      function(cb) {
+        /*
+        var schema = {
+          'type': 'object',
+          'title': 'GalleryCollection',
+          'required': [
+            'galleries'
+          ],
+          'properties': {
+            'galleries': {
+              'type': 'array',
+              'items': Gallery
             }
-          };
-          */
+          }
+        };
+        */
 
-          that.server.get("/gallery/")
-            .expect("Content-type", /json/)
-            .expect(200)
-            .end(function(err, result) {
+        that.server.get('/gallery/')
+          .expect('Content-type', /json/)
+          .expect(200)
+          .end(function(err, result) {
 
-              var data = {}
-              if (err) data.error = err.messsage
-              data.info = result;
-              var op = api.getOperation('/gallery', 'get');
-              var definition = op.getResponse(200).definitionFullyResolved;
+            var data = {};
+            if (err) data.error = err.messsage;
+            data.info = result;
+            var op = api.getOperation('/gallery', 'get');
+            var definition = op.getResponse(200).definitionFullyResolved;
 
-              try {
-                data.body = JSON.parse(result.text);
+            try {
+              data.body = JSON.parse(result.text);
 
-                validator.validate(data.body, definition.schema, function(err,
+              validator.validate(data.body, definition.schema,
+                function(err,
                   valid) {
 
                   // delete data.result.text;
@@ -360,44 +367,45 @@ Test.prototype.run = function(swaggerUrl, callback) {
                     valid: valid
                   };
                   cb(null, data);
-                })
-              } catch (err) {
-                cb(err, data);
-              }
-            });
-        },
-        function(cb) {
-/*
+                });
+            } catch (err) {
+              cb(err, data);
+            }
+          });
+      },
+      function(cb) {
+        /*
           var schema = {
-            "type": "object",
-            "title": "UserGallery",
-            "required": [
-              "user",
-              "published"
+            'type': 'object',
+            'title': 'UserGallery',
+            'required': [
+              'user',
+              'published'
             ],
-            "properties": {
-              "user": GalleryUser,
-              "published": {
-                "type": "array",
-                "items": ProjectPublished
+            'properties': {
+              'user': GalleryUser,
+              'published': {
+                'type': 'array',
+                'items': ProjectPublished
               }
             }
           };
-*/
-          that.server.get("/gallery/user/48137")
-            .expect("Content-type", /json/)
-            .expect(200)
-            .end(function(err, result) {
+        */
+        that.server.get('/gallery/user/48137')
+          .expect('Content-type', /json/)
+          .expect(200)
+          .end(function(err, result) {
 
-              var data = {}
-              if (err) data.error = err.messsage
-              data.info = result;
-              var op = api.getOperation('/gallery/user/{id}', 'get');
-              var definition = op.getResponse(200).definitionFullyResolved;
-              try {
-                data.body = JSON.parse(result.text);
+            var data = {};
+            if (err) data.error = err.messsage;
+            data.info = result;
+            var op = api.getOperation('/gallery/user/{id}', 'get');
+            var definition = op.getResponse(200).definitionFullyResolved;
+            try {
+              data.body = JSON.parse(result.text);
 
-                validator.validate(data.body, definition.schema, function(err,
+              validator.validate(data.body, definition.schema,
+                function(err,
                   valid) {
 
                   // delete data.result.text;
@@ -408,32 +416,31 @@ Test.prototype.run = function(swaggerUrl, callback) {
                     valid: valid
                   };
                   cb(null, data);
-                })
-              } catch (err) {
-                cb(err, data);
-              }
-            });
-        },
-        function(cb) {
+                });
+            } catch (err) {
+              cb(err, data);
+            }
+          });
+      },
+      function(cb) {
 
-          //var schema = GalleryProject;
-          that.server.get("/gallery/demo-gallery?max=5&first=1")
-            .expect("Content-type", /json/)
-            .expect(200)
-            .end(function(err, result) {
+        //var schema = GalleryProject;
+        that.server.get('/gallery/demo-gallery?max=5&first=1')
+          .expect('Content-type', /json/)
+          .expect(200)
+          .end(function(err, result) {
 
-              var data = {}
-              if (err) data.error = err.messsage
-              data.info = result;
-              try {
-                data.body = JSON.parse(result.text);
+            var data = {};
+            if (err) data.error = err.messsage;
+            data.info = result;
+            try {
+              data.body = JSON.parse(result.text);
 
-                var op = api.getOperation('/gallery/{slug}', 'get');
-                var definition = op.getResponse(200).definitionFullyResolved;
+              var op = api.getOperation('/gallery/{slug}', 'get');
+              var definition = op.getResponse(200).definitionFullyResolved;
 
-                validator.validate(data.body, definition.schema, function(err,
-                  valid) {
-
+              validator.validate(data.body, definition.schema,
+                function(err, valid) {
                   //delete data.result.text;
                   data.schema = definition.schema;
                   console.log(err, valid);
@@ -442,16 +449,14 @@ Test.prototype.run = function(swaggerUrl, callback) {
                     valid: valid
                   };
                   cb(null, data);
-                })
-              } catch (err) {
-                cb(err, data);
-              }
-            });
+                });
+            } catch (err) {
+              cb(err, data);
+            }
+          });
 
-        }
-      ],
-      callback
-    );
+      }
+    ], callback);
   }).catch(callback);
 };
 

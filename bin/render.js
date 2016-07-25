@@ -1,13 +1,15 @@
-const handlebars = require('handlebars');
+const fs = require('fs');
+const path = require('path');
 
-const app = require('express')(),
-  htmlToText = require('html-to-text');
+const handlebars = require('handlebars');
+const app = require('express')();
+const htmlToText = require('html-to-text');
 const helperMomentTimezone = require('../lib/helper-moment-timezone')();
 const juice = require('juice');
+
 handlebars.registerHelper('moment', helperMomentTimezone.moment);
 handlebars.registerHelper('duration', helperMomentTimezone.duration);
-const fs = require('fs')
-const path = require('path')
+
 app.get('/render', function(req, res) {
   const source = fs.readFileSync(path.join(__dirname,
     '../views/mail.hbs'), 'utf8');
