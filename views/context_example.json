@@ -231,24 +231,24 @@
   },
   "timestamp": 1465378497520,
   "config": {
-    "Id": "cn-hyper-test",
-    "Name": "Cloudoki hyper test",
-    "Component": "Hyper test",
-    "Version": "Staging",
-    "Server": "http://hypertest.cloudoki.com",
-    "Repos": [
+    "id": "cn-hyper-test",
+    "name": "Cloudoki hyper test",
+    "component": "Hyper test",
+    "version": "Staging",
+    "server": "http://hypertest.cloudoki.com",
+    "repos": [
       "https://github.com/Cloudoki/cn-hyper-test"
     ],
-    "Branchs": [
+    "branchs": [
       "master"
     ],
-    "Recipients": [
+    "recipients": [
       "ricardo@cloudoki.com",
       "edgar@cloudoki.com",
       "catia@cloudoki.com",
       "nuno@cloudoki.com"
     ],
-    "Poll": [
+    "poll": [
       "/var/www/workers/hyper/cn-hyper-test/conf/tests/cn-hyper-test/test_ping.js"
     ]
   },

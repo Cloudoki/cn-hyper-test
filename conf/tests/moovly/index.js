@@ -1,25 +1,25 @@
 module.exports = {
-  Id: 'moovly',
-  Name: 'Moovly',
-  Component: 'Moovly',
-  Version: 'Production',
-  Server: 'https://api.moovly.com',
-  Repos: [
+  id: 'moovly-api',
+  name: 'Moovly',
+  component: 'Moovly API',
+  version: 'production',
+  server: 'https://api.moovly.com',
+  repos: [
     'https://github.com/Moovly/moovly-api',
     'https://github.com/Moovly/moovly-worker'
   ],
-  'Branchs': [
+  branchs: [
     'master'
   ],
-  Recipients: [
-    'ricardo@cloudoki.com',
-    'edgar@cloudoki.com',
-    'catia@cloudoki.com',
-    'nuno@cloudoki.com'
-    //    'koen@cloudoki.com',
-    //    'development@moovly.com'
+  recipients: [
+    // 'ricardo@cloudoki.com',
+    // 'catia@cloudoki.com',
+    // 'nuno@cloudoki.com',
+    // 'koen@cloudoki.com',
+    // 'development@moovly.com',
+    'edgar@cloudoki.com'
   ],
-  Poll: [
+  poll: [
     __dirname + '/test.js'
   ]
 };

@@ -1,22 +1,22 @@
 module.exports = {
-  Id: 'cn-hyper-test',
-  Name: 'Cloudoki hyper test',
-  Component: 'Hyper test',
-  Version: 'Staging',
-  Server: 'http://hypertest.cloudoki.com',
-  Repos: [
+  id: 'cn-hyper-test',
+  name: 'Cloudoki hyper test',
+  component: 'Hyper test',
+  version: 'Staging',
+  server: 'http://hypertest.cloudoki.com',
+  repos: [
     'https://github.com/Cloudoki/cn-hyper-test'
   ],
-  Branchs: [
+  branchs: [
     'master'
   ],
-  Recipients: [
-    'ricardo@cloudoki.com',
-    'edgar@cloudoki.com',
-    'catia@cloudoki.com',
-    'nuno@cloudoki.com'
+  recipients: [
+    // 'ricardo@cloudoki.com',
+    // 'catia@cloudoki.com',
+    // 'nuno@cloudoki.com',
+    'edgar@cloudoki.com'
   ],
-  Poll: [
+  poll: [
     __dirname + '/test_ping.js'
   ]
 };

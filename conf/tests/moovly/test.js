@@ -1,9 +1,9 @@
 'use strict';
 
-var supertest = require('supertest');
-var async = require('async');
-var ZSchema = require('z-schema');
-var validator = new ZSchema({
+const supertest = require('supertest');
+const async = require('async');
+const ZSchema = require('z-schema');
+const validator = new ZSchema({
   ignoreUnknownFormats: true,
   noTypeless: true,
   assumeAdditional: true,
@@ -11,13 +11,13 @@ var validator = new ZSchema({
   breakOnFirstError: false
 });
 
-var sway = require('sway');
+const sway = require('sway');
 
 // TODO: serve schema
 // fake payload
 
 /*
-var date = {
+const date = {
   'type': 'object',
   'required': [
     'date',
@@ -42,7 +42,7 @@ var date = {
     'timezone': 'UTC'
   }
 };
-var User = {
+const User = {
   'type': 'object',
   'required': [
     'id',
@@ -67,7 +67,7 @@ var User = {
   }
 };
 
-var Project = {
+const Project = {
   'type': 'object',
   'required': [
     'id',
@@ -102,7 +102,7 @@ var Project = {
   }
 };
 
-var GallerySubmission = {
+const GallerySubmission = {
   'type': 'object',
   'required': [
     'id',
@@ -123,7 +123,7 @@ var GallerySubmission = {
   }
 };
 
-var Gallery = {
+const Gallery = {
   'type': 'object',
   'required': [
     'id',
@@ -162,7 +162,7 @@ var Gallery = {
     }
   }
 };
-var ProjectPublished = {
+const ProjectPublished = {
   'type': 'object',
   'required': [
     'id',
@@ -190,7 +190,7 @@ var ProjectPublished = {
     }
   }
 };
-var ProjectGallery = {
+const ProjectGallery = {
   'type': 'object',
   'required': [
     'id',
@@ -234,7 +234,7 @@ var ProjectGallery = {
   }
 };
 
-var GalleryUser = {
+const GalleryUser = {
   'type': 'object',
   'required': [
     'id',
@@ -258,7 +258,7 @@ var GalleryUser = {
     }
   }
 };
-var GalleryProject = {
+const GalleryProject = {
   'type': 'object',
   'required': [
     'id',
@@ -293,15 +293,12 @@ var GalleryProject = {
   }
 };
 */
-function Test(payload, serverAddress, swaggerUrl) {
-
-  console.log('payload', payload);
-  console.log('server', serverAddress);
+function Test(payload, testModule, swaggerUrl) {
   this.name = payload.repository.name;
-  this.server = supertest.agent(serverAddress.Server);
-  this.swaggerUrl = swaggerUrl || undefined;
+  this.request = supertest.agent(testModule.server);
+  this.swaggerUrl = swaggerUrl;
   this.payload = payload;
-  this.serverData = serverAddress;
+  this.testModule = testModule;
 }
 
 Test.prototype.run = function(swaggerUrl, callback) {
@@ -309,24 +306,24 @@ Test.prototype.run = function(swaggerUrl, callback) {
     return this.run.call(this, null, swaggerUrl);
   }
 
-  var that = this;
+  const self = this;
 
-  var schemaSource = this.swaggerUrl || swaggerUrl;
+  const schemaSource = this.swaggerUrl || swaggerUrl;
 
   if (!schemaSource) {
-    schemaSource = 'http://localhost:8700/swagger.json';
+    throw new Error('missing swagger documentation');
   }
+
+  console.log('schemaSource', schemaSource);
 
   sway.create({
     definition: schemaSource
   }).then(function(api) {
-
-    console.log(api);
-
     async.parallel([
+      /*
       function(cb) {
         /*
-        var schema = {
+        const schema = {
           'type': 'object',
           'title': 'GalleryCollection',
           'required': [
@@ -340,17 +337,17 @@ Test.prototype.run = function(swaggerUrl, callback) {
           }
         };
         */
-
-        that.server.get('/gallery/')
+        /*
+        self.request.get('/gallery/')
           .expect('Content-type', /json/)
           .expect(200)
           .end(function(err, result) {
 
-            var data = {};
+            const data = {};
             if (err) data.error = err.messsage;
             data.info = result;
-            var op = api.getOperation('/gallery', 'get');
-            var definition = op.getResponse(200).definitionFullyResolved;
+            const op = api.getOperation('/gallery', 'get');
+            const definition = op.getResponse(200).definitionFullyResolved;
 
             try {
               data.body = JSON.parse(result.text);
@@ -372,10 +369,11 @@ Test.prototype.run = function(swaggerUrl, callback) {
               cb(err, data);
             }
           });
-      },
+      },*/
+      /*
       function(cb) {
         /*
-          var schema = {
+          const schema = {
             'type': 'object',
             'title': 'UserGallery',
             'required': [
@@ -391,16 +389,17 @@ Test.prototype.run = function(swaggerUrl, callback) {
             }
           };
         */
-        that.server.get('/gallery/user/48137')
+       /*
+        self.request.get('/gallery/user/48137')
           .expect('Content-type', /json/)
           .expect(200)
           .end(function(err, result) {
 
-            var data = {};
+            const data = {};
             if (err) data.error = err.messsage;
             data.info = result;
-            var op = api.getOperation('/gallery/user/{id}', 'get');
-            var definition = op.getResponse(200).definitionFullyResolved;
+            const op = api.getOperation('/gallery/user/{id}', 'get');
+            const definition = op.getResponse(200).definitionFullyResolved;
             try {
               data.body = JSON.parse(result.text);
 
@@ -421,38 +420,48 @@ Test.prototype.run = function(swaggerUrl, callback) {
               cb(err, data);
             }
           });
-      },
+      },*/
       function(cb) {
-
-        //var schema = GalleryProject;
-        that.server.get('/gallery/demo-gallery?max=5&first=1')
+        //const schema = GalleryProject;
+        self.request.get('/gallery/demo-gallery?max=5&first=1')
           .expect('Content-type', /json/)
           .expect(200)
           .end(function(err, result) {
 
-            var data = {};
+            const data = {};
             if (err) data.error = err.messsage;
             data.info = result;
+            data.api = api;
+
             try {
               data.body = JSON.parse(result.text);
-
-              var op = api.getOperation('/gallery/{slug}', 'get');
-              var definition = op.getResponse(200).definitionFullyResolved;
-
-              validator.validate(data.body, definition.schema,
-                function(err, valid) {
-                  //delete data.result.text;
-                  data.schema = definition.schema;
-                  console.log(err, valid);
-                  data.validation = {
-                    errors: err ? err : [],
-                    valid: valid
-                  };
-                  cb(null, data);
-                });
             } catch (err) {
+              err.message = 'Parse Error: ' + err.message;
               cb(err, data);
+              return;
             }
+
+            delete data.result.text;
+
+            try {
+              const op = api.getOperation('/gallery/{slug}', 'get');
+              const definition = op.getResponse(200).definitionFullyResolved;
+              data.schema = definition.schema;
+            } catch(err) {
+              err.message = 'Schema Definition Error: ' + err.message;
+              cb(err, data);
+              return;
+            }
+
+            validator.validate(data.body, data.schema,
+              function(err, valid) {
+                console.log(err, valid);
+                data.validation = {
+                  errors: err ? err : [],
+                  valid: valid
+                };
+                cb(null, data);
+              });
           });
 
       }

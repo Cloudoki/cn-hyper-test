@@ -1,16 +1,19 @@
-"use strict"
+'use strict';
 
 const tester = require('./lib/tester');
 
-exports.addTest = function(payload, callback){
+exports.init = cb => tester.loadTests(cb);
 
-  if( payload && payload.repository && payload.repository.url )
+exports.addTest = function(payload, callback) {
+
+  if (payload && payload.repository && payload.repository.url) {
     return tester.create(payload, callback);
+  }
 
-  return callback(new Error("Invalid Git payload"));
-}
+  return callback(new Error('Invalid Git payload'));
+};
 
-exports.runTest = function(component, swaggerUrl, callback){
+exports.runTest = function(component, swaggerUrl, callback) {
 
   return tester.run(component, swaggerUrl, callback);
-}
+};

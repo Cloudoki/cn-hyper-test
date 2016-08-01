@@ -2,7 +2,7 @@
   "name": "cn-hyper-test",
   "version": "0.0.21",
   "description": "Code Name Hyper, testing component",
-  "main": "bin/www.js",
+  "main": "app.js",
   "scripts": {
     "start": "node bin/www.js",
     "test": "rimraf coverage && NODE_ENV=test istanbul cover node_modules/.bin/_mocha -- --reporter spec test",

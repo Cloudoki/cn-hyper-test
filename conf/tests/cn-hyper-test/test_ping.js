@@ -1,32 +1,32 @@
-'use strict'
+'use strict';
 
 var supertest = require('supertest');
 
-function Test(payload, serverAddress) {
-
-  console.log('payload', payload);
-  console.log('server'.serverAddress);
-
+function Test(payload, testModule) {
   this.name = payload.repository.name;
-  this.server = supertest.agent(serverAddress.Server);
+  this.request = supertest.agent(testModule.server);
 
   this.payload = payload;
-  this.serverData = serverAddress;
+  this.testModule = testModule;
 }
 
 Test.prototype.run = function(callback) {
-  var that = this;
-  this.server.get('/ping')
+  this.request.get('/ping')
     .expect('Content-type', /json/)
     .expect(200)
-    .end(function(err, result) {
+    .end((err, result) => {
 
       var data = {};
       if (err) data.error = err.messsage;
 
-      data.result = result;
-      data.commit = that.payload;
-      data.config = that.serverData;
+      data.info = result;
+      data.body = JSON.parse(result.text);
+      data.config = this.testModule;
+      // data.schema
+      data.validation = {
+        errors: [],
+        valid: true
+      };
       callback(null, data);
     });
 };
