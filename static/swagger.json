@@ -1,2587 +1,2524 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "Moovly API",
-    "description": "A description of the _Moovly API_",
-    "version": "1.0",
-    "termsOfService": "http:/api.moovly.com/terms",
-    "contact": {
-      "name": "Moovly API Support",
-      "url": "http://api.moovly.com/support",
-      "email": "support@moovly.com"
-    }
-  },
-  "host": "api.moovly.dev",
-  "basePath": "/",
-  "schemes": [
-    "http"
-  ],
-  "tags": [{
-    "name": "Auth",
-    "description": "authentication related endpoints"
-  }, {
-    "name": "Broadcast",
-    "description": "Message and tips endpoints"
-  }, {
-    "name": "Cart",
-    "description": "Cart management operations"
-  }, {
-    "name": "Coupon",
-    "description": "Coupon management"
-  }, {
-    "name": "Credit",
-    "description": "Credit package descriptions"
-  }, {
-    "name": "Gallery",
-    "description": "Public gallery endpoints"
-  }, {
-    "name": "Group",
-    "description": "User Group related endpoints"
-  }, {
-    "name": "License",
-    "description": "License related endpoints"
-  }, {
-    "name": "Marketplace",
-    "description": "Marketplace objects and libraries"
-  }, {
-    "name": "Profile",
-    "description": "User profile operations"
-  }, {
-    "name": "Project",
-    "description": "Project related operations"
-  }, {
-    "name": "Render",
-    "description": "Rendering related endpoints"
-  }, {
-    "name": "User",
-    "description": "User verifications"
-  }, {
-    "name": "Notification",
-    "description": "User notification"
-  }],
-  "paths": {
-    "/user/password/recover": {
-      "post": {
-        "tags": ["User"],
-        "summary": "Request a password reset for User",
-        "description": "Request a password reset for User",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-          "name": "email",
-          "in": "formData",
-          "description": "email of the user",
-          "required": true,
-          "type": "string"
-        }],
-        "responses": {
-          "200": {
-            "description": "password reset email with token sent"
-          },
-          "404": {
-            "description": "User not found"
-          }
+    "swagger": "2.0",
+    "info": {
+        "title": "Moovly API",
+        "description" : "A description of the _Moovly API_",
+        "version": "1.0",
+        "termsOfService": "http:/api.moovly.com/terms",
+        "contact": {
+            "name": "Moovly API Support",
+            "url": "http://api.moovly.com/support",
+            "email": "support@moovly.com"
         }
-      }
     },
-    "/user/password/reset/{token}": {
-      "get": {
-        "tags": ["User"],
-        "summary": "set a password from link containing token",
-        "description": "Check if user email exists for sharing purposes.",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-          "name": "token",
-          "in": "path",
-          "description": "the token sent in email",
-          "required": true,
-          "type": "string"
-        }],
-        "responses": {
-          "200": {
-            "description": "User email and id"
-          },
-          "404": {
-            "description": "User not found"
-          }
+    "host": "api.moovly.dev",
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "authentication related endpoints"
+        },
+        {
+            "name": "Broadcast",
+            "description": "Message and tips endpoints"
+        },
+        {
+            "name": "Cart",
+            "description": "Cart management operations"
+        },
+        {
+            "name": "Coupon",
+            "description": "Coupon management"
+        },
+        {
+            "name": "Credit",
+            "description": "Credit package descriptions"
+        },
+        {
+            "name": "Gallery",
+            "description": "Public gallery endpoints"
+        },
+        {
+            "name": "Group",
+            "description": "User Group related endpoints"
+        },
+        {
+            "name": "Library",
+            "description": "Library related endpoints"
+        },
+        {
+            "name": "License",
+            "description": "License related endpoints"
+        },
+        {
+            "name": "Marketplace",
+            "description": "Marketplace objects and libraries"
+        },
+        {
+            "name": "Profile",
+            "description": "User profile operations"
+        },
+        {
+            "name": "Project",
+            "description": "Project related operations"
+        },
+        {
+            "name": "Render",
+            "description": "Rendering related endpoints"
+        },
+        {
+            "name": "User",
+            "description": "User verifications"
+        },
+        {
+            "name": "Notification",
+            "description": "User notification"
+        },
+        {
+            "name": "Country",
+            "description": "Country list"
+        },
+        {
+            "name": "Object",
+            "description": "User file object"
         }
-      },
-      "post": {
-        "tags": ["User"],
-        "summary": "set a password from link containing token",
-        "description": "Check if user email exists for sharing purposes.",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-            "name": "token",
-            "in": "path",
-            "description": "the token sent in email",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "password",
-            "in": "formData",
-            "description": "the new password",
-            "required": true,
-            "type": "string"
-          }
-
-        ],
-        "responses": {
-          "200": {
-            "description": "password reset to password"
-          },
-          "404": {
-            "description": "User not found"
-          },
-          "400": {
-            "description": "Password does not validate"
-          }
-        }
-      }
-    },
-    "/user/check": {
-      "get": {
-        "tags": ["User"],
-        "summary": "Check if user email exists",
-        "description": "Check if user email exists for sharing purposes.",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-          "$ref": "api/parameters.json#/emailParam"
-        }],
-        "responses": {
-          "200": {
-            "description": "User email and id",
-            "schema": {
-              "$ref": "./api/definitions.json#/User"
-            }
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
-      }
-    },
-
-    "/group/users/{user_id}": {
-      "put": {
-        "tags": ["Group"],
-        "summary": "Update user admin status",
-        "description": "Update user admin status",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-          "name": "user_id",
-          "in": "path",
-          "description": "id of the user",
-          "required": true,
-          "type": "string"
-        }, {
-          "name": "details",
-          "in": "body",
-          "description": "email of the user",
-          "required": true,
-          "type": "string"
-        }],
-        "responses": {
-          "200": {
-            "description": "User email and id",
-            "schema": {
-              "$ref": "./api/definitions.json#/User"
-            }
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
-      }
-    },
-    "/group/user/add": {
-      "post": {
-        "tags": ["Group"],
-        "summary": "Add user to group",
-        "description": "Add user to group",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-          "name": "email",
-          "in": "body",
-          "description": "email of the user",
-          "required": true,
-          "type": "string"
-        }],
-        "responses": {
-          "200": {
-            "description": "User email and id"
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
-      }
-    },
-    "/group/users": {
-      "get": {
-        "tags": ["Group"],
-        "summary": "Get user list",
-        "description": "Get user list",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-          "name": "page",
-          "in": "query",
-          "description": "page to display",
-          "required": false,
-          "type": "integer",
-          "default": 1
-        }, {
-          "name": "per_page",
-          "in": "query",
-          "description": "results per page",
-          "required": false,
-          "type": "integer",
-          "default": 10
-        }, {
-          "name": "search",
-          "in": "query",
-          "description": "search wildcard. will search by email, username, name or last name",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "sort",
-          "in": "query",
-          "description": "sort results by",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "order",
-          "in": "query",
-          "description": "order sort ascending or descending",
-          "required": false,
-          "type": "string",
-          "default": "asc"
-        }],
-        "responses": {
-          "200": {
-            "description": "returns paginable user list"
-          }
-        }
-      }
-    },
-    "/group/available/rules": {
-      "get": {
-        "tags": ["Group"],
-        "summary": "Get available login rules",
-        "description": "Get available login rules",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Login rules",
-            "schema": {
-              "type": "object",
-              "title": "LoginRules",
-              "required": [
-                "rules"
-              ],
-              "properties": {
-                "rules": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "api/definitions.json#/LoginRule"
-                  }
-                }
-
-              }
-            }
-          }
-        }
-      }
-    },
-    "/group/rules": {
-      "get": {
-        "tags": ["Group"],
-        "summary": "Get group login rules",
-        "description": "Get group login rules for this users' group or default rules if not a group member",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Group rules",
-            "schema": {
-              "type": "object",
-              "title": "GroupLoginRules",
-              "required": [
-                "id",
-                "name",
-                "rules"
-              ],
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "format": "int64"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "rules": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "api/definitions.json#/LoginRule"
-                  }
-                }
-
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": ["Group"],
-        "summary": "Set group login rules",
-        "description": "Set group login rules for this users' group if user is group admin",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [{
-          "name": "rules",
-          "in": "body",
-          "description": "Rules object",
-          "required": true,
-          "schema": {
-            "type": "object",
-            "title": "GroupLoginRules",
-            "required": [
-              "id",
-              "name",
-              "rules"
-            ],
-            "properties": {
-              "id": {
-                "type": "integer",
-                "format": "int64"
-              },
-              "name": {
-                "type": "string"
-              },
-              "rules": {
-                "type": "array",
-                "items": {
-                  "$ref": "api/definitions.json#/LoginRule"
-                }
-              }
-
-            }
-          }
-        }],
-        "responses": {
-          "200": {
-            "description": "Group rules",
-            "schema": {
-              "$ref": "./api/definitions.json#/LoginRule"
-            }
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
-      }
-    },
-
-    "/oauth2/authorize": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Display login form. Alias for /oauth2/login",
-        "description": "Display login form. Alias for /oauth2/login",
-        "produces": [
-          "text/html"
-        ],
-        "parameters": [{
-          "$ref": "api/parameters.json#/redirectUri"
-        }],
-        "responses": {
-          "200": {
-            "description": "Displays login form"
-          }
-        }
-      }
-    },
-    "/oauth2/logout": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Revokes user token",
-        "description": "Revokes user token",
-        "responses": {
-          "200": {
-            "description": "Revoke token, users gets logged out"
-          }
-        }
-      }
-    },
-    "/oauth2/login": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Display login form",
-        "description": "Display login form",
-        "produces": [
-          "text/html"
-        ],
-        "parameters": [{
-          "$ref": "api/parameters.json#/redirectUri"
-        }],
-        "responses": {
-          "200": {
-            "description": "Displays login form"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Auth"],
-        "summary": "Submit login form",
-        "description": "Submit login form",
-        "produces": [
-          "text/html"
-        ],
-        "parameters": [{
-          "$ref": "api/parameters.json#/redirectUri"
-        }, {
-          "name": "form[email]",
-          "in": "formData",
-          "description": "User email",
-          "required": true,
-          "type": "string"
-        }, {
-          "name": "form[password]",
-          "in": "formData",
-          "description": "User password",
-          "required": true,
-          "type": "string"
-        }, {
-          "name": "form[_token]",
-          "in": "formData",
-          "description": "CSRF Protection on a Form",
-          "required": true,
-          "type": "string"
-        }],
-        "responses": {
-          "200": {
-            "description": "Returns user token"
-          },
-          "403": {
-            "description": "Invalid credentials"
-          }
-        }
-      }
-    },
-    "/oauth2/sign-up/free": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Display sign-up form",
-        "description": "Display sign-up form, which enables the creation of new users on the application",
-        "produces": [
-          "text/html"
-        ],
-        "responses": {
-          "200": {
-            "description": "Displays sign-up form"
-          },
-          "404": {
-            "description": "Endpoint or page not found"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Auth"],
-        "summary": "Creates a new user",
-        "description": "Creates a new user, if this doesn't exist on the database. The user email must be unique in order to be considered a new user.",
-        "produces": [
-          "text/html"
-        ],
-        "parameters": [{
-          "name": "form[firstname]",
-          "in": "formData",
-          "description": "The users firstname",
-          "required": true,
-          "type": "string"
-        }, {
-          "name": "form[lastame]",
-          "in": "formData",
-          "description": "The users lastname",
-          "required": true,
-          "type": "string"
-        }, {
-          "name": "form[email]",
-          "in": "formData",
-          "description": "User email",
-          "required": true,
-          "type": "string"
-        }, {
-          "name": "form[password]",
-          "in": "formData",
-          "description": "User password",
-          "required": true,
-          "type": "string"
-        }, {
-          "name": "form[terms]",
-          "in": "formData",
-          "description": "The Privacy Statement and the Terms & Conditions.",
-          "required": true,
-          "type": "boolean"
-        }, {
-          "name": "form[newsletter]",
-          "in": "formData",
-          "description": "The subscription to the Moovly newsletter",
-          "required": false,
-          "type": "boolean"
-        }],
-        "responses": {
-          "200": {
-            "description": "Authenticates the user and redirects the user to his profile area"
-          },
-          "400": {
-            "description": "Couldn't register that email. An account with that address possibly already exists."
-          }
-        }
-      }
-    },
-    "/oauth2/login/facebook": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Login with facebook",
-        "description": "Loging with facebook the user is promped to give the app permissions to access certain facebook information. If the user accepts, then the login is established, otherwise the user will no logged in the application",
-        "produces": [
-          "text/html"
-        ],
-        "responses": {
-          "200": {
-            "description": "Authenticates the user and redirects the user to his profile area"
-          }
-        }
-      }
-    },
-    "/oauth2/login/google": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Login with Google +",
-        "description": "Loging with Google + the user is promped to give the app permissions to access certain Google + information. If the user accepts, then the login is established, otherwise the user will no logged in the application",
-        "produces": [
-          "text/html"
-        ],
-        "responses": {
-          "200": {
-            "description": "Authenticates the user and redirects the user to his profile area"
-          }
-        }
-      }
-    },
-
-    "/oauth2/disconnect/facebook": {
-      "get": {
-        "tags": ["Profile"],
-        "summary": "Disonnect facebook account",
-        "description": "Disconnects the user facebook account from the user profilet",
-        "produces": [
-          "text/html"
-        ],
-        "responses": {
-          "200": {
-            "description": "Disconnects the user facebook account from the user profile"
-          }
-        }
-      }
-    },
-    "/oauth2/connect/google": {
-      "get": {
-        "tags": ["Profile"],
-        "summary": "Connect Google+ account",
-        "description": "Connect Google+ account",
-        "produces": [
-          "text/html"
-        ],
-        "responses": {
-          "200": {
-            "description": "Authenticates the user and redirects the user to his profile area"
-          }
-        }
-      }
-    },
-    "/oauth2/disconnect/google": {
-      "get": {
-        "tags": ["Profile"],
-        "summary": "Connect Google+ account",
-        "description": "CDisconnects the user Google + account from the user profile",
-        "produces": [
-          "text/html"
-        ],
-        "responses": {
-          "200": {
-            "description": "Disconnects the user facebook account from the user profile"
-          }
-        }
-      }
-    },
-    "/profile/show": {
-      "get": {
-        "tags": ["Profile"],
-        "summary": "Get user profile details",
-        "description": "Get all details for the authenticated user",
-        "responses": {
-          "200": {
-            "description": "Shows all user data",
-            "schema": {
-              "$ref": "api/definitions.json#/User"
-            }
-          },
-          "403": {
-            "description": "Forbidden"
-          }
-        }
-      }
-    },
-    "/profile/my-transactions": {
-      "get": {
-        "tags": ["Profile"],
-        "summary": "Get all the user transactions",
-        "description": "Get all the user transactions",
-        "responses": {
-          "200": {
-            "description": "Profile response"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Profile not found"
-          },
-          "405": {
-            "description": "Method Not Allowed"
-          }
-        }
-      }
-    },
-    "/profile/personal-data": {
-      "post": {
-        "tags": ["Profile"],
-        "summary": "Updates the personal data of an user",
-        "description": "Updates the personal data of an user",
-        "parameters": [{
-          "name": "email",
-          "in": "formData",
-          "description": "the user email",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "firstname",
-          "in": "formData",
-          "description": "the user firstname",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "name",
-          "in": "formData",
-          "description": "the user lastname",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "age",
-          "in": "formData",
-          "description": "the user age (ex.: 26-30)",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "address",
-          "in": "formData",
-          "description": "the user address",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "zip",
-          "in": "formData",
-          "description": "the user zip code",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "country",
-          "in": "formData",
-          "description": "the user country",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "city",
-          "in": "formData",
-          "description": "the user city",
-          "required": false,
-          "type": "string"
-        }],
-        "responses": {
-          "201": {
-            "description": "Data changed"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/profile/professional-data": {
-      "post": {
-        "tags": ["Profile"],
-        "summary": "Updates the professional data of an user",
-        "description": "Updates the professional data of an user",
-        "parameters": [{
-          "name": "company",
-          "in": "formData",
-          "description": "the user company",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "industry",
-          "in": "formData",
-          "description": "the user industry work",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "organization",
-          "in": "formData",
-          "description": "the user organization type",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "department",
-          "in": "formData",
-          "description": "the user department",
-          "required": false,
-          "type": "string"
-        }],
-        "responses": {
-          "201": {
-            "description": "Data changed"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/profile/change-password": {
-      "post": {
-        "tags": ["Profile"],
-        "summary": "Updates the professional data of an user",
-        "description": "Updates the professional data of an user",
-        "parameters": [{
-          "name": "password",
-          "in": "formData",
-          "description": "the new password",
-          "required": false,
-          "type": "string"
-        }],
-        "responses": {
-          "201": {
-            "description": "Password changed"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/profile/config/industry": {
-      "get": {
-        "tags": ["Profile"],
-        "summary": "Get profile industry",
-        "description": "Get profile industry",
-        "responses": {
-          "200": {
-            "description": "returns industry list"
-          }
-        }
-      }
-    },
-    "/profile/config/organization": {
-      "get": {
-        "tags": ["Profile"],
-        "summary": "Get profile organization",
-        "description": "Get profile organization",
-        "responses": {
-          "200": {
-            "description": "returns organization list"
-          }
-        }
-      }
-    },
-    "/profile/config/department": {
-      "get": {
-        "tags": ["Profile"],
-        "summary": "Get profile department",
-        "description": "Get profile department",
-        "responses": {
-          "200": {
-            "description": "returns department list"
-          }
-        }
-      }
-    },
-    "/profile/recurly/account": {
-      "get": {
-        "tags": ["Profile"],
-        "summary": "Get profile recurly data",
-        "description": "Get profile recurly data",
-        "responses": {
-          "200": {
-            "description": "returns department list"
-          }
-        }
-      }
-    },
-
-    "/gallery": {
-      "get": {
-        "tags": ["Gallery"],
-        "summary": "Retrieves a collection of public galleries",
-        "description": "Retrieves a collection of public galleries",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Gallery response",
-            "schema": {
-              "type": "object",
-              "title": "GalleryCollection",
-              "required": [
-                "galleries"
-              ],
-              "properties": {
-                "galleries": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "id",
-                      "name",
-                      "slug",
-                      "body",
-                      "created_at",
-                      "updated_at",
-                      "project_count"
-                    ],
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "format": "int64"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "slug": {
-                        "type": "string"
-                      },
-                      "body": {
-                        "type": "string"
-                      },
-                      "created_at": {
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      "updated_at": {
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      "project_count": {
-                        "type": "integer",
-                        "format": "int64"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/gallery/user/{id}": {
-        "get": {
-          "tags": ["Gallery"],
-          "summary": "Retrieves a public Gallery for user identified by {id}",
-          "description": "Retrieves a Gallery identified by {id}",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "$ref": "api/parameters.json#/id"
-          }],
-          "responses": {
-            "200": {
-              "description": "Returns the user published videos",
-              "schema": {
-                "type": "object",
-                "title": "UserGallery",
-                "required": [
-                  "user",
-                  "published"
+    ],
+    "paths": {
+        "/user/password/recover": {
+            "post": {
+                "tags": ["User"],
+                "summary": "Request a password reset for User",
+                "description": "Request a password reset for User",
+                "produces": [
+                    "application/json"
                 ],
-                "properties": {
-                  "user": {
-                    "type": "object",
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "id",
-                        "firstname",
-                        "name"
-                      ],
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "format": "int64"
-                        },
-                        "firstname": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string",
-                          "format": "email"
-                        }
-                      }
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "email of the user",
+                        "required": true,
+                        "type": "string"
                     }
-                  },
-                  "published": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "id",
-                        "name",
-                        "keyname",
-                        "description",
-                        "thumb"
-                      ],
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "format": "int64"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "keyname": {
-                          "type": "string"
-                        },
-                        "description": {
-                          "type": "string"
-                        },
-                        "thumb": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/gallery/{slug}": {
-        "get": {
-          "tags": ["Gallery"],
-          "summary": "Retrieves a Gallery identified by {slug}",
-          "description": "Retrieves a Gallery identified by {slug}. Use demo-gallery as a test gallery.",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "$ref": "api/parameters.json#/slug"
-          }, {
-            "$ref": "api/parameters.json#/maxParam"
-          }, {
-            "$ref": "api/parameters.json#/firstParam"
-          }],
-          "responses": {
-            "200": {
-              "description": "Returns the user published videos",
-              "schema": {
-                "type": "object",
-                "title": "GalleryCollection",
-                "required": [
-                  "gallery"
                 ],
-                "properties": {
-                  "gallery": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "id",
-                        "sticky",
-                        "name",
-                        "keyname",
-                        "description",
-                        "thumb",
-                        "updated_at",
-                        "created_by"
-                      ],
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "format": "int64"
-                        },
-                        "sticky": {
-                          "type": "integer",
-                          "format": "int64"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "keyname": {
-                          "type": "string"
-                        },
-                        "description": {
-                          "type": "string"
-                        },
-                        "thumb": {
-                          "type": "string"
-                        },
-                        "updated_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "created_by": {
-                          "type": "integer",
-                          "format": "int64"
-                        }
-                      }
+                "responses": {
+                    "200": {
+                        "description": "password reset email with token sent"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
-                  }
                 }
-              }
             }
-          }
-        }
-      },
-
-      "/project/get": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "Gets projects filtered by keyname",
-          "description": "Gets projects from comma separated list of keynames specified in query string parameter 'key' ",
-          "operationId": "Project::getList",
-          "parameters": [{
-            "$ref": "api/parameters.json#/keyParam"
-          }],
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "title": "ProjectCollection",
-                "type": "object",
-                "required": [
-                  "projects"
+        },
+        "/user/password/reset/{token}": {
+            "get": {
+                "tags": ["User"],
+                "summary": "set a password from link containing token",
+                "description": "Check if user email exists for sharing purposes.",
+                "produces": [
+                    "application/json"
                 ],
-                "properties": {
-                  "projects": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/SimpleProject"
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "the token sent in email",
+                        "required": true,
+                        "type": "string"
                     }
-                  }
-
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User email and id"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
                 }
-              }
             },
-            "404": {
-              "description": "Project not found"
+            "post": {
+                "tags": ["User"],
+                "summary": "set a password from link containing token",
+                "description": "Check if user email exists for sharing purposes.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "the token sent in email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "the new password",
+                        "required": true,
+                        "type": "string"
+                    }
+
+                ],
+                "responses": {
+                    "200": {
+                        "description": "password reset to password"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "400": {
+                        "description": "Password does not validate"
+                    }
+                }
             }
-          }
-        }
-      },
-      "/project/json/{keyname}": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "Get json settings for project",
-          "description": "Get json settings for project",
-          "operationId": "Project::getJson",
-          "parameters": [{
-            "$ref": "api/parameters.json#/keynamePathParam"
-          }],
-          "responses": {
-            "200": {
-              "description": "Project response"
-            },
-            "404": {
-              "description": "Project not found"
+        },
+        "/user/check": {
+            "get": {
+                "tags": ["User"],
+                "summary": "Check if user email exists",
+                "description": "Check if user email exists for sharing purposes.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "api/parameters.json#/emailParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User email and id",
+                        "schema": {
+                            "$ref": "./api/definitions.json#/User"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/user/remove": {
+          "get" : {
+            "tags": ["User"],
+            "summary": "Remove profile",
+            "description": "Remove profile",
+            "responses": {
+              "200": {
+                "description": ""
+              }
             }
           }
         },
-        "put": {
-          "tags": ["Project"],
-          "summary": "Update project JSON",
-          "description": "Update project JSON",
-          "operationId": "Project::getList",
-          "responses": {
-            "200": {
-              "description": "Project response"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "Project not found"
-            },
-            "405": {
-              "description": "Method Not Allowed"
+        "/user/remove/sendmail": {
+          "get" : {
+            "tags": ["User"],
+            "summary": "Send mail on account remove",
+            "description": "Send mail on account remove",
+            "responses": {
+              "200": {
+                "description": ""
+              }
             }
           }
         },
-        "post": {
-          "tags": ["Project"],
-          "summary": "Update project JSON. Currently used by flash editor",
-          "description": "Update project JSON. Currently used by flash editor",
-          "operationId": "Project::getList",
-          "responses": {
-            "200": {
-              "description": "Project response"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "Project not found"
-            },
-            "405": {
-              "description": "Method Not Allowed"
-            }
-          }
-        }
-      },
-      "/project/list": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "List user projects",
-          "description": "Lists projects for authenticated user",
-          "operationId": "Project::getList",
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "title": "ProjectCollection",
-                "required": [
-                  "projects"
-                ],
-                "properties": {
-                  "projects": {
-                    "$ref": "api/definitions.json#/Project"
-                  }
 
-                }
-              }
-            },
-            "404": {
-              "description": "Project not found"
-            }
-          }
-        }
-      },
-      "/project/create": {
-        "post": {
-          "tags": ["Project"],
-          "summary": "Creates a new Project",
-          "description": "Creates a new Project for authenticated user",
-          "operationId": "Project::create",
-          "consumes": [
-            "application/x-www-form-urlencoded"
-          ],
-          "parameters": [{
-            "name": "name",
-            "in": "formData",
-            "description": "the name for the project",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "description",
-            "in": "formData",
-            "description": "the description for the project",
-            "required": false,
-            "type": "string"
-          }, {
-            "name": "category",
-            "in": "formData",
-            "description": "the category for the project",
-            "required": true,
-            "type": "int"
-          }],
-          "responses": {
-            "200": {
-              "description": "Project created",
-              "schema": {
-                "type": "object",
-                "title": "ProjectIdentity",
-                "required": [
-                  "project"
+      "/group/users/{user_id}": {
+            "put": {
+                "tags": ["Group"],
+                "summary": "Update user admin status",
+                "description": "Update user admin status",
+                "consumes": [
+                    "application/json"
                 ],
-                "properties": {
-                  "project": {
-                    "$ref": "api/definitions.json#/ProjectID"
-                  }
-
-                }
-              }
-            }
-          }
-        }
-      },
-      "/project/copy": {
-        "post": {
-          "tags": ["Project"],
-          "summary": "Copies a new Project identified by keyname",
-          "description": "Creates a new Project based on the provided project keyname",
-          "operationId": "Project::copy",
-          "consumes": [
-            "application/x-www-form-urlencoded"
-          ],
-          "parameters": [{
-            "name": "keyname",
-            "in": "formData",
-            "description": "the keyname for the project to copy from",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "Project copied and created",
-              "schema": {
-                "type": "object",
-                "title": "ProjectIdentity",
-                "required": [
-                  "project"
+                "produces": [
+                    "application/json"
                 ],
-                "properties": {
-                  "project": {
-                    "$ref": "api/definitions.json#/ProjectID"
-                  }
-
-                }
-              }
-            }
-          }
-        }
-      },
-      "/project/{id}/archived": {
-        "put": {
-          "tags": ["Project"],
-          "summary": "Archives a project",
-          "description": "Archives a project",
-          "parameters": [{
-            "name": "id",
-            "in": "path",
-            "description": "the id of the project to be archived",
-            "required": true,
-            "type": "integer"
-          }],
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "title": "TrashCollection",
-                "required": [
-                  "trash"
-                ],
-                "properties": {
-                  "trash": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/SimpleProject"
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "id of the user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "details",
+                        "in": "body",
+                        "description": "email of the user",
+                        "required": true,
+                        "type": "string"
                     }
-                  }
-
-                }
-              }
-            }
-          }
-        }
-      },
-      "/project/{id}/restore": {
-        "put": {
-          "tags": ["Project"],
-          "summary": "Restores an archived a project",
-          "description": "Restores an archived a project",
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "title": "ProjectCollection",
-                "required": [
-                  "projects"
                 ],
-                "properties": {
-                  "projects": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/Project"
+                "responses": {
+                    "200": {
+                        "description": "User email and id",
+                        "schema": {
+                            "$ref": "./api/definitions.json#/User"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
-                  }
-
                 }
-              }
             }
-          },
-          "parameters": [{
-            "name": "id",
-            "in": "path",
-            "description": "the id of the project to be restored",
-            "required": true,
-            "type": "integer"
-          }]
-        }
-      },
-      "/project/archived/empty": {
-        "post": {
-          "tags": ["Project"],
-          "summary": "Deletes all archived project",
-          "description": "Deletes all archived project",
-          "responses": {
-            "200": {
-              "description": "Return all users projects",
-              "schema": {
-                "type": "object",
-                "title": "ProjectCollection",
-                "required": [
-                  "projects"
+        },
+        "/group/user/add": {
+            "post": {
+                "tags": ["Group"],
+                "summary": "Add user to group",
+                "description": "Add user to group",
+                "consumes": [
+                    "application/json"
                 ],
-                "properties": {
-                  "projects": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/Project"
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "body",
+                        "description": "email of the user",
+                        "required": true,
+                        "type": "string"
                     }
-                  }
-
-                }
-              }
-            }
-          }
-        }
-      },
-      "/project/{keyname}/edit": {
-        "put": {
-          "tags": ["Project"],
-          "summary": "Updates the name and description of a specific project",
-          "description": "Updates the name and description of a specific project",
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "project"
                 ],
-                "properties": {
-                  "project": {
-                    "$ref": "api/definitions.json#/ProjectView"
-                  }
-
-                }
-              }
-            }
-          },
-          "parameters": [{
-            "name": "keyname",
-            "in": "path",
-            "description": "the keyname of the project to be updated",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "name",
-            "in": "formData",
-            "description": "the name of the project to be updated",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "description",
-            "in": "formData",
-            "description": "the description of the project to be updated",
-            "required": true,
-            "type": "string"
-          }]
-        }
-      },
-      "/project/list-presets": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "List presets",
-          "description": "Lists project presets",
-          "operationId": "Project::listPresets",
-          "consumes": [
-            "application/x-www-form-urlencoded"
-          ],
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "preset",
-                  "project"
-                ],
-                "properties": {
-                  "preset": {
-                    "$ref": "api/definitions.json#/Preset"
-                  },
-                  "project": {
-                    "$ref": "api/definitions.json#/Project"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/project/select-preset": {
-        "put": {
-          "tags": ["Project"],
-          "summary": "Select a preset to copy",
-          "description": "Select a preset for the given project",
-          "operationId": "Project::selectPresets",
-          "parameters": [{
-            "name": "keyname",
-            "in": "formData",
-            "description": "the keyname identifier for the project",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "id",
-            "in": "formData",
-            "description": "the identifier for the preset",
-            "required": true,
-            "type": "integer"
-          }],
-          "consumes": [
-            "application/x-www-form-urlencoded"
-          ],
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "title": "ProjectIdentity",
-                "required": [
-                  "project"
-                ],
-                "properties": {
-                  "project": {
-                    "$ref": "api/definitions.json#/ProjectID"
-                  }
-
-                }
-              }
-            }
-          }
-        }
-      },
-      "/project/{keyname}/publish/{type}": {
-        "post": {
-          "tags": ["Project"],
-          "summary": "Send for rendering and publish project to {type}",
-          "description": "Send for rendering and publish project to {type}",
-          "parameters": [{
-            "name": "keyname",
-            "in": "path",
-            "description": "the keyname dentifier for the project",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "type",
-            "in": "path",
-            "description": "the type of publish, can be one of: 'video', 'gallery', 'html5' (or 'html'), 'youtube', or 'facebook'",
-            "required": true,
-            "type": "string",
-            "enum": [
-              "video",
-              "gallery",
-              "html5",
-              "html",
-              "youtube",
-              "facebook"
-            ]
-          }],
-          "responses": {
-            "200": {
-              "description": "Project response"
-            }
-          }
-        }
-      },
-      "/project/view/{keyname}": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "Retrieves a Project identified by {keyname}",
-          "description": "Retrieves a Project identified by {keyname}.",
-          "parameters": [{
-            "name": "keyname",
-            "in": "path",
-            "description": "the keyname dentifier for the project",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "title": "ProjectDetails",
-                "required": [
-                  "project",
-                  "playerSize",
-                  "isTemplate",
-                  "isPresentation"
-                ],
-                "properties": {
-                  "project": {
-                    "$ref": "api/definitions.json#/ProjectView"
-                  },
-                  "playerSize": {
-                    "$ref": "api/definitions.json#/PlayerSize"
-                  },
-                  "isTemplate": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
-                  "isPresentation": {
-                    "type": "boolean"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Project not found"
-            }
-          }
-        }
-      },
-      "/project/archived": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "Retrieves all archived Projects for User",
-          "description": "Retrieves all archived Projects for User",
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "title": "TrashCollection",
-                "required": [
-                  "trash"
-                ],
-                "properties": {
-                  "trash": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/SimpleProject"
+                "responses": {
+                    "200": {
+                        "description": "User email and id"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
-                  }
-
                 }
-              }
             }
-          }
-        }
-      },
-      "/project/shared": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "Retrieves all Projects shared with the User",
-          "description": "Retrieves all Projects shared with the User",
-          "responses": {
-            "200": {
-              "description": "Project shares response",
-              "schema": {
-                "type": "object",
-                "title": "ProjectShare",
-                "required": [
-                  "shared"
+        },
+        "/group/users": {
+            "get": {
+                "tags": ["Group"],
+                "summary": "Get user list",
+                "description": "Get user list",
+                "produces": [
+                    "application/json"
                 ],
-                "properties": {
-                  "shared": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/Project"
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page to display",
+                        "required": false,
+                        "type": "integer",
+                        "default": 1
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "results per page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 10
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "search wildcard. will search by email, username, name or last name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "sort results by",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "order sort ascending or descending",
+                        "required": false,
+                        "type": "string",
+                        "default": "asc"
                     }
-                  }
-
-                }
-              }
-            }
-          }
-        }
-      },
-      "/project/templates": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "Retrieves all Project templates",
-          "description": "Retrieves all Project templates",
-          "responses": {
-            "200": {
-              "description": "Project templates collection response",
-              "schema": {
-                "type": "object",
-                "title": "TemplateCollection",
-                "required": [
-                  "templates"
                 ],
-                "properties": {
-                  "templates": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/Project"
+                "responses": {
+                    "200": {
+                        "description": "returns paginable user list"
                     }
-                  }
-
                 }
-              }
             }
-          }
-        }
-      },
-      "/project/templates/category/{slug}": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "Retrieves Project templates in group",
-          "description": "Retrieves Project templates in group",
-          "parameters": [{
-            "name": "slug",
-            "in": "path",
-            "description": "slug of template_group",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "Project templates collection response",
-              "schema": {
-                "type": "object",
-                "title": "TemplateCollection",
-                "required": [
-                  "templates"
+        },
+        "/group/available/rules": {
+            "get": {
+                "tags": ["Group"],
+                "summary": "Get available login rules",
+                "description": "Get available login rules",
+                "produces": [
+                    "application/json"
                 ],
-                "properties": {
-                  "templates": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/Project"
+                "responses": {
+                    "200": {
+                        "description": "Login rules",
+                        "schema": {
+                            "type": "object",
+                            "title": "LoginRules",
+                            "required": [
+                                "rules"
+                            ],
+                            "properties": {
+                                "rules": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/LoginRule"
+                                    }
+                                }
+
+                            }
+                        }
                     }
-                  }
-
                 }
-              }
             }
-          }
-        }
-      },
-      "/project/gallery/user/{id}": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "Retrieves the user published projects",
-          "description": "Retrieves the user published projects",
-          "parameters": [{
-            "name": "id",
-            "in": "path",
-            "description": "the id of the user",
-            "required": true,
-            "type": "integer"
-          }],
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "title": "UserGallery",
-                "required": [
-                  "project",
-                  "presentation_points"
+        },
+        "/group/rules": {
+            "get": {
+                "tags": ["Group"],
+                "summary": "Get group login rules",
+                "description": "Get group login rules for this users' group or default rules if not a group member",
+                "produces": [
+                    "application/json"
                 ],
-                "properties": {
-                  "user": {
-                    "$ref": "api/definitions.json#/User"
-                  },
-                  "published": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/Project"
+                "responses": {
+                    "200": {
+                        "description": "Group rules",
+                        "schema": {
+                            "type": "object",
+                            "title": "GroupLoginRules",
+                            "required": [
+                                "id",
+                                "name",
+                                "rules"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "rules": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/LoginRule"
+                                    }
+                                }
+
+                            }
+                        }
                     }
-                  }
-
                 }
-              }
-            }
-          }
-        }
-      },
-      "/project/my-gallery": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "Retrieves the user published projects",
-          "description": "Retrieves the user published projects",
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "title": "UserGallery",
-                "required": [
-                  "published"
+            },
+            "put": {
+                "tags": ["Group"],
+                "summary": "Set group login rules",
+                "description": "Set group login rules for this users' group if user is group admin",
+                "produces": [
+                    "application/json"
                 ],
-                "properties": {
-                  "published": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/SimpleProject"
+                "consumes" : [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "rules",
+                        "in": "body",
+                        "description": "Rules object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "title": "GroupLoginRules",
+                            "required": [
+                                "id",
+                                "name",
+                                "rules"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "rules": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/LoginRule"
+                                    }
+                                }
+
+                            }
+                        }
                     }
-                  }
-
-                }
-              }
-            }
-          }
-        }
-      },
-      "/project/embed/{keyname}": {
-        "get": {
-          "tags": ["Project"],
-          "summary": "Retrieves the projects embed data",
-          "description": "Retrieves the projects embed data",
-          "parameters": [{
-            "name": "keyname",
-            "in": "path",
-            "description": "the keyname dentifier for the project",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "Project response",
-              "schema": {
-                "type": "object",
-                "title": "EmbedData",
-                "required": [
-                  "project",
-                  "presentation_points"
                 ],
-                "properties": {
-                  "project": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/SimpleProject"
+                "responses": {
+                    "200": {
+                        "description": "Group rules",
+                        "schema": {
+                            "$ref": "./api/definitions.json#/LoginRule"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
-                  }
                 }
-              }
             }
-          }
-        }
-      },
-
-      "/marketplace/summary": {
-        "get": {
-          "tags": ["Marketplace"],
-          "summary": "Retrieves the category slug, title and the total of objects",
-          "description": "Retrieves the category slug, title and the total of objects",
-          "parameters": [{
-            "name": "max",
-            "in": "query",
-            "description": "Max number of results per category",
-            "required": false,
-            "type": "integer"
-          }, {
-            "name": "first",
-            "in": "query",
-            "description": "First row of result set per category",
-            "required": false,
-            "type": "integer"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "summary not found"
-            },
-            "405": {
-              "description": "Method Not Allowed"
-            }
-          }
-        }
-      },
-      "/marketplace/objects": {
-        "get": {
-          "tags": ["Marketplace"],
-          "summary": "Retrieves marketplace graphical objects",
-          "description": "Retrieves marketplace graphical objects",
-          "parameters": [{
-            "name": "max",
-            "in": "query",
-            "description": "Max number of results",
-            "required": false,
-            "type": "integer"
-          }, {
-            "name": "first",
-            "in": "query",
-            "description": "First row of result set",
-            "required": false,
-            "type": "integer"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "summary not found"
-            },
-            "405": {
-              "description": "Method Not Allowed"
-            }
-          }
-        }
-      },
-      "/marketplace/sounds": {
-        "get": {
-          "tags": ["Marketplace"],
-          "summary": "Retrieves marketplace sound objects",
-          "description": "Retrieves marketplace sound objects",
-          "parameters": [{
-            "name": "max",
-            "in": "query",
-            "description": "Max number of results",
-            "required": false,
-            "type": "integer"
-          }, {
-            "name": "first",
-            "in": "query",
-            "description": "First row of result set",
-            "required": false,
-            "type": "integer"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "summary not found"
-            },
-            "405": {
-              "description": "Method Not Allowed"
-            }
-          }
-        }
-      },
-      "/marketplace/templates": {
-        "get": {
-          "tags": ["Marketplace"],
-          "summary": "Retrieves marketplace templates",
-          "description": "Retrieves marketplace templates",
-          "parameters": [{
-            "name": "max",
-            "in": "query",
-            "description": "Max number of results",
-            "required": false,
-            "type": "integer"
-          }, {
-            "name": "first",
-            "in": "query",
-            "description": "First row of result set",
-            "required": false,
-            "type": "integer"
-          }],
-          "responses": {
-            "200": {
-              "description": "category response"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "category not found"
-            },
-            "405": {
-              "description": "Method Not Allowed"
-            }
-          }
-
-        }
-      },
-      "/marketplace/view/{library_id}": {
-        "get": {
-          "tags": ["Marketplace"],
-          "summary": "Retrieves all info for the category library",
-          "description": "Retrieves all info for the category library",
-          "responses": {
-            "200": {
-              "description": "library response"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "library not found"
-            },
-            "405": {
-              "description": "Method Not Allowed"
-            }
-          },
-          "parameters": [{
-            "name": "library_id",
-            "in": "path",
-            "description": "the library identifier",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "max",
-            "in": "query",
-            "description": "Max number of results",
-            "required": false,
-            "type": "integer"
-          }, {
-            "name": "first",
-            "in": "query",
-            "description": "First row of result set",
-            "required": false,
-            "type": "integer"
-          }]
-        }
-      },
-
-      "/license/user/features": {
-        "get": {
-          "tags": ["License"],
-          "summary": "the feature matrix for the current users active subscription",
-          "description": "the feature matrix for the current users active subscription",
-          "responses": {
-            "200": {
-              "description": "feature matrix"
-            }
-          }
-        }
-      },
-      "/license/{id}/summary": {
-        "get": {
-          "tags": ["License"],
-          "summary": "A summary for the given license",
-          "description": "A summary for the given license",
-          "responses": {
-            "200": {
-              "description": "summary response"
-            }
-          },
-          "parameters": [{
-            "name": "id",
-            "in": "path",
-            "description": "the slug dentifier for the licence",
-            "required": true,
-            "type": "string"
-          }]
-        }
-      },
-      "/license/cancel": {
-        "post": {
-          "tags": ["License"],
-          "summary": "Cancel user license",
-          "description": "Cancel user license",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            }
-          }
-        }
-      },
-      "/license/list": {
-        "post": {
-          "tags": ["License"],
-          "summary": "Show user license",
-          "description": "Show user license",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            }
-          }
-        }
-      },
-      "/license/change/{license}": {
-        "post": {
-          "tags": ["License"],
-          "summary": "Change user license",
-          "description": "Change user license",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "name": "license",
-            "in": "path",
-            "description": "License type",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            }
-          }
-        }
-      },
-      "/license/edu/group": {
-        "post": {
-          "tags": ["License"],
-          "summary": "A summary for the given license",
-          "description": "A summary for the given license",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "name": "form",
-            "in": "body",
-            "description": "email of the user",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            }
-          }
-        }
-      },
-      "/license/edu/pro": {
-        "post": {
-          "tags": ["License"],
-          "summary": "A summary for the given license",
-          "description": "A summary for the given license",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "name": "form",
-            "in": "body",
-            "description": "email of the user",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            }
-          }
-        }
-      },
-      "/license/edu/plus": {
-        "post": {
-          "tags": ["License"],
-          "summary": "A summary for the given license",
-          "description": "A summary for the given license",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "name": "form",
-            "in": "body",
-            "description": "email of the user",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            }
-          }
-        }
-      },
-      "/license/edu/approve/{type}": {
-        "post": {
-          "tags": ["License"],
-          "summary": "Approve edu request",
-          "description": "Approve edu request",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "name": "type",
-            "in": "path",
-            "description": "type of request",
-            "required": true,
-            "type": "integer"
-          }, {
-            "name": "hash",
-            "in": "formData",
-            "description": "user hash",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "add_domain",
-            "in": "formData",
-            "description": "add domain if not exists",
-            "required": false,
-            "type": "integer"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            }
-          }
-        }
-      },
-      "/license/edu/renew": {
-        "post": {
-          "tags": ["License"],
-          "summary": "Renew edu request",
-          "description": "Renew edu request",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "summary response"
-            }
-          },
-          "parameters": [{
-            "name": "type",
-            "in": "formData",
-            "description": "type of request",
-            "required": false,
-            "type": "integer"
-          }]
-        }
-      },
-      "/license/{id}/coupon": {
-        "post": {
-          "tags": ["License"],
-          "summary": "",
-          "description": "Retrieves all Projects shared with the User",
-          "responses": {
-            "200": {
-              "description": "coupon response"
-            }
-          },
-          "parameters": [{
-            "name": "id",
-            "in": "path",
-            "description": "the identifier for the licence",
-            "required": true,
-            "type": "string"
-          }]
-        }
-      },
-
-      "/cart/view": {
-        "get": {
-          "tags": ["Cart"],
-          "summary": "View Cart for user",
-          "description": "View Cart for user",
-          "responses": {
-            "200": {
-              "description": "summary response",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "cart"
+        },
+        "/oauth2/authorize": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Display login form. Alias for /oauth2/login",
+                "description": "Display login form. Alias for /oauth2/login",
+                "produces": [
+                    "text/html"
                 ],
-                "properties": {
-                  "cart": {
-                    "$ref": "api/definitions.json#/Cart"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/cart/add/{item}": {
-        "post": {
-          "tags": ["Cart"],
-          "summary": "Add item to Cart",
-          "description": "",
-          "responses": {
-            "200": {
-              "description": "summary response",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "cart"
-                ],
-                "properties": {
-                  "cart": {
-                    "$ref": "api/definitions.json#/Cart"
-                  }
-                }
-              }
-            }
-          },
-          "parameters": [{
-            "name": "item",
-            "in": "path",
-            "description": "the item id to add",
-            "required": true,
-            "type": "string"
-          }]
-        }
-      },
-      "/cart/remove/{item}": {
-        "post": {
-          "tags": ["Cart"],
-          "summary": "Remove item from cart",
-          "description": "Remove item from cart",
-          "responses": {
-            "200": {
-              "description": "summary response",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "cart"
-                ],
-                "properties": {
-                  "cart": {
-                    "$ref": "api/definitions.json#/Cart"
-                  }
-                }
-              }
-            }
-          },
-          "parameters": [{
-            "name": "item",
-            "in": "path",
-            "description": "the item id",
-            "required": true,
-            "type": "string"
-          }]
-        }
-      },
-      "/cart/checkout": {
-        "post": {
-          "tags": ["Cart"],
-          "summary": "Calculate totals",
-          "description": "Calculate totals",
-          "responses": {
-            "201": {
-              "description": "items added"
-            },
-            "400": {
-              "description": "Bad Request"
-            }
-          }
-        }
-      },
-
-      "/coupon/apply": {
-        "post": {
-          "tags": ["Coupon"],
-          "summary": "Apply coupon code",
-          "description": "Apply coupon code",
-          "responses": {
-            "200": {
-              "description": "coupon response",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "cart"
-                ],
-                "properties": {
-                  "cart": {
-                    "$ref": "api/definitions.json#/Cart"
-                  }
-                }
-              }
-            }
-          },
-          "parameters": [{
-            "name": "coupon",
-            "in": "formData",
-            "description": "coupon code",
-            "required": true,
-            "type": "string"
-          }]
-        }
-      },
-
-      "/broadcast/tips": {
-        "get": {
-          "tags": ["Broadcast"],
-          "summary": "Lists last two broadcast tips",
-          "description": "List latest two broadcast tips",
-          "responses": {
-            "200": {
-              "description": "last two broadcast tips",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "broadcast"
-                ],
-                "properties": {
-                  "broadcast": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/Broadcast"
+                "parameters": [
+                    {
+                        "name": "redirect_uri",
+                        "in": "query",
+                        "description": "URI to redirect to upon successfull authentication",
+                        "required": true,
+                        "type": "string"
                     }
-                  }
-                }
-
-              }
-            }
-          }
-        }
-      },
-      "/broadcast/messages": {
-        "get": {
-          "tags": ["Broadcast"],
-          "summary": "Lists a broadcast message",
-          "description": "Lists a broadcast message",
-          "responses": {
-            "200": {
-              "description": "summary response",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "broadcast"
                 ],
-                "properties": {
-                  "broadcast": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/Broadcast"
+                "responses": {
+                    "200": {
+                        "description": "display form"
                     }
-                  }
                 }
-
-              }
             }
-          }
-        }
-      },
-
-      "/credit/credits": {
-        "get": {
-          "tags": ["Credit"],
-          "summary": "Get available credit packages",
-          "description": "Get available credit packages",
-          "responses": {
-            "200": {
-              "description": "summary response",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "credits"
-                ],
-                "properties": {
-                  "credits": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "api/definitions.json#/CreditPackage"
+        },
+        "/oauth2/logout": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Revoke token",
+                "description": "Revoke token",
+                "responses": {
+                    "200": {
+                        "description": "Revoke token"
                     }
-                  }
                 }
-              }
             }
-          }
-        }
-      },
-
-      "/render/status/{keyname}": {
-        "get": {
-          "tags": ["Render"],
-          "summary": "Get rendering status for project identified by {keyname}",
-          "description": "Get rendering status for project identified by {keyname}",
-          "parameters": [{
-            "$ref": "api/parameters.json#/keynamePathParam"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response",
-              "schema": {
-                "type": "object",
-                "title": "Render",
-                "required": [
-                  "render"
+        },
+        "/oauth2/login": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Display login form",
+                "description": "Display login form",
+                "produces": [
+                    "text/html"
                 ],
-                "properties": {
-                  "render": {
-                    "$ref": "api/definitions.json#/RenderStatus"
-                  }
+                "parameters": [
+                    {
+                        "name": "redirect_uri",
+                        "in": "query",
+                        "description": "URI to redirect to upon successfull authentication",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "display form"
+                    }
                 }
-              }
+            },
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Submit login form",
+                "description": "Submit login form",
+                "parameters": [
+                    {
+                        "name": "form[email]",
+                        "in": "formData",
+                        "description": "User email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "form[password]",
+                        "in": "formData",
+                        "description": "User password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns user token"
+                    }
+                }
             }
-          }
-        }
-      },
-      "/render/start/{keyname}/{render_id}": {
-        "post": {
-          "tags": ["Render"],
-          "summary": "Render start callback",
-          "description": "Render start callback used by renderers to signal that rendering has started ",
-          "parameters": [{
-            "$ref": "api/parameters.json#/keynamePathParam"
-          }, {
-            "name": "render_id",
-            "in": "path",
-            "description": "the project render id",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response",
-              "schema": {
-                "type": "string"
-              }
+        },
+        "/oauth2/disconnect/facebook": {
+            "get": {
+                "tags": ["Profile"],
+                "summary": "Disonnect facebook account",
+                "description": "Disonnect facebook account"
             }
-          }
-        }
-      },
-      "/render/finish/{keyname}/{render_id}": {
-        "post": {
-          "tags": ["Render"],
-          "summary": "Render finish callback",
-          "description": "Render finish callback used by renderers to signal that a render has finished",
-          "parameters": [{
-            "$ref": "api/parameters.json#/keynamePathParam"
-          }, {
-            "name": "render_id",
-            "in": "path",
-            "description": "the project render id",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "summary response",
-              "schema": {
-                "type": "string"
-              }
+        },
+        "/oauth2/connect/google": {
+            "get": {
+                "tags": ["Profile"],
+                "summary": "Connect Google+ account",
+                "description": "Connect Google+ account"
             }
-          }
-        }
-      },
+        },
+        "/oauth2/disconnect/google": {
+            "get": {
+                "tags": ["Profile"],
+                "summary": "Connect Google+ account",
+                "description": "Connect Google+ account"
+            }
+        },
+        "/oauth2/login/facebook": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Login with facebook",
+                "description": "Login with facebook",
+                "responses": {
+                    "200": {
+                        "description": "returns user token"
+                    }
+                }
+            }
+        },
+        "/oauth2/login/google": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Login with Google +",
+                "description": "Login with Google +",
+                "responses": {
+                    "200": {
+                        "description": "returns user token"
+                    }
+                }
+            }
+        },
+        "/profile/show": {
+            "get": {
+                "tags": ["Profile"],
+                "summary": "Get user profile details",
+                "description": "Get all details for the authenticated user",
+                "responses": {
+                    "200": {
+                        "description": "Profile response"
+                    }
+                }
+            }
+        },
+        "/profile/my-transactions": {
+            "get": {
+                "tags": ["Profile"],
+                "summary": "Get all the user transactions",
+                "description": "Get all the user transactions",
+                "responses": {
+                    "200": {
+                        "description": "Profile response"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Profile not found"
+                    },
+                    "405": {
+                        "description": "Method Not Allowed"
+                    }
+                }
+            }
+        },
+        "/profile/personal-data": {
+            "post" : {
+                "tags": ["Profile"],
+                "summary": "Updates the personal data of an user",
+                "description": "Updates the personal data of an user",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "the user email",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "firstname",
+                        "in": "formData",
+                        "description": "the user firstname",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "the user lastname",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "age",
+                        "in": "formData",
+                        "description": "the user age (ex.: 26-30)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "address",
+                        "in": "formData",
+                        "description": "the user address",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "zip",
+                        "in": "formData",
+                        "description": "the user zip code",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "country",
+                        "in": "formData",
+                        "description": "the user country",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "city",
+                        "in": "formData",
+                        "description": "the user city",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Data changed"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/profile/professional-data" : {
+            "post" : {
+                "tags": ["Profile"],
+                "summary": "Updates the professional data of an user",
+                "description": "Updates the professional data of an user",
+                "parameters": [
+                    {
+                        "name": "company",
+                        "in": "formData",
+                        "description": "the user company",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "industry",
+                        "in": "formData",
+                        "description": "the user industry work",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "organization",
+                        "in": "formData",
+                        "description": "the user organization type",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "department",
+                        "in": "formData",
+                        "description": "the user department",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Data changed"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/profile/change-password": {
+            "post" : {
+                "tags": ["Profile"],
+                "summary": "Updates the professional data of an user",
+                "description": "Updates the professional data of an user",
+                "parameters": [
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "the new password",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Password changed"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/profile/config/industry": {
+            "get" : {
+                "tags": ["Profile"],
+                "summary": "Get profile industry",
+                "description": "Get profile industry",
+                "responses": {
+                    "200": {
+                        "description": "returns industry list"
+                    }
+                }
+            }
+        },
+        "/profile/config/organization": {
+            "get" : {
+                "tags": ["Profile"],
+                "summary": "Get profile organization",
+                "description": "Get profile organization",
+                "responses": {
+                    "200": {
+                        "description": "returns organization list"
+                    }
+                }
+            }
+        },
+        "/profile/config/department": {
+            "get" : {
+                "tags": ["Profile"],
+                "summary": "Get profile department",
+                "description": "Get profile department",
+                "responses": {
+                    "200": {
+                        "description": "returns department list"
+                    }
+                }
+            }
+        },
+        "/profile/recurly/account": {
+            "get" : {
+                "tags": ["Profile"],
+                "summary": "Get profile recurly data",
+                "description": "Get profile recurly data",
+                "responses": {
+                    "200": {
+                        "description": "returns department list"
+                    }
+                }
+            }
+        },
+        "/gallery/": {
+            "get": {
+                "tags": ["Gallery"],
+                "summary": "Retrieves a collection of galleries",
+                "description": "gets a collection of gallery objects",
+                "responses": {
+                    "200": {
+                        "description": "Gallery response",
+                        "schema": {
+                            "type": "object",
+                            "title": "GalleryCollection",
+                            "required": [
+                                "galleries",
+                                "submissions"
+                            ],
+                            "properties": {
+                                "galleries": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/Gallery"
+                                    }
+                                },
+                                "submissions": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/GallerySubmission"
+                                    }
 
-      "/profile/notification": {
-        "get": {
-          "tags": ["Notification"],
-          "summary": "Get user notification",
-          "description": "Get user notification",
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "display form"
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
-        }
-      },
-      "/profile/notification/{output}": {
-        "post": {
-          "tags": ["Notification"],
-          "summary": "Retrieve output action",
-          "description": "Retrieve output action",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "name": "output",
-            "in": "path",
-            "description": "Output",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "returns user token"
+        },
+        "/gallery/user/{id}": {
+            "get": {
+                "tags": ["Gallery"],
+                "summary": "Retrieves a Public Gallery for user identified by {id}",
+                "description": "Retrieves a Gallery identified by {slug}. Use demo-gallery as a test gallery.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "the user id for the public gallery",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Gallery response"
+                    },
+                    "404": {
+                        "description": "Gallery not found"
+                    }
+                }
             }
-          }
-        }
-      },
+        },
+        "/gallery/{slug}": {
+            "get": {
+                "tags": ["Gallery"],
+                "summary": "Retrieves a Gallery identified by {slug}",
+                "description": "Retrieves a Gallery identified by {slug}. Use demo-gallery as a test gallery.",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "the slug dentifier for the gallery",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "description": "Max number of results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "first",
+                        "in": "query",
+                        "description": "First row of result set",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Gallery response"
+                    }
+                }
+            }
+        },
+        "/project/get": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "Gets projects filtered by keyname",
+                "description": "Gets projects from comma separated list of keynames specified in query string parameter 'key' ",
+                "operationId": "Project::getList",
+                "parameters": [
+                    {
+                        "$ref": "api/parameters.json#/keyParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "title": "ProjectCollection",
+                            "type": "object",
+                            "required": [
+                                "projects"
+                            ],
+                            "properties": {
+                                "projects": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/SimpleProject"
+                                    }
+                                }
+
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        },
+        "/project/json/{keyname}": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "Get json settings for project",
+                "description": "Get json settings for project",
+                "operationId": "Project::getJson",
+                "parameters": [
+                    {
+                        "$ref": "api/parameters.json#/keynamePathParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project response"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Project"],
+                "summary": "Update project JSON",
+                "description": "Update project JSON",
+                "operationId": "Project::getList",
+                "responses": {
+                    "200": {
+                        "description": "Project response"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    },
+                    "405": {
+                        "description": "Method Not Allowed"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Project"],
+                "summary": "Update project JSON. Currently used by flash editor",
+                "description": "Update project JSON. Currently used by flash editor",
+                "operationId": "Project::getList",
+                "responses": {
+                    "200": {
+                        "description": "Project response"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    },
+                    "405": {
+                        "description": "Method Not Allowed"
+                    }
+                }
+            }
+        },
+        "/project/list": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "List user projects",
+                "description": "Lists projects for authenticated user",
+                "operationId": "Project::getList",
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "title": "ProjectCollection",
+                            "required": [
+                                "projects"
+                            ],
+                            "properties": {
+                                "projects": {
+                                    "$ref": "api/definitions.json#/Project"
+                                }
+
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        },
+        "/project/create": {
+            "post": {
+                "tags": ["Project"],
+                "summary": "Creates a new Project",
+                "description": "Creates a new Project for authenticated user",
+                "operationId": "Project::create",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "the name for the project",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "formData",
+                        "description": "the description for the project",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "category",
+                        "in": "formData",
+                        "description": "the category for the project",
+                        "required": true,
+                        "type": "int"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project created",
+                        "schema": {
+                            "type": "object",
+                            "title": "ProjectIdentity",
+                            "required": [
+                                "project"
+                            ],
+                            "properties": {
+                                "project": {
+                                    "$ref": "api/definitions.json#/ProjectID"
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/copy": {
+            "post": {
+                "tags": ["Project"],
+                "summary": "Copies a new Project identified by keyname",
+                "description": "Creates a new Project based on the provided project keyname",
+                "operationId": "Project::copy",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyname",
+                        "in": "formData",
+                        "description": "the keyname for the project to copy from",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project copied and created",
+                        "schema": {
+                            "type": "object",
+                            "title": "ProjectIdentity",
+                            "required": [
+                                "project"
+                            ],
+                            "properties": {
+                                "project": {
+                                    "$ref": "api/definitions.json#/ProjectID"
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/{id}/archived": {
+            "put": {
+                "tags": ["Project"],
+                "summary": "Archives a project",
+                "description": "Archives a project",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "the id of the project to be archived",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "title": "TrashCollection",
+                            "required": [
+                                "trash"
+                            ],
+                            "properties": {
+                                "trash": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/SimpleProject"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/{id}/restore": {
+            "put":{
+                "tags": ["Project"],
+                "summary": "Restores an archived a project",
+                "description": "Restores an archived a project",
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "title": "ProjectCollection",
+                            "required": [
+                                "projects"
+                            ],
+                            "properties": {
+                                "projects": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/Project"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "the id of the project to be restored",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/project/archived/empty": {
+            "post":{
+                "tags": ["Project"],
+                "summary": "Deletes all archived project",
+                "description": "Deletes all archived project",
+                "responses": {
+                    "200": {
+                        "description": "Return all users projects",
+                        "schema": {
+                            "type": "object",
+                            "title": "ProjectCollection",
+                            "required": [
+                                "projects"
+                            ],
+                            "properties": {
+                                "projects": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/Project"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/{keyname}/edit": {
+            "put":{
+                "tags": ["Project"],
+                "summary": "Updates the name and description of a specific project",
+                "description": "Updates the name and description of a specific project",
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "project"
+                            ],
+                            "properties": {
+                                "project": {
+                                    "$ref": "api/definitions.json#/ProjectView"
+                                }
+
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "keyname",
+                        "in": "path",
+                        "description": "the keyname of the project to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "the name of the project to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "formData",
+                        "description": "the description of the project to be updated",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/project/list-presets": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "List presets",
+                "description": "Lists project presets",
+                "operationId": "Project::listPresets",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "preset",
+                                "project"
+                            ],
+                            "properties": {
+                                "preset": {
+                                    "$ref": "api/definitions.json#/Preset"
+                                },
+                                "project": {
+                                    "$ref": "api/definitions.json#/Project"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/select-preset": {
+            "put": {
+                "tags": ["Project"],
+                "summary": "Select a preset to copy",
+                "description": "Select a preset for the given project",
+                "operationId": "Project::selectPresets",
+                "parameters": [
+                    {
+                        "name": "keyname",
+                        "in": "formData",
+                        "description": "the keyname identifier for the project",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "description": "the identifier for the preset",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "title": "ProjectIdentity",
+                            "required": [
+                                "project"
+                            ],
+                            "properties": {
+                                "project": {
+                                    "$ref": "api/definitions.json#/ProjectID"
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/{keyname}/publish/{type}": {
+            "post": {
+                "tags": ["Project"],
+                "summary": "Send for rendering and publish project to {type}",
+                "description": "Send for rendering and publish project to {type}",
+                "parameters": [
+                    {
+                        "name": "keyname",
+                        "in": "path",
+                        "description": "the keyname dentifier for the project",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "the type of publish, can be one of: 'video', 'gallery', 'html5' (or 'html'), 'youtube', or 'facebook'",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "video",
+                            "gallery",
+                            "html5",
+                            "html",
+                            "youtube",
+                            "facebook"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project response"
+                    }
+                }
+            }
+        },
+        "/project/view/{keyname}": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "Retrieves a Project identified by {keyname}",
+                "description": "Retrieves a Project identified by {keyname}.",
+                "parameters": [
+                    {
+                        "name": "keyname",
+                        "in": "path",
+                        "description": "the keyname dentifier for the project",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "title": "ProjectDetails",
+                            "required": [
+                                "project",
+                                "playerSize",
+                                "isTemplate",
+                                "isPresentation"
+                            ],
+                            "properties": {
+                                "project": {
+                                    "$ref": "api/definitions.json#/ProjectView"
+                                },
+                                "playerSize": {
+                                    "$ref": "api/definitions.json#/PlayerSize"
+                                },
+                                "isTemplate": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "isPresentation": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        },
+        "/project/archived": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "Retrieves all archived Projects for User",
+                "description": "Retrieves all archived Projects for User",
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "title": "TrashCollection",
+                            "required": [
+                                "trash"
+                            ],
+                            "properties": {
+                                "trash": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/SimpleProject"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/shared": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "Retrieves all Projects shared with the User",
+                "description": "Retrieves all Projects shared with the User",
+                "responses": {
+                    "200": {
+                        "description": "Project shares response",
+                        "schema": {
+                            "type": "object",
+                            "title": "ProjectShare",
+                            "required": [
+                                "shared"
+                            ],
+                            "properties": {
+                                "shared": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/Project"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/templates": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "Retrieves all Project templates",
+                "description": "Retrieves all Project templates",
+                "responses": {
+                    "200": {
+                        "description": "Project templates collection response",
+                        "schema": {
+                            "type": "object",
+                            "title": "TemplateCollection",
+                            "required": [
+                                "templates"
+                            ],
+                            "properties": {
+                                "categories": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/ProjectCategory"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/templates/category/{slug}": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "Retrieves Project templates in group",
+                "description": "Retrieves Project templates in group",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "slug of template_group",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project templates collection response",
+                        "schema": {
+                            "type": "object",
+                            "title": "TemplateCollection",
+                            "required": [
+                                "templates"
+                            ],
+                            "properties": {
+                                "templates": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/Project"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/gallery/user/{id}": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "Retrieves the user published projects",
+                "description": "Retrieves the user published projects",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "the id of the user",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "title": "UserGallery",
+                            "required": [
+                                "project",
+                                "presentation_points"
+                            ],
+                            "properties": {
+                                "user": {
+                                    "$ref": "api/definitions.json#/User"
+                                },
+                                "published": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/Project"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/my-gallery": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "Retrieves the user published projects",
+                "description": "Retrieves the user published projects",
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "title": "UserGallery",
+                            "required": [
+                                "published"
+                            ],
+                            "properties": {
+                                "published": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/SimpleProject"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/embed/{keyname}": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "Retrieves the projects embed data",
+                "description": "Retrieves the projects embed data",
+                "parameters": [
+                    {
+                        "name": "keyname",
+                        "in": "path",
+                        "description": "the keyname dentifier for the project",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project response",
+                        "schema": {
+                            "type": "object",
+                            "title": "EmbedData",
+                            "required": [
+                                "project",
+                                "presentation_points"
+                            ],
+                            "properties": {
+                                "project": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/SimpleProject"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/marketplace/summary": {
+            "get": {
+                "tags": ["Marketplace"],
+                "summary": "Retrieves the category slug, title and the total of objects",
+                "description": "Retrieves the category slug, title and the total of objects",
+                "parameters": [
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "description": "Max number of results per category",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "first",
+                        "in": "query",
+                        "description": "First row of result set per category",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "summary not found"
+                    },
+                    "405": {
+                        "description": "Method Not Allowed"
+                    }
+                }
+            }
+        },
+        "/marketplace/objects": {
+            "get": {
+                "tags": ["Marketplace"],
+                "summary": "Retrieves marketplace graphical objects",
+                "description": "Retrieves marketplace graphical objects",
+                "parameters": [
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "description": "Max number of results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "first",
+                        "in": "query",
+                        "description": "First row of result set",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "summary not found"
+                    },
+                    "405": {
+                        "description": "Method Not Allowed"
+                    }
+                }
+            }
+        },
+        "/marketplace/sounds": {
+            "get": {
+                "tags": ["Marketplace"],
+                "summary": "Retrieves marketplace sound objects",
+                "description": "Retrieves marketplace sound objects",
+                "parameters": [
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "description": "Max number of results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "first",
+                        "in": "query",
+                        "description": "First row of result set",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "summary not found"
+                    },
+                    "405": {
+                        "description": "Method Not Allowed"
+                    }
+                }
+            }
+        },
+        "/marketplace/templates": {
+            "get": {
+                "tags": ["Marketplace"],
+                "summary": "Retrieves marketplace templates",
+                "description": "Retrieves marketplace templates",
+                "parameters": [
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "description": "Max number of results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "first",
+                        "in": "query",
+                        "description": "First row of result set",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "category response"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "category not found"
+                    },
+                    "405": {
+                        "description": "Method Not Allowed"
+                    }
+                }
+
+            }
+        },
+        "/marketplace/view/{library_id}": {
+            "get": {
+                "tags": ["Marketplace"],
+                "summary": "Retrieves all info for the category library",
+                "description": "Retrieves all info for the category library",
+                "responses": {
+                    "200": {
+                        "description": "library response"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "library not found"
+                    },
+                    "405": {
+                        "description": "Method Not Allowed"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "library_id",
+                        "in": "path",
+                        "description": "the library identifier",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "description": "Max number of results",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                      "name": "first",
+                      "in": "query",
+                      "description": "First row of result set",
+                      "required": false,
+                      "type": "integer"
+                    },
+                    {
+                      "name": "slug",
+                      "in": "query",
+                      "description": "Slug type",
+                      "required": false,
+                      "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/library/{uuid}/personal/data.json": {
+            "get": {
+                "tags": ["Library"],
+                "summary": "library objects and scenes for user",
+                "description": "library objects and scenes for user",
+                "responses": {
+                    "200": {
+                        "description": "objects and scenes json"
+                    }
+                }
+            }
+        },
+        "/license/user/features": {
+            "get": {
+                "tags": ["License"],
+                "summary": "the feature matrix for the current users active subscription",
+                "description": "the feature matrix for the current users active subscription",
+                "responses": {
+                    "200": {
+                        "description": "feature matrix"
+                    }
+                }
+            }
+        },
+        "/license/{id}/summary": {
+            "get": {
+                "tags": ["License"],
+                "summary": "A summary for the given license",
+                "description": "A summary for the given license",
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "the slug dentifier for the licence",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/license/cancel": {
+            "post": {
+                "tags": ["License"],
+                "summary": "Cancel user license",
+                "description": "Cancel user license",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    }
+                }
+            }
+        },
+        "/license/list": {
+            "post": {
+                "tags": ["License"],
+                "summary": "Show user license",
+                "description": "Show user license",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    }
+                }
+            }
+        },
+        "/license/change/{license}": {
+            "post": {
+                "tags": ["License"],
+                "summary": "Change user license",
+                "description": "Change user license",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "license",
+                        "in": "path",
+                        "description": "License type",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    }
+                }
+            }
+        },
+        "/license/edu/group": {
+            "post": {
+                "tags": ["License"],
+                "summary": "A summary for the given license",
+                "description": "A summary for the given license",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "form",
+                        "in": "body",
+                        "description": "email of the user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    }
+                }
+            }
+        },
+        "/license/edu/pro": {
+            "post": {
+                "tags": ["License"],
+                "summary": "A summary for the given license",
+                "description": "A summary for the given license",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "form",
+                        "in": "body",
+                        "description": "email of the user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    }
+                }
+            }
+        },
+        "/license/edu/plus": {
+            "post": {
+                "tags": ["License"],
+                "summary": "A summary for the given license",
+                "description": "A summary for the given license",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "form",
+                        "in": "body",
+                        "description": "email of the user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    }
+                }
+            }
+        },
+        "/license/edu/approve/{type}": {
+            "post": {
+                "tags": ["License"],
+                "summary": "Approve edu request",
+                "description": "Approve edu request",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "type of request",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "hash",
+                        "in": "formData",
+                        "description": "user hash",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "add_domain",
+                        "in": "formData",
+                        "description": "add domain if not exists",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    }
+                }
+            }
+        },
+        "/license/edu/renew": {
+            "post": {
+                "tags": ["License"],
+                "summary": "Renew edu request",
+                "description": "Renew edu request",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "formData",
+                        "description": "type of request",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ]
+            }
+        },
+        "/license/{id}/coupon": {
+            "post": {
+                "tags": ["License"],
+                "summary": "",
+                "description": "Retrieves all Projects shared with the User",
+                "responses": {
+                    "200": {
+                        "description": "coupon response"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "the identifier for the licence",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/cart/view": {
+            "get": {
+                "tags": ["Cart"],
+                "summary": "View Cart for user",
+                "description": "View Cart for user",
+                "responses": {
+                    "200": {
+                        "description": "summary response",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "cart"
+                            ],
+                            "properties": {
+                                "cart": {
+                                    "$ref": "api/definitions.json#/Cart"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cart/add/{item}": {
+            "post": {
+                "tags": ["Cart"],
+                "summary": "Add item to Cart",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "summary response",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "cart"
+                            ],
+                            "properties": {
+                                "cart": {
+                                    "$ref": "api/definitions.json#/Cart"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "item",
+                        "in": "path",
+                        "description": "the item id to add",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/cart/remove/{item}": {
+            "post": {
+                "tags": ["Cart"],
+                "summary": "Remove item from cart",
+                "description": "Remove item from cart",
+                "responses": {
+                    "200": {
+                        "description": "summary response",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "cart"
+                            ],
+                            "properties": {
+                                "cart": {
+                                    "$ref": "api/definitions.json#/Cart"
+                                }
+                            }
+                        }
+                    }
+                    },
+                "parameters": [
+                    {
+                        "name": "item",
+                        "in": "path",
+                        "description": "the item id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/cart/checkout": {
+            "post": {
+                "tags": ["Cart"],
+                "summary": "Calculate totals",
+                "description": "Calculate totals",
+                "responses": {
+                    "201": {
+                        "description": "items added"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/coupon/apply": {
+            "post": {
+                "tags": ["Coupon"],
+                "summary": "Apply coupon code",
+                "description": "Apply coupon code",
+                "responses": {
+                    "200": {
+                        "description": "coupon response",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "cart"
+                            ],
+                            "properties": {
+                                "cart": {
+                                    "$ref": "api/definitions.json#/Cart"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "coupon",
+                        "in": "formData",
+                        "description": "coupon code",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/broadcast/tips": {
+            "get": {
+                "tags": ["Broadcast"],
+                "summary": "Lists last two broadcast tips",
+                "description": "List latest two broadcast tips",
+                "responses": {
+                    "200": {
+                        "description": "last two broadcast tips",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "broadcast"
+                            ],
+                            "properties": {
+                                "broadcast": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/Broadcast"
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        },
+        "/broadcast/messages": {
+            "get": {
+                "tags": ["Broadcast"],
+                "summary": "Lists a broadcast message",
+                "description": "Lists a broadcast message",
+                "responses": {
+                    "200": {
+                        "description": "summary response",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "broadcast"
+                            ],
+                            "properties": {
+                                "broadcast": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/Broadcast"
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        },
+        "/credit/credits":{
+            "get": {
+                "tags": ["Credit"],
+                "summary": "Get available credit packages",
+                "description": "Get available credit packages",
+                "responses": {
+                    "200": {
+                        "description": "summary response",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "credits"
+                            ],
+                            "properties": {
+                                "credits": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "api/definitions.json#/CreditPackage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/render/status/{keyname}":{
+            "get": {
+                "tags": ["Render"],
+                "summary": "Get rendering status for project identified by {keyname}",
+                "description": "Get rendering status for project identified by {keyname}",
+                "parameters": [
+                    {
+                        "$ref": "api/parameters.json#/keynamePathParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response",
+                        "schema": {
+                            "type": "object",
+                            "title": "Render",
+                            "required": [
+                                "render"
+                            ],
+                            "properties": {
+                                "render": {
+                                    "$ref": "api/definitions.json#/RenderStatus"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/render/start/{keyname}/{render_id}": {
+            "post": {
+                "tags": ["Render"],
+                "summary": "Render start callback",
+                "description": "Render start callback used by renderers to signal that rendering has started ",
+                "parameters": [
+                    {
+                        "$ref": "api/parameters.json#/keynamePathParam"
+                    },
+                    {
+                        "name": "render_id",
+                        "in": "path",
+                        "description": "the project render id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/render/finish/{keyname}/{render_id}": {
+            "post": {
+                "tags": ["Render"],
+                "summary": "Render finish callback",
+                "description": "Render finish callback used by renderers to signal that a render has finished",
+                "parameters": [
+                    {
+                        "$ref": "api/parameters.json#/keynamePathParam"
+                    },
+                    {
+                        "name": "render_id",
+                        "in": "path",
+                        "description": "the project render id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "summary response",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/profile/notification": {
+            "get": {
+                "tags": ["Notification"],
+                "summary": "Get user notification",
+                "description": "Get user notification",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "display form"
+                    }
+                }
+            }
+        },
+        "/profile/notification/{output}": {
+            "post": {
+                "tags": ["Notification"],
+                "summary": "Retrieve output action",
+                "description": "Retrieve output action",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "output",
+                        "in": "path",
+                        "description": "Output",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns user token"
+                    }
+                }
+            }
+        },
       "/profile/notification/{output}/{action}": {
         "post": {
           "tags": ["Notification"],
@@ -2590,19 +2527,22 @@
           "produces": [
             "application/json"
           ],
-          "parameters": [{
-            "name": "output",
-            "in": "path",
-            "description": "Output",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "action",
-            "in": "path",
-            "description": "Action",
-            "required": true,
-            "type": "string"
-          }],
+          "parameters": [
+            {
+              "name": "output",
+              "in": "path",
+              "description": "Output",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "action",
+              "in": "path",
+              "description": "Action",
+              "required": true,
+              "type": "string"
+            }
+          ],
           "responses": {
             "200": {
               "description": "returns notifications"
@@ -2610,138 +2550,272 @@
           }
         }
       },
-      "/profile/notification/": {
-        "post": {
-          "tags": ["Notification"],
-          "summary": "Add user notification",
-          "description": "Add user notification",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "name": "output",
-            "in": "formData",
-            "description": "Output",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "action",
-            "in": "formData",
-            "description": "Action",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "returns user token"
+        "/profile/notification/": {
+            "post": {
+                "tags": ["Notification"],
+                "summary": "Add user notification",
+                "description": "Add user notification",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "output",
+                        "in": "formData",
+                        "description": "Output",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "action",
+                        "in": "formData",
+                        "description": "Action",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns user token"
+                    }
+                }
+            }
+        },
+        "/profile/notification/delete/{output}/{action}": {
+            "delete": {
+                "tags": ["Notification"],
+                "summary": "Delete user notification",
+                "description": "Delete user notification",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "output",
+                        "in": "path",
+                        "description": "Output",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "action",
+                        "in": "path",
+                        "description": "Action",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns user token"
+                    }
+                }
+            }
+        },
+        "/profile/notification/register/{type}/{token}": {
+          "post": {
+            "tags": ["Notification"],
+            "summary": "Register app installs",
+            "description": "Register app installs",
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "name": "type",
+                "in": "path",
+                "description": "type",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "token",
+                "in": "path",
+                "description": "token",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "returns notifications"
+              }
             }
           }
-        }
-      },
-      "/profile/notification/delete/{output}/{action}": {
-        "delete": {
-          "tags": ["Notification"],
-          "summary": "Delete user notification",
-          "description": "Delete user notification",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "name": "output",
-            "in": "path",
-            "description": "Output",
-            "required": true,
-            "type": "string"
-          }, {
-            "name": "action",
-            "in": "path",
-            "description": "Action",
-            "required": true,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "returns user token"
+        },
+        "/country/list": {
+            "get": {
+                "tags": ["Country"],
+                "summary": "Country list",
+                "description": "Returns alpha2 code, and name",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns list"
+                    }
+                }
             }
-          }
-        }
-      },
-
-      "/country/list": {
-        "get": {
-          "tags": ["Country"],
-          "summary": "Country list",
-          "description": "Returns alpha2 code, and name",
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "Returns list"
+        },
+        "/object/img-file": {
+            "post": {
+                "tags": ["Object"],
+                "summary": "Create object, and create thumb, from raw image data provided",
+                "description": "Create object, and create thumb, from raw image data provided",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns object id"
+                    }
+                }
             }
-          }
-        }
-      },
-
-      "/object/img-file": {
-        "POST": {
-          "tags": ["Object"],
-          "summary": "Create object, and create thumb, from raw image data provided",
-          "description": "Create object, and create thumb, from raw image data provided",
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "returns object id"
+        },
+        "/object/personal-video-upload": {
+            "post": {
+                "tags": ["Object"],
+                "summary": "Upload user personal video",
+                "description": "Upload video to user personal library",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "video",
+                        "in": "formData",
+                        "description": "Video blob",
+                        "required": true,
+                        "type": "input"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns object id"
+                    }
+                }
             }
-          }
-        }
-      },
-      "/object/img-file/{keyname}": {
-        "POST": {
-          "tags": ["Object"],
-          "summary": "Create image for object",
-          "description": "Create image for object",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "name": "keyname",
-            "in": "path",
-            "description": "object id",
-            "required": true,
-            "type": "int"
-          }],
-          "responses": {
-            "200": {
-              "description": "returns object"
+        },
+        "/object/personal-video-upload?generate-thumb": {
+            "post": {
+                "tags": ["Object"],
+                "summary": "Upload user personal video",
+                "description": "Upload video to user personal library",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "video",
+                        "in": "formData",
+                        "description": "Video blob",
+                        "required": true,
+                        "type": "input"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns object id"
+                    }
+                }
             }
-          }
-        }
-      },
-      "/object/img-data/{keyname}": {
-        "POST": {
-          "tags": ["Object"],
-          "summary": "Adds name and tags for object",
-          "description": "Adds name and tags for object",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [{
-            "name": "keyname",
-            "in": "path",
-            "description": "object id",
-            "required": true,
-            "type": "int"
-          }],
-          "responses": {
-            "200": {
-              "description": "returns object"
+        },
+        "/object/personal-video-poll/{id}": {
+            "get": {
+                "tags": ["Object"],
+                "summary": "Check video is converted",
+                "description": "Check video is converted",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Object ID",
+                        "required": true,
+                        "type": "int"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns object false or url, thumb url, id"
+                    }
+                }
             }
-          }
+        },
+        "/object/img-file/{keyname}": {
+            "post": {
+                "tags": ["Object"],
+                "summary": "Create image for object",
+                "description": "Create image for object",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyname",
+                        "in": "path",
+                        "description": "object id",
+                        "required": true,
+                        "type": "int"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns object"
+                    }
+                }
+            }
+        },
+        "/object/img-data/{keyname}": {
+            "post": {
+                "tags": ["Object"],
+                "summary": "Adds name and tags for object",
+                "description": "Adds name and tags for object",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyname",
+                        "in": "path",
+                        "description": "object id",
+                        "required": true,
+                        "type": "int"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns object"
+                    }
+                }
+            }
+        },
+        "/object/delete/{keyname}": {
+            "delete": {
+                "tags": ["Object"],
+                "summary": "Deletes object",
+                "description": "Delete file from storage, and mark object as deleted",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyname",
+                        "in": "path",
+                        "description": "object id",
+                        "required": true,
+                        "type": "int"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "status"
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
