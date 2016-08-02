@@ -293,31 +293,19 @@ const GalleryProject = {
   }
 };
 */
-function Test(payload, testModule, swaggerUrl) {
+function Test(payload, testModule) {
   this.name = payload.repository.name;
   this.request = supertest.agent(testModule.server);
-  this.swaggerUrl = swaggerUrl;
+  this.swaggerUrl = testModule.swagger;
   this.payload = payload;
   this.testModule = testModule;
 }
 
-Test.prototype.run = function(swaggerUrl, callback) {
-  if (typeof swaggerUrl === 'function') {
-    return this.run.call(this, null, swaggerUrl);
-  }
-
+Test.prototype.run = function(callback) {
   const self = this;
 
-  const schemaSource = this.swaggerUrl || swaggerUrl;
-
-  if (!schemaSource) {
-    throw new Error('missing swagger documentation');
-  }
-
-  console.log('schemaSource', schemaSource);
-
   sway.create({
-    definition: schemaSource
+    definition: this.swaggerUrl
   }).then(function(api) {
     async.parallel([
       /*
@@ -337,7 +325,7 @@ Test.prototype.run = function(swaggerUrl, callback) {
           }
         };
         */
-        /*
+      /*
         self.request.get('/gallery/')
           .expect('Content-type', /json/)
           .expect(200)
@@ -389,7 +377,7 @@ Test.prototype.run = function(swaggerUrl, callback) {
             }
           };
         */
-       /*
+      /*
         self.request.get('/gallery/user/48137')
           .expect('Content-type', /json/)
           .expect(200)
@@ -431,7 +419,30 @@ Test.prototype.run = function(swaggerUrl, callback) {
             const data = {};
             if (err) data.error = err.messsage;
             data.info = result;
-            data.api = api;
+            data.operationsByPath = {};
+            console.log(api
+              .getPath('/user/password/recover')
+              .getOperation('POST')
+              .getParameter('email')
+              .getSample());
+            api.getPaths().forEach(p => {
+              data.operationsByPath[p.path] = p.getOperations()
+                .map(({
+                  definition,
+                  definitionFullyResolved,
+                  method,
+                  pathToDefinition,
+                  ptr,
+                  securityDefinitions
+                }) => ({
+                  definition,
+                  definitionFullyResolved,
+                  method,
+                  pathToDefinition,
+                  ptr,
+                  securityDefinitions
+                }));
+            });
 
             try {
               data.body = JSON.parse(result.text);
@@ -441,13 +452,13 @@ Test.prototype.run = function(swaggerUrl, callback) {
               return;
             }
 
-            delete data.result.text;
+            delete data.info.text;
 
             try {
-              const op = api.getOperation('/gallery/{slug}', 'get');
+              const op = api.getOperation('/gallery/{slug}', 'GET');
               const definition = op.getResponse(200).definitionFullyResolved;
               data.schema = definition.schema;
-            } catch(err) {
+            } catch (err) {
               err.message = 'Schema Definition Error: ' + err.message;
               cb(err, data);
               return;
@@ -455,7 +466,8 @@ Test.prototype.run = function(swaggerUrl, callback) {
 
             validator.validate(data.body, data.schema,
               function(err, valid) {
-                console.log(err, valid);
+                if (err) console.error('Validation Errors:', err);
+                console.log('Validation:', valid);
                 data.validation = {
                   errors: err ? err : [],
                   valid: valid

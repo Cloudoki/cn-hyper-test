@@ -1,6 +1,6 @@
 'use strict';
 
-const hypert = require('../app');
+const hyperTest = require('../app');
 const conf = require('../conf/app');
 const express = require('express');
 const app = express();
@@ -13,7 +13,7 @@ app.post('/promise', function(req, res) {
   // process git new pushes only
   if (req.headers && req.headers['x-github-event'] &&
     req.headers['x-github-event'] === 'push') {
-    hypert.addTest(req.body, function(err) {
+    hyperTest.addTest(req.body, function(err) {
       if (err) return res.json({ ok: false, error: err });
 
       return res.json({ ok: true });
@@ -24,7 +24,7 @@ app.post('/promise', function(req, res) {
 });
 
 app.get('/test', function(req, res) {
-  hypert.addTest(require('../static/payload'), function(err) {
+  hyperTest.addTest(require('../static/payload'), function(err) {
     if (err) return res.json({ ok: false, error: err });
 
     return res.json({ ok: true });
@@ -32,8 +32,8 @@ app.get('/test', function(req, res) {
 });
 
 app.post('/run', function(req, res) {
-  if (req.body.component && req.body.swagger) {
-    hypert.runTest(req.body.component, req.body.swagger,
+  if (req.body.component) {
+    hyperTest.runTest(req.body.component,
       function(err, data) {
         const response = { ok: true };
         if (err) {
@@ -58,7 +58,7 @@ app.post('/run', function(req, res) {
     res.status(400);
     res.json({
       ok: false,
-      error: 'BAD_REQUEST: missing body properties component or swagger'
+      error: 'BAD_REQUEST: missing body property component'
     });
   }
 });
@@ -78,7 +78,7 @@ app.get('/render', function(req, res) {
 
 app.use('/', express.static('static'));
 
-hypert.init(err => {
+hyperTest.init(err => {
   if (err) throw err;
   console.log('Tests loaded');
   app.listen(conf.web.port, function() {

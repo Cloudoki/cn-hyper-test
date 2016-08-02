@@ -4,6 +4,7 @@ module.exports = {
   component: 'Moovly API',
   version: 'production',
   server: 'https://api.moovly.com',
+  swagger: "http://localhost:8700/swagger.json",
   repos: [
     'https://github.com/Moovly/moovly-api',
     'https://github.com/Moovly/moovly-worker'
