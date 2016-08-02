@@ -4,6 +4,7 @@ module.exports = {
   component: 'Hyper test',
   version: 'Staging',
   server: 'http://hypertest.cloudoki.com',
+  // swagger: "http://localhost:8700/swagger.json",
   repos: [
     'https://github.com/Cloudoki/cn-hyper-test'
   ],

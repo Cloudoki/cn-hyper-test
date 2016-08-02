@@ -16,7 +16,6 @@
             }
         }
     },
-
     "Broadcast": {
         "type": "object",
         "required": [
@@ -43,7 +42,6 @@
             "created_at": "1970-01-01 00:00:01"
         }
     },
-
     "PlayerSize": {
         "type": "object",
         "required": [
@@ -61,20 +59,31 @@
             }
         }
     },
-
     "Date" : {
         "type": "object",
         "required": [
-            "date"
+            "date",
+            "timezone_type",
+            "timezone"
         ],
         "properties": {
             "date": {
-                "type": "string",
+                "type": "dateTime",
                 "format": "date-time"
+            },
+            "timezone_type": {
+                "type": "integer"
+            },
+            "timezone": {
+                "type": "string"
             }
+        },
+        "example": {
+            "date": "1970-01-01 00:00:01.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
         }
     },
-
     "User": {
         "type": "object",
         "required": [
@@ -92,27 +101,6 @@
             },
             "last_name": {
                 "type": "string"
-            }
-        }
-    },
-
-    "UserGallery": {
-        "type": "object",
-        "required": [
-            "id",
-            "firstname",
-            "name"
-        ],
-        "properties": {
-            "id": {
-                "type": "integer",
-                "format": "int64"
-            },
-            "firstname": {
-                "type": "string"
-            },
-            "name": {
-                "type": "string"
             },
             "email": {
                 "type": "string",
@@ -120,7 +108,6 @@
             }
         }
     },
-
     "CartStatus": {
         "type": "object",
         "required": [
@@ -139,7 +126,6 @@
         }
 
     },
-
     "CreditPackage": {
         "type": "object",
         "required": [
@@ -170,7 +156,6 @@
             }
         }
     },
-
     "CartItem": {
         "type": "object",
         "required" :[
@@ -202,7 +187,6 @@
 
         }
     },
-
     "Cart": {
         "type": "object",
         "required" :[
@@ -228,7 +212,6 @@
         }
 
     },
-
     "GallerySubmission": {
         "type": "object",
         "required": [
@@ -244,20 +227,19 @@
                 "format": "int64"
             },
             "project": {
-                "$ref": "#/Project"
+                "$ref": "#/Project"    
             },
             "created_at": {
-                "$ref": "#/Date"
+                "$ref": "#/Date"    
             },
             "updated_at": {
-                "$ref": "#/Date"
+                "$ref": "#/Date"    
             },
             "created_by": {
-                "$ref": "#/User"
+                "$ref": "#/User"    
             }
         }
     },
-
     "Gallery": {
         "type": "object",
         "required": [
@@ -277,27 +259,42 @@
             "name": {
                 "type": "string"
             },
-            "slug": {
+            "keyname": {
                 "type": "string"
             },
             "body": {
                 "type": "string"
             },
-            "created_at": {
-                "type": "string",
-                "format": "date-time"
-            },
-            "updated_at": {
-                "type": "string",
-                "format": "date-time"
-            },
             "project_count": {
                 "type": "integer",
                 "format": "int64"
+            },
+            "created_at": {
+                "$ref": "#/Date"    
+            },
+            "updated_at": {
+                "$ref": "#/Date"    
             }
         }
     },
-
+    "ProjectCategory": {
+        "type": "object",
+      "required": [
+        "name",
+        "template"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "templates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/Project"
+          }
+        }
+      }
+    },
     "Project": {
         "type": "object",
         "required": [
@@ -328,124 +325,16 @@
                 "type": "string"
             },
             "created_at": {
-                "$ref": "#/Date"
+                "$ref": "#/Date"    
             },
             "updated_at": {
-                "$ref": "#/Date"
+                "$ref": "#/Date"    
             },
             "created_by": {
-                "$ref": "#/User"
+                "$ref": "#/User"    
             }
         }
     },
-
-    "ProjectPublished": {
-        "type": "object",
-        "required": [
-            "id",
-            "name",
-            "keyname",
-            "description",
-            "thumb"
-        ],
-        "properties": {
-            "id": {
-                "type": "integer",
-                "format": "int64"
-            },
-            "name": {
-                "type": "string"
-            },
-            "keyname": {
-                "type": "string"
-            },
-            "description": {
-                "type": "string"
-            },
-            "thumb": {
-                "type": "string"
-            }
-        }
-    },
-
-    "ProjectGallery": {
-        "type": "object",
-        "required": [
-            "id",
-            "sticky",
-            "name",
-            "keyname",
-            "description",
-            "thumb",
-            "updated_at",
-            "created_by"
-        ],
-        "properties": {
-            "id": {
-                "type": "integer",
-                "format": "int64"
-            },
-            "sticky": {
-                "type": "integer",
-                "format": "int64"
-            },
-            "name": {
-                "type": "string"
-            },
-            "keyname": {
-                "type": "string"
-            },
-            "description": {
-                "type": "string"
-            },
-            "thumb": {
-                "type": "string"
-            },
-            "updated_at" : {
-                "type": "string",
-                "format": "date-time"
-            },
-            "created_by" : {
-                "type": "integer",
-                "format": "int64"
-            }
-        }
-    },
-
-    "GalleryProject": {
-        "type": "object",
-        "required": [
-            "id",
-            "name",
-            "slug",
-            "body",
-            "project_count",
-            "projects"
-        ],
-        "properties": {
-            "id": {
-                "type": "integer",
-                "format": "int64"
-            },
-            "name": {
-                "type": "string"
-            },
-            "slug": {
-                "type": "string"
-            },
-            "body": {
-                "type": "string"
-            },
-            "project_count": {
-                "type": "integer",
-                "format": "int64"
-            },
-            "projects" : {
-                "$ref": "#/ProjectGallery"
-            }
-        }
-    },
-
     "SimpleProject": {
         "type": "object",
         "required": [
@@ -474,7 +363,6 @@
             }
         }
     },
-
     "ProjectID": {
         "type": "object",
         "required": [
@@ -491,7 +379,6 @@
             }
         }
     },
-
     "ProjectView": {
         "allOf": [
             {
@@ -555,7 +442,6 @@
             }
         ]
     },
-
     "LoginRule": {
         "type": "object",
         "required": [
@@ -587,7 +473,6 @@
             }
         }
     },
-
     "Preset": {
         "type": "object",
         "required": [
@@ -616,7 +501,6 @@
             }
         }
     },
-
     "ProjectSettings": {
         "type": "object",
         "required": [
@@ -638,8 +522,8 @@
                 "type": "string"
             }
         }
-    },
 
+    },
     "RenderStatus": {
         "type": "object",
         "required": [
@@ -669,5 +553,6 @@
             "status": "queued",
             "datetime": "1970-01-01 00:00:01"
         }
+
     }
 }

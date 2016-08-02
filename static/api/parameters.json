@@ -1,35 +1,4 @@
 {
-    "id": {
-        "name": "id",
-        "in": "path",
-        "description": "The user id",
-        "required": true,
-        "type": "string"
-    },
-
-    "slug": {
-        "name": "slug",
-        "in": "path",
-        "description": "the slug dentifier for the gallery",
-        "required": true,
-        "type": "string"
-    },
-
-    "maxParam": {
-        "name": "max",
-        "in": "query",
-        "description": "Max number of results",
-        "required": false,
-        "type": "integer"
-    },
-
-    "firstParam":{
-        "name": "first",
-        "in": "query",
-        "description": "First row of result set",
-        "required": false,
-        "type": "integer"
-    },
 
     "emailParam" : {
         "name": "email",
@@ -39,13 +8,6 @@
         "type": "string"
     },
 
-    "redirectUri" : {
-        "name": "redirect_uri",
-        "in": "query",
-        "description": "URI to redirect to upon successfull authentication",
-        "required": true,
-        "type": "string"
-    },
 
     "keyParam" : {
         "name": "key",
