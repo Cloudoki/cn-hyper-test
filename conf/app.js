@@ -4,8 +4,8 @@ module.exports = {
   },
   worker:{
     auth: {
-      uname: "",
-      password: ""
+      uname: "ricardo@cloudoki.com",
+      passwd: "moovlypassword"
     }
   }
 };

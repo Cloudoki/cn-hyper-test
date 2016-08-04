@@ -1,8 +1,6 @@
 'use strict';
 
-const
-  async   = require('async'),
-  worker  = require('../lib/worker');
+const worker = require('../lib/worker');
 
 require('express')().use('/', require('express').static('static')).listen(8700,
   err => {
@@ -12,26 +10,16 @@ require('express')().use('/', require('express').static('static')).listen(8700,
     }
     require('../lib/swayer')
       .fromComponent('moovly-api',
-        (err, data) => {
+        (err, data, sway) => {
           if (err) {
             console.error(err);
             return process.exit(1);
           }
 
-          const
-            baseURL = data.config.server,
-            URIs = [];
+          worker.runSway(data, require('../lib/worker/hooks'), (err, results) => {
 
-          for ( var uri in data.operationsByPath ) {
-
-            var endpoint = data.operationsByPath[uri];
-            if( endpoint.method.toLowerCase() != "get" ){
-              console.log("Skip", uri, "method", endpoint.method);
-            }
-
-
-          }
-          // console.log(JSON.stringify(data, null, 2));
-          process.exit();
+            console.log("End:", err, results);
+            process.exit();
+          });
         });
   });

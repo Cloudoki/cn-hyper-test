@@ -6,10 +6,16 @@ const
 
 fs.readFile("output.json", function(err, content){
 
-  var data = JSON.parse(content);
-  worker.runSway(data, require('../lib/worker/hooks'),(err) => {
+  try {
+      var data = JSON.parse(content);
+  } catch(e){
+    console.error(e);
+    process.exit(1);
+  }
 
-    console.log("End:", err);
+  worker.runSway(data, require('../lib/worker/hooks'),(err, results) => {
+
+    console.log("End:", err, results);
+    process.exit(0);
   });
-
 });
