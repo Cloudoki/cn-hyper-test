@@ -227,16 +227,16 @@
                 "format": "int64"
             },
             "project": {
-                "$ref": "#/Project"    
+                "$ref": "#/Project"
             },
             "created_at": {
-                "$ref": "#/Date"    
+                "$ref": "#/Date"
             },
             "updated_at": {
-                "$ref": "#/Date"    
+                "$ref": "#/Date"
             },
             "created_by": {
-                "$ref": "#/User"    
+                "$ref": "#/User"
             }
         }
     },
@@ -270,10 +270,10 @@
                 "format": "int64"
             },
             "created_at": {
-                "$ref": "#/Date"    
+                "$ref": "#/Date"
             },
             "updated_at": {
-                "$ref": "#/Date"    
+                "$ref": "#/Date"
             }
         }
     },
@@ -325,13 +325,13 @@
                 "type": "string"
             },
             "created_at": {
-                "$ref": "#/Date"    
+                "$ref": "#/Date"
             },
             "updated_at": {
-                "$ref": "#/Date"    
+                "$ref": "#/Date"
             },
             "created_by": {
-                "$ref": "#/User"    
+                "$ref": "#/User"
             }
         }
     },

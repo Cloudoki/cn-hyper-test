@@ -4,6 +4,7 @@ const hyperTest = require('../app');
 const conf = require('../conf/app');
 const express = require('express');
 const app = express();
+const fs = require('fs');
 const bodyParser = require('body-parser');
 
 const handlebars = require('handlebars');
@@ -33,27 +34,27 @@ app.get('/test', function(req, res) {
 
 app.post('/run', function(req, res) {
   if (req.body.component) {
-    hyperTest.runTest(req.body.component,
-      function(err, data) {
-        const response = { ok: true };
-        if (err) {
-          res.status(500);
-          response.ok = false;
-          response.error = err.message;
-        }
+    res.json({
+      ok: true
+    });
+    setImmediate(() => {
+      hyperTest.runTest(req.body.component,
+        function(err, data) {
+          if (err) {
+            console.error('Run test error:', err);
+          } else {
+            console.log('Run test completed');
+          }
 
-        if (!err && data && data.error) {
-          res.status(500);
-          response.ok = false;
-          response.error = data.error;
-        }
-
-        if (process.env.NODE_ENV !== 'production') {
-          response.data = data;
-        }
-
-        return res.json(response);
-      });
+          if (process.env.NODE_ENV !== 'production') {
+            fs.writeFile('./output.json',
+              JSON.stringify(data, null, 2), 'uft8',
+              err => {
+                if (err) console.error('Saving output error:', err);
+              });
+          }
+        });
+    });
   } else {
     res.status(400);
     res.json({

@@ -5,7 +5,7 @@ require('express')().use('/', require('express').static('static')).listen(8700,
       return process.exit(1);
     }
     require('../lib/swayer')
-      .fromComponent('moovly-api',
+      .fromUrl('http://localhost:8700/swagger.json', {},
         (err, data) => {
           if (err) {
             console.error(err);

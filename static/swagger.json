@@ -194,7 +194,7 @@
                     "200": {
                         "description": "User email and id",
                         "schema": {
-                            "$ref": "./api/definitions.json#/User"
+                            "$ref": "api/definitions.json#/User"
                         }
                     },
                     "404": {
@@ -259,7 +259,7 @@
                     "200": {
                         "description": "User email and id",
                         "schema": {
-                            "$ref": "./api/definitions.json#/User"
+                            "$ref": "api/definitions.json#/User"
                         }
                     },
                     "404": {
@@ -470,7 +470,7 @@
                     "200": {
                         "description": "Group rules",
                         "schema": {
-                            "$ref": "./api/definitions.json#/LoginRule"
+                            "$ref": "api/definitions.json#/LoginRule"
                         }
                     },
                     "404": {

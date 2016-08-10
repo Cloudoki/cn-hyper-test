@@ -2,7 +2,7 @@
 
 const tester = require('./lib/tester');
 
-exports.init = cb => tester.loadTests(cb);
+exports.init = tester.init;
 
 exports.addTest = function(payload, callback) {
 
@@ -14,6 +14,5 @@ exports.addTest = function(payload, callback) {
 };
 
 exports.runTest = function(component, swaggerUrl, callback) {
-
-  return tester.run(component, swaggerUrl, callback);
+  tester.run(component, swaggerUrl, callback);
 };
