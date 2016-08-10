@@ -3,7 +3,7 @@ module.exports = {
   component: 'Moovly API',
   version: 'production',
   server: 'https://api.moovly.com',
-  swagger: "http://localhost:8700/swagger.json",
+  swagger: 'http://localhost:8700/swagger.json',
   repos: [
     'https://github.com/Moovly/moovly-api',
     'https://github.com/Moovly/moovly-worker'
@@ -19,10 +19,16 @@ module.exports = {
     // 'development@moovly.com',
     'edgar@cloudoki.com'
   ],
+  tester: {
+    attempts: 2,
+    concurrency: 3,
+    delayAttempt: 50,
+    delay: 20
+  },
+  sway: {},
   hooks: [{
     type: 'clint-side-oauth',
-    statusCode: 403,
-    attempts: 2,
+    onStatusCode: 403,
     cache: {
       id: 'moovly-api'
     },

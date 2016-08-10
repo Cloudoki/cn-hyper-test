@@ -36,4 +36,4 @@ node_modules
 db
 
 # ignore development output
-output.json
+output*.json

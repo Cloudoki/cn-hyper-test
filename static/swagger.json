@@ -11,7 +11,7 @@
             "email": "support@moovly.com"
         }
     },
-    "host": "api.moovly.dev",
+    "host": "api.moovly.com",
     "basePath": "/",
     "schemes": [
         "http"
