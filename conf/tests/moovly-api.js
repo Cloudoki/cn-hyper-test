@@ -27,7 +27,7 @@ module.exports = {
   },
   sway: {},
   hooks: [{
-    type: 'clint-side-oauth',
+    type: 'client-side-oauth',
     onStatusCode: 403,
     cache: {
       id: 'moovly-api'

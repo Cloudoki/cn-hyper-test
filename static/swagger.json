@@ -14,7 +14,7 @@
     "host": "api.moovly.com",
     "basePath": "/",
     "schemes": [
-        "http"
+        "https"
     ],
     "tags": [
         {
