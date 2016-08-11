@@ -1,17 +1,16 @@
 # Hyper API testing tool
-Testing tool to Restul API's, part of the Hyper platform.
+Testing tool to Restful API's, part of the Hyper platform.
 
 Features:
   - Register testing projects based on one or more repositories
   - Webhook to setup a new test based on the repos commit ID's
-  - Type HTTP test units with supertest
+  - Parse through an specification and generate tests for it
   - Send the results via sendgrid
 
 ### Requirements
 
  - node: >=6.0.0
  - npm: >=3.8.1
-
 
 ### Installation:
 
@@ -36,18 +35,24 @@ the `static/payload.json`  file payload
 
 ### Scripts
 
-- Swayer Script: will parse the `moovly-api` specification and output the swayer procedure
+###### Swayer
+
+It will parse the `moovly-api` specification and output the swayer procedure
 useful for debugging
 
     $ node bin/swayer > output.json
 
-- Worker Script: run a test for the `moovly-api` but without the need for github payloads.
+###### Worker
+
+Run a test for the `moovly-api` but without the need for github payloads.
 Will not save to the database the result (only output to stdout) and will not send mail
 
     $ node bin/worker > output-worker.json
 
-- Render script: useful for developing the templates will only require dependencies
-needed to render the template of the mail
+###### Render
+
+Useful for developing the templates will only require dependencies
+needed to render the template of the mail (no need for to npm install everything)
 
     $ npm install handlebars express juice html-to-text
 
