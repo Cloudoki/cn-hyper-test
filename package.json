@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node bin/www.js",
     "test": "rimraf coverage && NODE_ENV=test istanbul cover node_modules/.bin/_mocha -- --reporter spec test",
-    "lint": "eslint lib bin test",
-    "debug": "DEBUG=hyper:* npm start"
+    "lint": "eslint lib bin test"
   },
   "repository": {
     "type": "git",
