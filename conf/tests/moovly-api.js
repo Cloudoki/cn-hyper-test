@@ -8,7 +8,7 @@ module.exports = {
     'https://github.com/Moovly/moovly-api',
     'https://github.com/Moovly/moovly-worker'
   ],
-  branchs: [
+  branches: [
     'master'
   ],
   recipients: [

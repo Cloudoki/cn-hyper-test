@@ -48,7 +48,7 @@ app.post('/run', function(req, res) {
 
           if (process.env.NODE_ENV !== 'production') {
             fs.writeFile('./output.json',
-              JSON.stringify(data, null, 2), 'uft8',
+              JSON.stringify(data, null, 2), 'utf8',
               err => {
                 if (err) console.error('Saving output error:', err);
               });
