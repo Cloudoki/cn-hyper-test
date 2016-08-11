@@ -39,19 +39,19 @@ the `static/payload.json`  file payload
 - Swayer Script: will parse the `moovly-api` specification and output the swayer procedure
 useful for debugging
 
-`node bin/swayer > output.json`
+    $ node bin/swayer > output.json
 
 - Worker Script: run a test for the `moovly-api` but without the need for github payloads.
 Will not save to the database the result (only output to stdout) and will not send mail
 
-`node bin/worker > output-worker.json`
+    $ node bin/worker > output-worker.json
 
 - Render script: useful for developing the templates will only require dependencies
 needed to render the template of the mail
 
-`npm install handlebars express juice html-to-text`
+    $ npm install handlebars express juice html-to-text
 
-`node bin/render.js`
+    $ node bin/render.js
 
 This will start http server with only the `GET /render` (will reload templates on every request)
 and an new endpoint `GET /text` that will render the text format of the email
