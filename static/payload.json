@@ -1,21 +1,21 @@
 {
   "ref": "refs/heads/master",
   "repository": {
-    "url": "https://github.com/Moovly/moovly-api",
-    "name": "moovly-api",
-    "organization": "Moovly"
+    "url": "https://github.com/Cloudoki/poc-api",
+    "name": "poc-api",
+    "organization": "Cloudoki"
   },
   "commits": [{
     "timestamp": "2016-06-08T10:41:58.000Z",
-    "message": "do not require payload",
+    "message": "do require payload",
     "author": {
-      "username": "dimitrivh"
+      "username": "efmr"
     }
   }],
   "pusher": {
-    "name": "dimitrivh"
+    "name": "efmr"
   },
   "organization": {
-    "login": "Moovly"
+    "login": "Cloudoki"
   }
 }
