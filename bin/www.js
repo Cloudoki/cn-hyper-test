@@ -25,7 +25,7 @@ app.post('/promise', function(req, res) {
 });
 
 app.get('/test', function(req, res) {
-  hyperTest.addTest(require('../static/payload'), function(err) {
+  hyperTest.addTest(require('../static/payload_hyper_api_test.json'), function(err) {
     if (err) return res.json({ ok: false, error: err });
 
     return res.json({ ok: true });

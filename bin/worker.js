@@ -10,7 +10,7 @@ require('express')().use('/', require('express').static('static')).listen(8700,
         console.error(err);
         return process.exit(1);
       }
-      tester.test('moovly-api',
+      tester.test('cn-hyper-test-api',
         (err, data) => {
           if (err) {
             console.error(err);

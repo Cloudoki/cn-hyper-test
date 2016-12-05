@@ -1,0 +1,21 @@
+{
+  "ref": "refs/heads/master",
+  "repository": {
+    "url": "https://github.com/Cloudoki/cn-hyper-test-api",
+    "name": "cn-hyper-test-api",
+    "organization": "Cloudoki"
+  },
+  "commits": [{
+    "timestamp": "2016-09-09T14:30:00.000Z",
+    "message": "fix package.json",
+    "author": {
+      "username": "efmr"
+    }
+  }],
+  "pusher": {
+    "name": "efmr"
+  },
+  "organization": {
+    "login": "Cloudoki"
+  }
+}
