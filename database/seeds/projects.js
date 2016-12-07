@@ -20,11 +20,10 @@ const testProjects = [
         recipients: [
           'hyper.test.dev@cloudoki.com'
         ],
-        authentication: {
-          type: 'header',
-          key: 'Authentication',
-          value: 'Bearer SOMEKEYSOMEKEY'
-        },
+        authentication: [{
+          id: 'api_key',
+          value: 'Bearer SOMEKEYSOMEKEYLOCAL'
+        }],
         tester: {
           attempts: 2,
           concurrency: 3,
@@ -40,11 +39,10 @@ const testProjects = [
         recipients: [
           'hyper.test.dev@cloudoki.com'
         ],
-        authentication: {
-          type: 'header',
-          key: 'Authentication',
-          value: 'Bearer SOMEKEYSOMEKEY'
-        },
+        authentication: [{
+          id: 'api_key',
+          value: 'Bearer SOMEKEYSOMEKEYSTAGING'
+        }],
         tester: {
           attempts: 2,
           concurrency: 3,
@@ -76,6 +74,4 @@ function performSeed () {
       log.info({ projectName: testProject.name, _id: p._id }, 'Seed project inserted')
     })
   })
-
-  log.info('All test projects seeded.')
 }

@@ -26,6 +26,10 @@ build/Release
 # Dependency directory
 node_modules
 
+# Any temporary or forgotten hook
+/tmp/*
+!/tmp/.gitkeep
+
 # Optional npm cache directory
 .npm
 

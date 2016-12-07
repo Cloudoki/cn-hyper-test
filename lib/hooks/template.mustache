@@ -1,0 +1,158 @@
+const _ = require('lodash')
+const os = require('os')
+const url = require('url')
+const hooks = require('hooks')
+const SwaggerParser = require('swagger-parser')
+const log = require('lib/helpers/log')
+const packageJson = require('package.json')
+
+let db
+const now = new Date()
+console.log('####### at hooks, file name:', __filename)
+
+let environment = {{{ environment }}} // eslint-disable-line
+let envAuthenticationHash = null
+
+let parsedSwaggerApi = null
+let prefixedSwaggerPaths = null
+
+/**
+ * Given a swagger path such as `/user` and a basePath such as `/ap1/v1`,
+ * transform all Swagger api paths to `/api/v1/user`.
+ *
+ * @see `documentation/examples/swagger-requests-prefixed.md`
+ * @return object           The swagger.paths object but
+ *                          with the keys prefixed
+ */
+function prefixSwaggerPaths(swaggerApi) {
+  let prefix = swaggerApi.basePath || ''
+  let prefixedSwaggerPaths = {}
+
+  if (typeof swaggerApi.paths !== 'object') {
+    return prefixedSwaggerPaths
+  }
+
+  swaggerApi.paths = swaggerApi.paths || {}
+  for (let uri in swaggerApi.paths) {
+    prefixedSwaggerPaths[prefix + uri] = swaggerApi.paths[uri]
+  }
+
+  return prefixedSwaggerPaths
+}
+
+/**
+ * Get Swagger path entry from the passed Dredd transaction object.
+ *
+ * @see `documentation/examples/swagger-requests-prefixed.md`
+ * @see `documentation/examples/dredd-request-transaction.md`
+ */
+function getSwaggerRequest(prefixedSwaggerPaths, dreddTransaction) {
+  let method = dreddTransaction.request.method.toLowerCase()
+  let uri = dreddTransaction.origin.resourceName
+  return prefixedSwaggerPaths[uri][method]
+}
+
+/**
+ * Given the original Swagger specification that contains the `securityDefinitions` object
+ * and the particular request's `security` config, we try to find the authentication tokens
+ * provided in the current project environment and inject it into the dredd transaction object.
+ * Usually this means that we insert the Authorization header with the correct value.
+ */
+function injectTransactionSecurity(swaggerApi, prefixedSwaggerPaths, dreddTransaction) {
+  let request = getSwaggerRequest(prefixedSwaggerPaths, dreddTransaction)
+
+  // @see docs: http://swagger.io/specification/#securityDefinitionsObject
+  let securityDefinitions = swaggerApi.securityDefinitions
+  let requestSecurity = request.security
+  let location = null
+  let key = null
+  let value = null
+
+  if (!requestSecurity || !Array.isArray(requestSecurity)) {
+    return
+  }
+
+  // Convert the environment's authentication array into a hash
+  envAuthenticationHash = envAuthenticationHash || _.keyBy(environment.authentication, 'id')
+
+  requestSecurity.some((sec) => {
+    for (let identifier in sec) {
+      if (!envAuthenticationHash[identifier]) {
+        // User did not provide configuration
+        // for this particular authentication type
+        continue
+      }
+      let definition = securityDefinitions[identifier]
+      switch (definition.type) {
+        case 'apiKey':
+          location = definition.in.toLowerCase()
+          key = definition.name
+          value = envAuthenticationHash[identifier].value
+          return true
+        case 'basic':
+          location = 'header'
+          key = 'Authorization'
+          value = envAuthenticationHash[identifier].value
+          return true
+        case 'oauth2':
+          // Not yet implemented
+          // Fallthrough
+        default:
+          return false
+      }
+    }
+  })
+
+  if (!location || !key || !value) {
+    return
+  }
+
+  if (location === 'header') {
+    dreddTransaction.request.headers[key] = value
+  } else {
+    let urlObj = url.parse(dreddTransaction.request.uri, true)
+    delete urlObj.search
+    urlObj.query[key] = value
+    dreddTransaction.request.uri = url.format(urlObj)
+  }
+}
+
+function replaceUserAgent(transaction) {
+  let system = os.type() + ' ' + os.release() + '; ' + os.arch();
+  let userAgent = 'HyperTest/' + packageJson.version + ' (' + system + ')'
+
+  transaction.request.headers['User-Agent'] = userAgent
+}
+
+hooks.beforeAll((transactions, done) => {
+  log.debug('Before all transactions')
+  if (!transactions || !transactions[0] || !transactions[0].origin || !transactions[0].origin.filename) {
+    return done(new Error('Invalid origin filename'));
+  }
+
+  // TODO log with bunyan
+  // TODO add a timeout so that we don't wait on the swagger parser forever if a network issue occurrs
+
+  SwaggerParser.validate(transactions[0].origin.filename, (err, api) => {
+    if (err) {
+      return done(new Error('Could not fetch Swagger spec'))
+    }
+    log.debug("API name: %s, Version: %s", api.info.title, api.info.version)
+    parsedSwaggerApi = api
+    prefixedSwaggerPaths = prefixSwaggerPaths(api);
+
+    return done()
+  })
+})
+
+hooks.beforeEach((transaction, done) => {
+  let contentType
+  let auth = environment.authentication
+
+  injectTransactionSecurity(parsedSwaggerApi, prefixedSwaggerPaths, transaction)
+  replaceUserAgent(transaction)
+
+  log.debug({ transaction }, 'Altered transaction')
+
+  done()
+})

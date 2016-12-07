@@ -4,7 +4,7 @@ exports = module.exports = {
   'server': 'http://localhost:8000',
   'options': {
     'dry-run': null,
-    'hookfiles': './hooks.js',
+    'hookfiles': [],
     'language': 'nodejs',
     'sandbox': false,
     'server': 'node index.js',
@@ -48,7 +48,7 @@ exports = module.exports = {
     ]
   },
   'custom': {
-    'cwd': path.resolve('..'),
+    'cwd': path.resolve(__dirname + '/..'),
     'argv': []
   }
 }

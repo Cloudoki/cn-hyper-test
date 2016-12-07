@@ -13,6 +13,10 @@ This project uses the following technologies:
 * Database: [MongoDB](https://www.mongodb.com/) with [Mongoose ODM](http://mongoosejs.com/)
 * Style Guide: [JavaScript Standard Style](http://standardjs.com/index.html)
 
+## Documentation
+
+In the `documentation/examples/` folder you can find some example objects of the different data types that this project uses such as a parsed Swagger spec or the Dredd request transaction object.
+
 ## Installation
 
 TBD
@@ -40,7 +44,7 @@ Create the test database seed:
 
 Run the Hyper Test project with:
 
-   npm start | bunyan
+    npm start | bunyan
 
 Check the output logs and find the `_id` that was given to the inserted test documents.
 
