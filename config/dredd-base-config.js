@@ -16,7 +16,7 @@ exports = module.exports = {
     'reporter': [],
     'output': [],
     'header': [],
-    'sorted': false,
+    'sorted': true,
     'user': null,
     'inline-errors': false,
     'details': false,

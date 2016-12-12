@@ -8,11 +8,10 @@ const packageJson = require('package.json')
 
 let db
 const now = new Date()
-console.log('####### at hooks, file name:', __filename)
 
-let environment = {{{ environment }}} // eslint-disable-line
+let environment = {{{ environment }}}
+
 let envAuthenticationHash = null
-
 let parsedSwaggerApi = null
 let prefixedSwaggerPaths = null
 
@@ -124,13 +123,63 @@ function replaceUserAgent(transaction) {
   transaction.request.headers['User-Agent'] = userAgent
 }
 
+/**
+ * Dredd can sort transactions as well but it only orders them by
+ * the request verb
+ * (order: CONNECT, OPTIONS, POST, GET, HEAD, PUT, PATCH, DELETE, TRACE).
+ * Here we also order the transactions according to the request URI so that
+ * we perform request in the [holpefully] correct hierarchical order.
+ * For instance, POST `/users`, should be performed
+ * before POST `/users/{user_id}/addresses`.
+ * Attention that this doesn't solve all request dependency issues since
+ * a hierarchical URI structure is not a REST requirement.
+ */
+function sortTransactions(transactions) {
+  let sortedMethods = {
+    'CONNECT': 1,
+    'OPTIONS': 2,
+    'POST': 3,
+    'GET': 4,
+    'HEAD': 5,
+    'PUT': 6,
+    'PATCH': 7,
+    'DELETE': 8,
+    'TRACE': 9
+  };
+
+  let sortedTransactions = _.orderBy(
+    transactions,
+    [
+      (t) => {
+        // First order by HTTP verb weight
+        return sortedMethods[t.request.method];
+      },
+      (t) => {
+        // Then order by the request URI hoping to correctly
+        // order by resource hierarchy
+        return t.origin.resourceName
+      },
+    ],
+    [ 'asc', 'desc' ]
+  );
+
+  // Empty the original array
+  transactions.splice(0)
+
+  sortedTransactions.forEach(function(element) {
+    transactions.push(element);
+  }, this);
+}
+
 hooks.beforeAll((transactions, done) => {
+
   log.debug('Before all transactions')
   if (!transactions || !transactions[0] || !transactions[0].origin || !transactions[0].origin.filename) {
     return done(new Error('Invalid origin filename'));
   }
 
-  // TODO log with bunyan
+  sortTransactions(transactions)
+
   // TODO add a timeout so that we don't wait on the swagger parser forever if a network issue occurrs
 
   SwaggerParser.validate(transactions[0].origin.filename, (err, api) => {
@@ -139,7 +188,7 @@ hooks.beforeAll((transactions, done) => {
     }
     log.debug("API name: %s, Version: %s", api.info.title, api.info.version)
     parsedSwaggerApi = api
-    prefixedSwaggerPaths = prefixSwaggerPaths(api);
+    prefixedSwaggerPaths = prefixSwaggerPaths(api)
 
     return done()
   })
