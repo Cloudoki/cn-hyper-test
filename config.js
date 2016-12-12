@@ -9,6 +9,9 @@ exports = module.exports = {
     // and must NOT be a symlink to a directory outside the project root
     tmpDir: process.env.HT_HOOKS_TEMP_DIR || './tmp/'
   },
+  mailer: {
+    apiKey: process.env.HT_MAILER_API_KEY || ''
+  },
   logger: {
     name: process.env.HT_LOGGER_NAME || 'HT',
     level: process.env.HT_LOGGER_LEVEL || 'debug'

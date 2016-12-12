@@ -12,6 +12,8 @@ const mustache = require('mustache')
 const config = require('../../config.js')
 const log = require('../../lib/helpers/log')
 const jobs = require('../../lib/helpers/jobs')
+const resultBuilder = require('../../lib/helpers/result-builder')
+const mailer = require('../../lib/helpers/mailer')
 const Project = require('../../lib/models').Project
 const dreddConfig = require('../../config/dredd-base-config.js')
 
@@ -71,6 +73,15 @@ function runTestSuite (project, environment, callback) {
         return callback(err)
       }
       log.info({ project, environment, stats: stats }, 'Dredd result stats')
+
+      // DEBUG
+      // log.debug({ dreddResult: dredd.tests }, 'Dredd Test Result')
+      let tmpFile = '/tmp/testresult2.html'
+      let html = resultBuilder.toHtml({}, dredd.tests)
+      fs.writeFileSync(tmpFile, html)
+      log.debug('Temporarily written the HTML test report to %s', tmpFile)
+
+      // mailer.send('tiago.alves@cloudoki.com', 'Hyper Test - Test', html, () => {})
 
       dredd.tests.forEach((test) => {
         log.info('* ' + test.title + ': ' + test.status)
