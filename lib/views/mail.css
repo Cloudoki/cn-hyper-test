@@ -27,6 +27,19 @@ ul li {
   padding-bottom: 15px;
 }
 
+ul.result-details ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  padding: 0 0 0 20px;
+  margin-bottom: 0;
+}
+
+ul.result-details li {
+  padding: 10px 0;
+}
+
 a {
   color: #334354;
   text-decoration: none;

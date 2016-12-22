@@ -192,20 +192,34 @@
                                 <td align="left" class="">
                                     <strong class="warning">{{request.method}}</strong> - {{origin.resourceName}} ({{request.uri}}) - <strong class="status {{#if valid}}valid{{else}}invalid{{/if}}">{{#if valid}}Valid Schema{{else}}Invalid Schema{{/if}}</strong>
                                     {{#unless valid}}
-                                    <div><b>Actual:</b></div>
-                                    <div>Status Code: {{actual.statusCode}}</div>
-                                    <div>&nbsp;&nbsp;Headers:</div>
-                                    {{#each actual.headers}}
-                                        <div>&nbsp;&nbsp;&nbsp;&nbsp;{{@key}}: {{this}}</div>
-                                    {{/each}}
-                                    <div>Body: {{actual.body}}</div>
-                                    <div><b>Expected:</b></div>
-                                    <div>Status Code: {{expected.statusCode}}</div>
-                                    <div>&nbsp;&nbsp;Headers:</div>
-                                    {{#each expected.headers}}
-                                        <div>&nbsp;&nbsp;&nbsp;&nbsp;{{@key}}: {{this}}</div>
-                                    {{/each}}
-                                    <div>Body: {{expected.body}}</div>
+                                    <ul class="result-details">
+                                        <li><b>Actual</b>:
+                                            <ul>
+                                                <li>Status Code: {{actual.statusCode}}</li>
+                                                <li>Headers:
+                                                    <ul>
+                                                        {{#each actual.headers}}
+                                                        <li>{{@key}}: {{this}}</li>
+                                                        {{/each}}
+                                                    </ul>
+                                                </li>
+                                                <li>Body: {{actual.body}}</li>
+                                            </ul>
+                                        </li>
+                                        <li><b>Expected</b>:
+                                            <ul>
+                                                <li>Status Code: {{expected.statusCode}}</li>
+                                                <li>Headers:
+                                                    <ul>
+                                                        {{#each expected.headers}}
+                                                        <li>{{@key}}: {{this}}</li>
+                                                        {{/each}}
+                                                    </ul>
+                                                </li>
+                                                <li>Body: {{expected.body}}</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
                                     {{/unless}}
 
                                     {{#if false}}
