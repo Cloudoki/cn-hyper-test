@@ -15,6 +15,7 @@ const jobs = require('../../lib/helpers/jobs')
 const resultBuilder = require('../../lib/helpers/result-builder')
 const mailer = require('../../lib/helpers/mailer')
 const Project = require('../../lib/models').Project
+const Run = require('../../lib/models').Run
 const dreddConfig = require('../../config/dredd-base-config.js')
 
 const CHECK_JOBS_DELAY = 5000
@@ -36,6 +37,7 @@ function checkDeployJobs () {
 }
 
 function runTestSuite (project, environment, callback) {
+  let start = Date.now();
   Project.getEnvironment(project, environment, function (err, result) {
     if (err || !result) {
       return callback(err || new Error('Project / environment not found'))
@@ -75,20 +77,49 @@ function runTestSuite (project, environment, callback) {
       log.info({ project, environment, stats: stats }, 'Dredd result stats')
 
       // DEBUG
-      // log.debug({ dreddResult: dredd.tests }, 'Dredd Test Result')
+      log.debug({ dreddResult: dredd.tests }, 'Dredd Test Result')
       let tmpFile = '/tmp/testresult2.html'
+
       let html = resultBuilder.toHtml({}, dredd.tests)
       fs.writeFileSync(tmpFile, html)
       log.debug('Temporarily written the HTML test report to %s', tmpFile)
 
-      // mailer.send('tiago.alves@cloudoki.com', 'Hyper Test - Test', html, () => {})
+      mailer.send('tiago.alves@cloudoki.com', 'Hyper Test - Test', html, (err, result) => {
+        let mailResult
+        if (err) {
+          log.error({ err, result }, 'Could not send result email')
+          mailResult = {
+            statusCode: 0,
+            success: false
+          }
+        } else {
+          mailResult = result
+        }
 
-      dredd.tests.forEach((test) => {
-        log.info('* ' + test.title + ': ' + test.status)
+        let run = new Run({
+          tests: dredd.tests,
+          projectId: project,
+          environmentId: environment,
+          mail: mailResult
+        })
+
+        run.save((err) => {
+          if (err) {
+            log.error({ err, project, environment }, 'Could not save the test run result')
+            return
+          }
+
+          let durantion = ((Date.now() - start) / 1000) + ' s'
+          log.debug({ project, environment, duration: durantion, success: String(mailResult.success) }, 'Test run fully finished!')
+
+          cleanUp()
+          callback()
+        })
+
+        dredd.tests.forEach((test) => {
+          log.info('* ' + test.title + ': ' + test.status)
+        })
       })
-
-      cleanUp()
-      callback()
     })
   })
 }
