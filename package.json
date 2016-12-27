@@ -1,5 +1,5 @@
 {
-  "name": "dredd-test",
+  "name": "cn-hyper-test",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -7,6 +7,7 @@
     "boom": "^4.2.0",
     "bunyan": "^1.8.5",
     "dredd": "^2.2.3",
+    "dredd-transactions": "^3.0.1",
     "handlebars": "^4.0.6",
     "hapi": "^15.2.0",
     "html-to-text": "^2.1.3",

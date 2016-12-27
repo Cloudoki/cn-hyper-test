@@ -2,6 +2,7 @@ const _ = require('lodash')
 const os = require('os')
 const url = require('url')
 const hooks = require('hooks')
+const dreddTransactions = require('dredd-transactions')
 const SwaggerParser = require('swagger-parser')
 const log = require('lib/helpers/log')
 const packageJson = require('package.json')
@@ -14,6 +15,160 @@ let environment = {{{ environment }}}
 let envAuthenticationHash = null
 let parsedSwaggerApi = null
 let prefixedSwaggerPaths = null
+
+// Store the transaction results for POST requests
+// in the form of <operationId>: <dreddTransaction.result>
+let generatedDataResults = {}
+
+/**
+ * Look up a property in an object given a flat dot notation. For instance,
+ * having the object `{ a: b: { c: 1 }}`, the path `"a.b.c"` would return 1.
+ */
+function propertyLookup(obj, path) {
+  return path.split('.').reduce((o,i) => o[i], obj)
+}
+
+/**
+ * For requests that generate data (`POST`), we store the full transaction,
+ * including the resulting response, so that it can be looked up later by
+ * other requests that depend on it.
+ *
+ * Example dependency settings configuration:
+ *
+ *     x-hyper-dependency-settings:
+ *      -
+ *        parameter:
+ *          $ref: "#/parameters/user_id"
+ *        operationId: postAccountUser
+ *        param: id
+ *        in: body
+ */
+function storeGeneratedDataResult(transaction) {
+  let success = transaction.test.status === 'pass'
+  let method = transaction.request.method
+
+  if (!success || method != 'POST') {
+    // only store the generated data of successful POST requests
+    return
+  }
+
+  let operationId = transaction.origin.operationId
+
+  log.debug({ operationId }, 'Storing a transaction result for later dependency lookup')
+
+  generatedDataResults[operationId] = transaction
+}
+
+/**
+ * Given a new transaction, we check whether there was a previous POST
+ * request that generated the object we're about to update. We get its id.
+ *
+ * For instance, if we previously generated a car with POST /cars, we check which
+ * id the new car was assigned and use it now in a new DELETE /cars/{id} request.
+ */
+function getParametersOverride(transaction) {
+  let dependencySettings = transaction.origin['x-hyper-dependency-settings']
+  if (!dependencySettings) {
+    return null
+  }
+
+  let newParameters = []
+
+  try {
+    dependencySettings.forEach((setting) => {
+
+      let operationId = setting.operationId
+      let transactionResult = generatedDataResults[operationId]
+
+      if (!transactionResult) {
+        return null
+      }
+
+      let val
+
+      switch (setting.in) {
+        // TODO also support header lookup instead of just body
+        case 'body':
+          let body = JSON.parse(transactionResult.real.body)
+          val = propertyLookup(body, setting.param)
+          break
+      }
+
+      let clonedParameter = JSON.parse(JSON.stringify(setting.parameter))
+      clonedParameter['x-example'] = val
+
+      newParameters.push(clonedParameter)
+    })
+
+  } catch (e) {
+    log.error({ exception: e }, 'Exception while getting the transaction dependencies')
+    return null
+  }
+
+  return newParameters
+}
+
+function recompileTransaction(transaction, callback) {
+
+  // Check if this transaction depends on previous transactions and
+  // if so, get the values to override in this request.
+  let paramsOverride = getParametersOverride(transaction)
+  if (paramsOverride === null || !Array.isArray(paramsOverride) || !paramsOverride.length) {
+    return callback(null, transaction)
+  }
+
+  // Clone the original parsed Swagger Spec and inject the dependency request's result
+  // in the example data of this new object
+  let swaggerApiClone = JSON.parse(JSON.stringify(parsedSwaggerApi))
+  let swaggerRequest = getSwaggerRequest(prefixedSwaggerPaths, transaction)
+
+  if (!swaggerRequest) {
+    return callback(null, transaction)
+  }
+
+  let swaggerRequestClone = JSON.parse(JSON.stringify(swaggerRequest))
+  swaggerApiClone.basePath = '/'
+
+  // Replace the original request's parameters with the one that
+  // we've altered to have the new x-example value according to the dependency
+  // request's return value
+  swaggerRequestClone.parameters.forEach((element, index, theArray) => {
+    let elementOverride = _.find(paramsOverride, (e) => { return e.name == element.name })
+    if (elementOverride) {
+      theArray[index] = elementOverride
+    }
+  })
+
+  paramsOverride.forEach(function (element) {
+    swaggerRequestClone.parameters.forEach((e, index) => {
+      if (e.name === element.name) {
+        swaggerRequestClone.parameters[index] = element
+      }
+    })
+    if (typeof swaggerApiClone.parameters[element.name]) {
+      swaggerApiClone.parameters[element.name] = element
+    }
+  })
+
+  // Reset all other paths since we're not interested in them now
+  swaggerApiClone.paths = {}
+  replaceSwaggerRequest(swaggerApiClone.paths, transaction, swaggerRequestClone)
+
+  // Recompile the Dredd transaction object, now including the changes
+  // resulting from the Hyper Swagger extension settings.
+  dreddTransactions.compile(JSON.stringify(swaggerApiClone), 'recompilation-spec.json', function (compilationError, compilationResult) {
+    let alteredTransaction = compilationResult.transactions[0]
+
+    if (!alteredTransaction) {
+      log.info({ compilationError, compilationResult }, 'Dredd transaction recompilation error')
+      return callback(new Error('Error recompiling transactions'))
+    }
+
+    log.debug({ compilationResult }, 'Dredd transaction recompilation result')
+
+    return callback(null, alteredTransaction)
+  })
+}
 
 /**
  * Given a swagger path such as `/user` and a basePath such as `/ap1/v1`,
@@ -33,7 +188,7 @@ function prefixSwaggerPaths(swaggerApi) {
 
   swaggerApi.paths = swaggerApi.paths || {}
   for (let uri in swaggerApi.paths) {
-    prefixedSwaggerPaths[prefix + uri] = swaggerApi.paths[uri]
+    prefixedSwaggerPaths[prefix + uri] = JSON.parse(JSON.stringify(swaggerApi.paths[uri]))
   }
 
   return prefixedSwaggerPaths
@@ -49,6 +204,59 @@ function getSwaggerRequest(prefixedSwaggerPaths, dreddTransaction) {
   let method = dreddTransaction.request.method.toLowerCase()
   let uri = dreddTransaction.origin.resourceName
   return prefixedSwaggerPaths[uri][method]
+}
+
+function replaceSwaggerRequest(prefixedSwaggerPaths, dreddTransaction, replacementRequest) {
+  let method = dreddTransaction.request.method.toLowerCase()
+  let uri = dreddTransaction.origin.resourceName
+  prefixedSwaggerPaths[uri] = prefixedSwaggerPaths[uri] || {}
+  prefixedSwaggerPaths[uri][method] = replacementRequest
+}
+
+/**
+ * Since Dredd doesn't know about the x-hyper-* extensions, we get them from the original
+ * Swagger spec and inject them into the Dredd transaction object
+ *
+ * @param {object} prefixedSwaggerPaths   The array of paths from the original Swagger spec
+ *                                        but with the basePath prefix already included
+ * @param {object} dreddTransaction       The current Dredd transaction object
+ *
+ */
+function injectHyperExtensions(prefixedSwaggerPaths, dreddTransaction) {
+  let swaggerRequest = getSwaggerRequest(prefixedSwaggerPaths, dreddTransaction)
+
+  swaggerRequestResponse = swaggerRequest.responses[dreddTransaction.expected.statusCode]
+
+  let operationId = swaggerRequest.operationId
+  let xHyperDependencySettings = swaggerRequest['x-hyper-dependency-settings']
+  let xHyperSkip
+  if (typeof swaggerRequestResponse['x-hyper-skip'] !== 'undefined') {
+    xHyperSkip = swaggerRequestResponse['x-hyper-skip'] === true ? true : false
+  } else {
+    xHyperSkip = swaggerRequest['x-hyper-skip'] === true ? true : false
+  }
+
+  // Inject the operationId into the Dredd transaction object
+  dreddTransaction.origin.operationId = operationId
+  // Inject the Hyper extension x-hyper-dependency-settings
+  // parameter into the Dredd transaction object
+  dreddTransaction.origin['x-hyper-dependency-settings'] = xHyperDependencySettings
+
+  dreddTransaction.origin['x-hyper-skip'] = xHyperSkip === true ? true : false
+}
+
+/**
+ * For 204 requests, the response Content-Type is irrelevant but Dredd still
+ * tries to valida te it. To solve this issue, we can simply remove it
+ * from the expected header.
+ *
+ * @param {object} dreddTransaction       The current Dredd transaction object
+ */
+function removeContentTypeExpectation(dreddTransaction) {
+  if (dreddTransaction.expected.statusCode == 204) {
+    delete dreddTransaction.expected.headers['Content-Type']
+    delete dreddTransaction.expected.headers['content-type']
+  }
 }
 
 /**
@@ -117,7 +325,7 @@ function injectTransactionSecurity(swaggerApi, prefixedSwaggerPaths, dreddTransa
 }
 
 function replaceUserAgent(transaction) {
-  let system = os.type() + ' ' + os.release() + '; ' + os.arch();
+  let system = os.type() + ' ' + os.release() + '; ' + os.arch()
   let userAgent = 'HyperTest/' + packageJson.version + ' (' + system + ')'
 
   transaction.request.headers['User-Agent'] = userAgent
@@ -145,14 +353,14 @@ function sortTransactions(transactions) {
     'PATCH': 7,
     'DELETE': 8,
     'TRACE': 9
-  };
+  }
 
   let sortedTransactions = _.orderBy(
     transactions,
     [
       (t) => {
         // First order by HTTP verb weight
-        return sortedMethods[t.request.method];
+        return sortedMethods[t.request.method]
       },
       (t) => {
         // Then order by the request URI hoping to correctly
@@ -161,21 +369,19 @@ function sortTransactions(transactions) {
       },
     ],
     [ 'asc', 'desc' ]
-  );
+  )
 
   // Empty the original array
   transactions.splice(0)
 
   sortedTransactions.forEach(function(element) {
-    transactions.push(element);
-  }, this);
+    transactions.push(element)
+  }, this)
 }
 
 hooks.beforeAll((transactions, done) => {
-
-  log.debug('Before all transactions')
   if (!transactions || !transactions[0] || !transactions[0].origin || !transactions[0].origin.filename) {
-    return done(new Error('Invalid origin filename'));
+    return done(new Error('Invalid origin filename'))
   }
 
   sortTransactions(transactions)
@@ -198,10 +404,35 @@ hooks.beforeEach((transaction, done) => {
   let contentType
   let auth = environment.authentication
 
-  injectTransactionSecurity(parsedSwaggerApi, prefixedSwaggerPaths, transaction)
-  replaceUserAgent(transaction)
+  removeContentTypeExpectation(transaction)
+  injectHyperExtensions(prefixedSwaggerPaths, transaction)
 
-  log.debug({ transaction }, 'Altered transaction')
+  if (transaction.origin['x-hyper-skip']) {
+    transaction.skip = true
+    return done()
+  }
 
+  // Eventually recompile transaction so that we can inject
+  // parameters that were generated by previous requests
+  // Eg: a DELETE might depend on the result of a previous POST
+  recompileTransaction(transaction, (err, alteredTransaction) => {
+    if (!err) {
+      transaction.request.method = alteredTransaction.request.method
+      transaction.request.uri = alteredTransaction.request.uri
+      transaction.fullPath = alteredTransaction.request.uri
+      transaction.id = alteredTransaction.request.method + ' ' + alteredTransaction.request.uri
+    }
+
+    injectTransactionSecurity(parsedSwaggerApi, prefixedSwaggerPaths, transaction)
+    replaceUserAgent(transaction)
+
+    log.debug({ transaction }, 'Transaction about to be tested')
+
+    done()
+  })
+})
+
+hooks.afterEach((transaction, done) => {
+  storeGeneratedDataResult(transaction)
   done()
 })
