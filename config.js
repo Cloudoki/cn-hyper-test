@@ -9,6 +9,12 @@ exports = module.exports = {
     // and must NOT be a symlink to a directory outside the project root
     tmpDir: process.env.HT_HOOKS_TEMP_DIR || './tmp/'
   },
+  queue: {
+    redis: {
+      port: process.env.HT_QUEUE_REDIS_PORT  || 6379,
+      host: process.env.HT_QUEUE_REDIS_HOST  || '127.0.0.1'
+    }
+  },
   mailer: {
     apiKey: process.env.HT_MAILER_API_KEY || ''
   },

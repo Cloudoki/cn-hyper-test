@@ -18,42 +18,34 @@ const Project = require('../../lib/models').Project
 const Run = require('../../lib/models').Run
 const dreddConfig = require('../../config/dredd-base-config.js')
 
-const CHECK_JOBS_DELAY = 5000
-
 let hookTemplate = fs.readFileSync('./lib/hooks/template.mustache')
 
-function checkDeployJobs () {
-  jobs.get('deploy', (err, job) => {
-    log.debug(job || {}, 'Got "deploy" Job Back?')
+jobs.process('deploy', (job, done) => {
+  log.debug({ job: job.data }, 'Got "deploy" Job Back')
+  runTestSuite(job.data.project, job.data.environment, done)
+})
 
-    if (!job) {
-      return setTimeout(checkDeployJobs, CHECK_JOBS_DELAY)
-    }
-
-    runTestSuite(job.project, job.environment, () => {
-      setTimeout(checkDeployJobs, CHECK_JOBS_DELAY)
-    })
-  })
-}
-
-function runTestSuite (project, environment, callback) {
+function runTestSuite (project, environment, done) {
   let start = Date.now();
   Project.getEnvironment(project, environment, function (err, result) {
     if (err || !result) {
-      return callback(err || new Error('Project / environment not found'))
+      return done(err || new Error('Project / environment not found'))
     }
 
     function cleanUp () {
       fs.unlinkSync(envHookFile)
     }
 
+    const env = result.environments[0]
+
     // Create a concrete Dredd Hook file for this particular project/env
-    let envHookFilename = ['hooks_', result.environments[0]._id, '_', Date.now(), '.js'].join('')
+    let envHookFilename = ['hooks_', env._id, '_', Date.now(), '.js'].join('')
     let envHookFile = path.resolve(config.hooks.tmpDir + '/' + envHookFilename)
-    let output = mustache.render(hookTemplate.toString(), { environment: JSON.stringify(result.environments[0]) })
+    let output = mustache.render(hookTemplate.toString(), { environment: JSON.stringify(env) })
     fs.writeFileSync(envHookFile, output)
 
-    let swaggerPath = result.environments[0].swagger
+    let swaggerPath = env.swagger
+    let emailRecipients = env.recipients
 
     let envConfig = Object.assign({}, dreddConfig)
     envConfig.options.path.push(swaggerPath)
@@ -72,19 +64,21 @@ function runTestSuite (project, environment, callback) {
       if (err) {
         log.error({ project, environment, err: err }, 'Error running dredd tests')
         cleanUp()
-        return callback(err)
+        return done(err)
       }
       log.info({ project, environment, stats: stats }, 'Dredd result stats')
 
       // DEBUG
       log.debug({ dreddResult: dredd.tests }, 'Dredd Test Result')
-      let tmpFile = '/tmp/testresult2.html'
 
       let html = resultBuilder.toHtml({}, dredd.tests)
-      fs.writeFileSync(tmpFile, html)
-      log.debug('Temporarily written the HTML test report to %s', tmpFile)
 
-      mailer.send('tiago.alves@cloudoki.com', 'Hyper Test - Test', html, (err, result) => {
+      // DEBUG
+      // let tmpFile = '/tmp/testresult.html'
+      // fs.writeFileSync(tmpFile, html)
+      // log.debug('Temporarily written the HTML test report to %s', tmpFile)
+
+      mailer.send(emailRecipients, 'Hyper Test Run Results', html, (err, result) => {
         let mailResult
         if (err) {
           log.error({ err, result }, 'Could not send result email')
@@ -113,7 +107,7 @@ function runTestSuite (project, environment, callback) {
           log.debug({ project, environment, duration: durantion, success: String(mailResult.success) }, 'Test run fully finished!')
 
           cleanUp()
-          callback()
+          done()
         })
 
         dredd.tests.forEach((test) => {
@@ -123,5 +117,3 @@ function runTestSuite (project, environment, callback) {
     })
   })
 }
-
-checkDeployJobs()

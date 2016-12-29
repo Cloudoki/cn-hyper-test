@@ -7,14 +7,8 @@
 const log = require('../../lib/helpers/log')
 const jobs = require('../../lib/helpers/jobs')
 
-const CHECK_JOBS_DELAY = 5000
-
-function checkPushJobs () {
-  jobs.get('push', (err, job) => {
-    log.debug(job || {}, 'Got "push" Job Back?')
-
-    setTimeout(checkPushJobs, CHECK_JOBS_DELAY)
-  })
-}
-
-checkPushJobs()
+jobs.process('push', (job, done) => {
+  log.debug({ job: job.data }, 'Got "push" Job Back')
+  // TODO handle the job
+  done()
+})
