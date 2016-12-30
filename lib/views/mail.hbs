@@ -148,8 +148,8 @@
                                 <td class="header">
                                     <ul class="commits">
                                         <li><strong>Date:</strong> 08/06/16 18:3718:00</li>
-                                        <li><strong>Author:</strong> {{payload.pusher.name}}</li>
-                                        <li><strong>Organization:</strong> {{payload.organization.login}}</li>
+                                        <li><strong>Author:</strong> {{gitPush.pusher.name}}</li>
+                                        <li><strong>Organization:</strong> {{gitPush.organization.login}}</li>
                                     </ul>
                                 </td>
                             </tr>
@@ -162,9 +162,9 @@
                             <tr>
                                 <td class="header">
                                     <ul class="commits">
-                                    {{#payload.commits}}
+                                    {{#gitPush.commits}}
                                         <li><a href="{{url}}" title="{{url}}" target="_blank">{{author.username}} - {{message}} - {{moment timestamp format="DD/MM/YY HH:mm:ss"}}</a></li>
-                                    {{/payload.commits}}
+                                    {{/gitPush.commits}}
                                     </ul>
                                 </td>
                             </tr>

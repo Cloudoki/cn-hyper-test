@@ -9,6 +9,6 @@ const jobs = require('../../lib/helpers/jobs')
 
 jobs.process('push', (job, done) => {
   log.debug({ job: job.data }, 'Got "push" Job Back')
-  // TODO handle the job
+  // TODO handle the job if there's even anything to do
   done()
 })
