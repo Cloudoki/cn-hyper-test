@@ -4,6 +4,10 @@
 // Run this in the root folder with the command:
 //     NODE_PATH=. node bin/workers/deploy-handler.js
 
+const log = require('../../lib/helpers/log')
+
+log.fatal('##### Starting Hyper Test Deploy Webhook Handler #####')
+
 const fs = require('fs')
 const path = require('path')
 const Dredd = require('dredd')
@@ -11,7 +15,6 @@ const mustache = require('mustache')
 const async = require('async')
 
 const config = require('../../config.js')
-const log = require('../../lib/helpers/log')
 const jobs = require('../../lib/helpers/jobs')
 const resultBuilder = require('../../lib/helpers/result-builder')
 const mailer = require('../../lib/helpers/mailer')
@@ -19,6 +22,7 @@ const Project = require('../../lib/models').Project
 const Push = require('../../lib/models').Push
 const Run = require('../../lib/models').Run
 const dreddConfig = require('../../config/dredd-base-config.js')
+
 
 let hookTemplate = fs.readFileSync('./lib/hooks/template.mustache')
 
@@ -42,7 +46,6 @@ function runTestSuite (projectId, environmentId, done) {
     function (project, callback) {
       const environment = project.environments[0]
       Push.getByProjectIdAndBranch(projectId, environment.branch, function (err, push) {
-        console.log('!!!!!! args:', arguments)
         if (err || !push) {
           return callback(err || new Error(`Latest push for branch ${environment.branch} not found`))
         }
