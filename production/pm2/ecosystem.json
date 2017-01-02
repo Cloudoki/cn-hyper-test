@@ -1,0 +1,47 @@
+{
+  /**
+   * Sample Application configuration section
+   * http://pm2.keymetrics.io/docs/usage/application-declaration/
+   */
+  apps : [
+
+    // First application
+    {
+      name: "Hyper Test v2",
+      script: "index.js",
+      env: {
+        NODE_PATH: ".",
+        HT_PORT: 8001,
+        HT_MONGO_URI: "mongodb://localhost:27017/hyper_test",
+        HT_MAILER_API_KEY: "<insert SendGrid key here>",
+      },
+    },
+
+    // Second application
+    {
+      name: "Hyper Test Deploy Webhook Handler",
+      script: "./bin/workers/deploy-handler.js",
+      env: {
+        NODE_PATH: ".",
+        HT_PORT: 8001,
+        HT_MONGO_URI: "mongodb://localhost:27017/hyper_test",
+        HT_MAILER_API_KEY: "<insert SendGrid key here>",
+      },
+    },
+  ],
+
+  /**
+   * Deployment section
+   * http://pm2.keymetrics.io/docs/usage/deployment/
+   */
+  deploy : {
+    production : {
+      user : "hyper",
+      host : "46.101.193.8",
+      ref  : "origin/feature/integrate-dredd",
+      repo : "git@github.com:Cloudoki/cn-hyper-test.git",
+      path : "/var/www/workers/hyper/cn-hyper-test-v2",
+      "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production"
+    }
+  }
+}
