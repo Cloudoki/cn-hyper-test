@@ -28,8 +28,12 @@
   "scripts": {
     "start": "NODE_PATH=. node index.js",
     "start-dev": "NODE_PATH=. node index.js | bunyan",
+    "start-deploy-handler": "NODE_PATH=. ./bin/workers/deploy-handler.js",
+    "start-deploy-handler-dev": "NODE_PATH=. ./bin/workers/deploy-handler.js | bunyan",
+    "start-push-handler": "NODE_PATH=. ./bin/workers/push-handler.js",
+    "start-push-handler-dev": "NODE_PATH=. ./bin/workers/push-handler.js | bunyan",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Tiago Alves <tiago.alves@cloudoki.com>",
   "license": "ISC"
 }
