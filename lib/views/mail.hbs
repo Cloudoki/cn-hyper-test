@@ -147,7 +147,7 @@
                             <tr>
                                 <td class="header">
                                     <ul class="commits">
-                                        <li><strong>Date:</strong> 08/06/16 18:3718:00</li>
+                                        <li><strong>Date:</strong> {{moment gitPush.updatedAt format="DD/MM/YYYY HH:mm:ss"}}</li>
                                         <li><strong>Author:</strong> {{gitPush.pusher.name}}</li>
                                         <li><strong>Organization:</strong> {{gitPush.organization.login}}</li>
                                     </ul>
@@ -163,7 +163,12 @@
                                 <td class="header">
                                     <ul class="commits">
                                     {{#gitPush.commits}}
-                                        <li><a href="{{url}}" title="{{url}}" target="_blank">{{author.username}} - {{message}} - {{moment timestamp format="DD/MM/YY HH:mm:ss"}}</a></li>
+                                        <li>
+                                            <a href="{{url}}" title="{{url}}" target="_blank">
+                                                <strong>{{message}}</strong>
+                                                {{author.username}} - {{moment timestamp format="DD/MM/YYYY HH:mm:ss"}}
+                                            </a>
+                                        </li>
                                     {{/gitPush.commits}}
                                     </ul>
                                 </td>
