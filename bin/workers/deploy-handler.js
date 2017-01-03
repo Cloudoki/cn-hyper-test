@@ -16,6 +16,7 @@ const async = require('async')
 
 const config = require('../../config.js')
 const jobs = require('../../lib/helpers/jobs')
+const db = require('../../lib/helpers/db')
 const resultBuilder = require('../../lib/helpers/result-builder')
 const mailer = require('../../lib/helpers/mailer')
 const Project = require('../../lib/models').Project
@@ -26,9 +27,16 @@ const dreddConfig = require('../../config/dredd-base-config.js')
 
 let hookTemplate = fs.readFileSync('./lib/hooks/template.mustache')
 
-jobs.process('deploy', (job, done) => {
-  log.debug({ job: job.data }, 'Got "deploy" Job Back')
-  runTestSuite(job.data.project, job.data.environment, done)
+db.connect((err, db) => {
+  if (err) {
+    log.fatal({ err: err }, 'Could not connect to the database. Exiting.')
+    process.exit()
+  }
+
+  jobs.process('deploy', (job, done) => {
+    log.debug({ job: job.data }, 'Got "deploy" Job Back')
+    runTestSuite(job.data.project, job.data.environment, done)
+  })
 })
 
 function runTestSuite (projectId, environmentId, done) {

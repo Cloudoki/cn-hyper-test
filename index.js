@@ -54,8 +54,3 @@ server.register([
     })
   })
 })
-
-// TODO
-// DEBUG while we have no actual Job Queue
-require('bin/workers/deploy-handler')
-require('bin/workers/push-handler')
