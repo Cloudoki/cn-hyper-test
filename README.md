@@ -142,9 +142,10 @@ In the `documentation/examples/` folder you can find some example objects of the
 
 ### Known issues / difficulties
 
+* Adding a new project / API to be tested still needs to be done manually in the database.
 * OAuth client has not been implemented yet. That is, the OAuth Access Tokens we need from the API to test need to be generated manually or in a "fake" way and injected manually into our database.
 * Regarding the usage of the [Hyper Test API](https://github.com/Cloudoki/cn-hyper-test-api) as a testing target:
     * It seems that the Hyper Test API's access tokens are only valid for 2 weeks. Hyper Test does not refresh OAuth Access Tokens.
     * The Hyper Test API project has create and delete user endpoints. However, the user can't be deleted because that operation has an authorization check where users can only remove themselves. So, to get this to work, we would have to perform the OAuth authorization on behalf of the created user to get its OAuth access_token and perform the `delete user` request with it. This is out of scope right now. Consequently, a new user is left in the database after each test run.
     * I had to set the `DELETE /0/accounts/1` test to skip since we don't have an account creation endpoint and would thus only be able to test this DELETE endpoint once.
-* Some times the project does not
+* Sometimes subsequent tests yield different results and we haven't found the reason why.
