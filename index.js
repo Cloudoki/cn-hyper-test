@@ -1,7 +1,10 @@
 'use strict'
 
-const Hapi = require('hapi')
 const path = require('path')
+const Hapi = require('hapi')
+const Vision = require('vision')
+const HapiSwagger = require('hapi-swagger')
+const pkgJson = require('./package')
 
 const log = require('lib/helpers/log')
 const db = require('lib/helpers/db')
@@ -37,7 +40,18 @@ server.register([
   // Register the static file handling plugin
   {
     register: require('./lib/plugins/static/index.js')
+  },
+  Vision,
+  {
+    register: HapiSwagger,
+    options: {
+      info: {
+        title: 'Test API Documentation',
+        version: pkgJson.version
+      }
+    }
   }
+
 ], () => {
   db.connect((err, db) => {
     if (err) {

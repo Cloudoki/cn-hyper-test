@@ -91,6 +91,13 @@ In production, the main web server and the workers must be daemonized so that th
 
 The current install in _Cloudoki One_ uses [pm2](http://pm2.keymetrics.io/) for this purpose. In `production/pm2/ecosystem.json`.
 
+## REST API Documentation
+
+This project provides its own API documentation in Swagger format. It can be viewed by running the HTTP server (`npm start`) and visiting the following links:
+
+* HTML: http://localhost:3000/documentation
+* JSON: http://localhost:3000/swagger.json
+
 ## Development Documentation
 
 As explained in the top section, this project is an automatic REST API testing tool.
