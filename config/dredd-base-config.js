@@ -1,14 +1,12 @@
 var path = require('path')
 
 exports = module.exports = {
-  'server': 'http://localhost:8000',
+  'server': null, // project-specific
   'options': {
     'dry-run': null,
     'hookfiles': [],
     'language': 'nodejs',
     'sandbox': false,
-    'server': 'node index.js',
-    'server-wait': 3,
     'init': false,
     'custom': {},
     'names': false,
@@ -26,7 +24,7 @@ exports = module.exports = {
     'timestamp': false,
     'silent': true,
     'path': [
-      // project specific
+      // project-specific
       // Ex: "http://staging.example.com/swagger.json"
     ],
     'hooks-worker-timeout': 5000,
@@ -39,11 +37,11 @@ exports = module.exports = {
     'hooks-worker-handler-port': 61321,
     'config': './dredd.yml',
     '_': [
-      // project specific
+      // project-specific
       // Ex: "http://staging.example.com/swagger.json"
     ],
     'p': [
-      // project specific
+      // project-specific
       // Ex: "http://staging.example.com/swagger.json"
     ]
   },

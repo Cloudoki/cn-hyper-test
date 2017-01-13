@@ -87,6 +87,9 @@ function runTestSuite (projectId, environmentId, done) {
     let emailRecipients = environment.recipients
 
     let envConfig = Object.assign({}, dreddConfig)
+    // TODO Security Fix! We're just getting the `environment.server` from the DB
+    // without checking whether the server endpoint is some local URL, for instance.
+    envConfig.server = environment.server
     envConfig.options.path.push(swaggerPath)
     envConfig.options._.push(swaggerPath)
     envConfig.options.p.push(swaggerPath)
