@@ -54,8 +54,14 @@ function runTestSuite (projectId, environmentId, done) {
     function (project, callback) {
       const environment = project.environments[0]
       Push.getByProjectIdAndBranch(projectId, environment.branch, function (err, push) {
-        if (err || !push) {
+        if (err) {
           return callback(err || new Error(`Latest push for branch ${environment.branch} not found`))
+        }
+        if (!push) {
+          log.warn(
+            { project: projectId, environment: environmentId },
+            `No push for branch ${environment.branch} found.`
+          )
         }
         return callback(null, environment, push)
       })
@@ -64,7 +70,7 @@ function runTestSuite (projectId, environmentId, done) {
   ], function (err) {
     if (err) {
       log.error(
-        { error: err && err.message, project: projectId, environment: environmentId },
+        { error: err && err.message, projectId, environmentId },
         'Error running test suite'
       )
     }
@@ -100,15 +106,15 @@ function runTestSuite (projectId, environmentId, done) {
     // Configure and start a Dredd test runner
     let dredd = new Dredd(envConfig)
 
-    log.debug({ projectId, environment }, 'Running tests')
+    log.debug({ projectId, environmentId }, 'Running tests')
 
     dredd.run((err, stats) => {
       if (err) {
-        log.error({ projectId, environment, err: err }, 'Error running dredd tests')
+        log.error({ projectId, environmentId, error: err && err.message }, 'Error running dredd tests')
         cleanUp()
         return done(err)
       }
-      log.info({ projectId, environment, stats: stats }, 'Dredd result stats')
+      log.info({ projectId, environmentId, stats: stats }, 'Dredd result stats')
 
       // DEBUG
       log.debug({ dreddResult: dredd.tests }, 'Dredd Test Result')
@@ -135,18 +141,18 @@ function runTestSuite (projectId, environmentId, done) {
         let run = new Run({
           tests: dredd.tests,
           projectId,
-          environmentId: environment,
+          environmentId,
           mail: mailResult
         })
 
         run.save((err) => {
           if (err) {
-            log.error({ err, projectId, environment }, 'Could not save the test run result')
+            log.error({ err, projectId, environmentId }, 'Could not save the test run result')
             return callback(err)
           }
 
           let durantion = ((Date.now() - start) / 1000) + ' s'
-          log.debug({ projectId, environment, duration: durantion, success: String(mailResult.success) }, 'Test run fully finished!')
+          log.debug({ projectId, environmentId, duration: durantion, success: String(mailResult.success) }, 'Test run fully finished!')
 
           cleanUp()
           callback()

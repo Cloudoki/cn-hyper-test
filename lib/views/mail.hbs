@@ -143,7 +143,7 @@
                                     <strong class="info">Push details:</strong>
                                 </td>
                             </tr>
-
+                            {{#if gitPush}}
                             <tr>
                                 <td class="header">
                                     <ul class="commits">
@@ -173,6 +173,13 @@
                                     </ul>
                                 </td>
                             </tr>
+                            {{else}}
+                            <tr>
+                                <td class="header">
+                                    <span>Commit history not available. Is the project's Git push webhook configured correctly?</span>
+                                </td>
+                            </tr>
+                            {{/if}}
                         </table>
                     </td>
                 </tr><!-- // END HEADER -->
