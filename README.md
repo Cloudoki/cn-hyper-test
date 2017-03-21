@@ -87,9 +87,11 @@ Run a manual deployment hook by performing a request like shown below (make sure
 
 ## Production installation
 
-In production, the main web server and the workers must be daemonized so that they start up once the system boots and are restarted if the crash.
+In production, the main web server and the workers must be daemonized so that they start up once the system boots and are restarted if they crash. The current install uses [pm2](http://pm2.keymetrics.io/) for this purpose. You can find an example PM2 `.json` config in this repo's `production/pm2/ecosystem.json` file.
 
-The current install in _Cloudoki One_ uses [pm2](http://pm2.keymetrics.io/) for this purpose. In `production/pm2/ecosystem.json`.
+The current install is available at [https://hyper-test.cloudoki.com](https://hyper-test.cloudoki.com).
+
+**For more specific information about the production installation, visit this project's wiki page.**
 
 ## REST API Documentation
 
